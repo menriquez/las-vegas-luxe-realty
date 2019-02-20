@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="local rets_update_images_mrtu.php " type="PhpWebAppRunConfigurationType" factoryName="PHP Web Application" singleton="false" server_name="local xampp apache" start_url="/rets/rets_update_images_mrtu.php">
+    <method v="2" />
+  </configuration>
+</component>
