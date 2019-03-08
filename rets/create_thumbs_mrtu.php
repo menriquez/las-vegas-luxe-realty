@@ -7,7 +7,7 @@ $width = 400;
 
 $thumb_file_name = $argv[1];
 
-$base_dir  = "/home/admin/web/dev.webwarephpdevelopment.com/public_html";
+$base_dir  = "/home/admin/web/$ACTIVE_DOMAIN/public_html";
 $origin_dir = '/mls/photos/';
 $full_origin_dir = $base_dir.$origin_dir;
 
@@ -20,13 +20,13 @@ $full_thumb96_dir = $base_dir.$thumb96_dir;
 
 if (!file_exists($full_thumb_dir)) {
   if (!mkdir($full_thumb_dir, 0755)) {
-    throw new Exception("createThumbs.php - cannot create new directory $full_thumb_dir for thumbs...") ;
+    throw new Exception("create_thumbs_mrtu.php - ERROR cannot create new directory $full_thumb_dir for thumbs...") ;
   }
 }
 
 if (!file_exists($full_thumb96_dir)) {
   if (!mkdir($full_thumb96_dir, 0755)) {
-    throw new Exception("createThumbs.php - cannot create new directory $full_thumb96_dir for thumbs...") ;
+    throw new Exception("create_thumbs_mrtu.php - ERROR cannot create new directory $full_thumb96_dir for thumbs...") ;
   }
 }
 

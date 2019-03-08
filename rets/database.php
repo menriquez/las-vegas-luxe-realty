@@ -1,6 +1,6 @@
 <?php  
 
-$ACTIVE_DOMAIN="dev.webwarephpdevelopment.com";
+$ACTIVE_DOMAIN="lasvegasluxerealty.com";
 
 $is_sean = false;
 
@@ -31,7 +31,7 @@ $conn=mysqli_connect($configDB['DB_HOST'], $configDB['DB_USER'], $configDB['DB_P
 // Get State Abbreviation
 function getState($state = '', $postal_code = '') {
 
-	global $conn;
+    global $conn;
     
     if(!empty($postal_code))
     {
@@ -67,29 +67,29 @@ function getState($state = '', $postal_code = '') {
 // Get County
 function getCounty($postal_code = '', $city = '')
 {
-	global $conn;
+    global $conn;
 
-	if(!empty($postal_code))
-	{
+    if(!empty($postal_code))
+    {
 
-		$county_results = mysqli_query( $conn,"SELECT * FROM `zipcode_county_lookup` WHERE `zip_code` = '{$postal_code}' LIMIT 1");
-		if(mysqli_num_rows($county_results) > 0)
-		{
-			$row_1 = mysqli_fetch_assoc($county_results);
-			return $row_1['county'];
-		}
+        $county_results = mysqli_query( $conn,"SELECT * FROM `zipcode_county_lookup` WHERE `zip_code` = '{$postal_code}' LIMIT 1");
+        if(mysqli_num_rows($county_results) > 0)
+        {
+            $row_1 = mysqli_fetch_assoc($county_results);
+            return $row_1['county'];
+        }
 
-	}
-	elseif(!empty($city))
-	{
+    }
+    elseif(!empty($city))
+    {
 
-		$county_results = mysqli_query( $conn, "SELECT * FROM `zipcode_county_lookup` WHERE `city` = '{$city}' LIMIT 1");
-		if(mysqli_num_rows($county_results) > 0)
-		{
-			$row_1 = mysqli_fetch_assoc($county_results);
-			return $row_1['county'];
-		}
-	}
+        $county_results = mysqli_query( $conn, "SELECT * FROM `zipcode_county_lookup` WHERE `city` = '{$city}' LIMIT 1");
+        if(mysqli_num_rows($county_results) > 0)
+        {
+            $row_1 = mysqli_fetch_assoc($county_results);
+            return $row_1['county'];
+        }
+    }
 
-	return false;
+    return false;
 }

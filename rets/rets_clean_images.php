@@ -14,90 +14,94 @@ include('../includes/globals.php');
 //
 //  CONFIG OPTIONS 
 //  
-$rets_name="lasvegasluxerealty.com";
-$rets_from="mark@webwarephpdevelopment.com";
+$rets_name = "lasvegasluxerealty.com";
+$rets_from = "mark@webwarephpdevelopment.com";
 
 // set this to true to force image download from links instead of using photo array - FLEXMLS advises this is best way
-$forceDl=true;
+$forceDl = true;
 // set this to true to pull HiRes images from server
-$hiRes=true;
+$hiRes = true;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // $site_root_dir = '/var/www/vhosts/brevardauctions.com/httpdocs/';  - not doing it this way on this system - marke
 
 set_time_limit(0);
 
-$delCnt=$keepCnt=0;
+$delCnt = $keepCnt = 0;
 
-foreach (glob($base_image_dir."*-1.jpg") as $file) {
-  
- $str = strrchr ( $file ,"/" );
- 
- $from = "/";
- $to = "-";
- 
-  $sub = substr($str, strpos($str,$from)+strlen($from),strlen($str));
-  $mls= substr($sub,0,strpos($sub,$to));
-  
- $sql = "select * from master_rets_table where sysid = '$mls'";
- $mls_r = mysql_query($sql);
- if(mysql_num_rows($mls_r) == 0) {
-   // ok...no record exists for the image, so we can safely delete the image set..
-   delete_images($mls);
-   echo "delete image set for MLS Id# $mls...\r\n";
-   $delCnt++;
-   
- } else {
-   
-   $keepCnt++;
-   // echo "Keeping image set for MLS Id# $mls...\r\n";  
- }
- 
-  
+foreach (glob($base_image_dir . "*-1.jpg") as $file) {
+
+    $str = strrchr($file, "/");
+
+    $from = "/";
+    $to = "-";
+
+    $sub = substr($str, strpos($str, $from) + strlen($from), strlen($str));
+    $mls = substr($sub, 0, strpos($sub, $to));
+
+    $sql = "select * from master_rets_table where sysid = '$mls'";
+    $mls_r = mysql_query($sql);
+    if (mysql_num_rows($mls_r) == 0) {
+        // ok...no record exists for the image, so we can safely delete the image set..
+        delete_images($mls);
+        echo "delete image set for MLS Id# $mls...\r\n";
+        $delCnt++;
+
+    } else {
+
+        $keepCnt++;
+        // echo "Keeping image set for MLS Id# $mls...\r\n";
+    }
+
+
 }
 
 echo "DELCNT = $delCnt\r\nKeepCNT = $keepCnt\r\n";
 exit(0);
 
-function delete_images($listing_id) {
-    
-   GLOBAL $base_image_dir;
-   GLOBAL $rets_config;
-   
-  // Base Images Directory
-  // $init_image = $base_image.$listing_id.".jpg";
-  $image_count = 0;
-  $images = array();
-  $dir = $base_image_dir;
+function delete_images($listing_id)
+{
 
-  // fix the fact the glob sometimes doens't return an array type...sigh
-  $fnArray1 = glob($dir."/".$listing_id."-??.jpg"); if (!$fnArray1) $fnArray1 = array();
-  $fnArray2 = glob($dir."/".$listing_id."-?.jpg"); if (!$fnArray2) $fnArray2 = array();
+    GLOBAL $base_image_dir;
+    GLOBAL $rets_config;
 
-  // create one array from the two...
-  $images = array_merge($fnArray1 , $fnArray2 );
-  
-  // handy way to delete all files in an array...
-  echo "Deleting old image set for MLS Id# $listing_id...";
-  array_map( "unlink", $images );
-  echo "...ok"."\n";
+    // Base Images Directory
+    // $init_image = $base_image.$listing_id.".jpg";
+    $image_count = 0;
+    $images = [];
+    $dir = $base_image_dir;
+
+    // fix the fact the glob sometimes doens't return an array type...sigh
+    $fnArray1 = glob($dir . "/" . $listing_id . "-??.jpg");
+    if (!$fnArray1) $fnArray1 = array();
+    $fnArray2 = glob($dir . "/" . $listing_id . "-?.jpg");
+    if (!$fnArray2) $fnArray2 = array();
+
+    // create one array from the two...
+    $images = array_merge($fnArray1, $fnArray2);
+
+    // handy way to delete all files in an array...
+    echo "Deleting old image set for MLS Id# $listing_id...";
+    array_map("unlink", $images);
+    echo "...ok" . "\n";
 
 }
 
-function get_single_image_set($listing_id,$rets_object) {
-     
-  $rets_results = mysql_query("select * from `master_rets_table` WHERE  listing_id = '$listing_id';");
-  $totRows = mysql_num_rows($rets_results);
-  $curRow=0;
- 
-  // get images
-  if ($totRows > 0) {
-     
-    while ($row = mysql_fetch_assoc($rets_results)) {
-        
-      get_images($row['listing_id'], $row['photo_count'], $row['rets_key'], $rets_object, null);
-           
-    } 
-       
-  }
+function get_single_image_set($listing_id, $rets_object)
+{
+
+    $rets_results = mysql_query("select * from `master_rets_table` WHERE  listing_id = '$listing_id';");
+    $totRows = mysql_num_rows($rets_results);
+    $curRow = 0;
+
+    // get images
+    if ($totRows > 0) {
+
+        while ($row = mysql_fetch_assoc($rets_results)) {
+
+            get_images($row['listing_id'], $row['photo_count'], $row['rets_key'], $rets_object, null);
+
+        }
+
+    }
 }

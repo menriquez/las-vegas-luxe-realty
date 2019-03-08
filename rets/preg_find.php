@@ -115,8 +115,7 @@ Function preg_find($pattern, $start_dir='.', $args=NULL) {
     uasort($files_matched, $filesort);
   }
   --$depth;
+
   return $files_matched;
 
 }
-
-?>
