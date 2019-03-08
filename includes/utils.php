@@ -80,12 +80,5 @@
     }
   }
   
-  
-// UGH just UGH...
-$dbhost = 'localhost';
-$dbuser = 'tsgfl_dbuser';
-$dbpass = 'eOlqo56HsC05';
-$dbname = 'tsgfl_rets';
- 
-    
+
 ?>

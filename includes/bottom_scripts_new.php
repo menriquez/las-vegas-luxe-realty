@@ -19,9 +19,9 @@
     <div></div>    <script type="text/javascript" src="<?= $BASE_WEB_URL ?>/js/mail_validation.js"></script>
 
     <script type="text/javascript" src="<?= $BASE_WEB_URL ?>/js/function.js"></script>
-    <script type="text/javascript" src="<?= $BASE_WEB_URL ?>/js/library.js"></script> 
-    <script type="text/javascript" src="<?= $BASE_WEB_URL ?>/js/owl.carousel.min.js"></script> 
-    <script type="text/javascript" src="<?= $BASE_WEB_URL ?>/js/jquery.royalslider.min.js"></script>        
+    <script type="text/javascript" src="<?= $BASE_WEB_URL ?>/js/library.js"></script>
+    <script type="text/javascript" src="<?= $BASE_WEB_URL ?>/js/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="<?= $BASE_WEB_URL ?>/js/jquery.royalslider.min.js"></script>
     <script type="text/javascript" src="<?= $BASE_WEB_URL ?>/js/accordion.js"></script>
 
     <!-- Layer Slider JS controller (view documentation for refrence) -->

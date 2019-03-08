@@ -1,4 +1,5 @@
-    <div id="footer">    
+
+    <div id="footer">
         <div class="top">
             <div class="container"> 
                 <div class="row">
@@ -47,7 +48,7 @@
             <div class="container">
                 <div class="row">
                     <!-- edit copyright notice here -->
-                    <div class="copyrights">Design / RETS by <a href="https://webwarephpdevelopment.com">Webware PHP Dev</a> &copy2016 - <?= date('Y') ?></div>
+                    <div class="copyrights">Design / RETS by <a href="https://webwarephpdevelopment.com">Webware PHP Development</a> &copy2016 - <?= date('Y') ?></div>
                 </div>
             </div>
         </div>

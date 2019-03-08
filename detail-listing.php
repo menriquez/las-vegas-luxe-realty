@@ -1,8 +1,9 @@
 <?
 error_reporting(E_ALL);
 include('includes/globals.php');
-include('mls/controller/retsController.php');
-include('mls/controller/pageController.php');
+
+require('mls/controller/retsController.php');
+require('mls/controller/pageController.php');
 
 // load 
 //$page_title = $this->page->getPageTitle();
@@ -14,60 +15,55 @@ $homepage = false;
 //$controller = new retsController('loadmls');        // register controller with page action and parameter
 //$controller->invoke();
 
-include('includes/header.php');   
+
+include('includes/header.php');
 ?>
 <body>
 
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WTJ5MQD"
-  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  
-  <link type="text/css" rel="stylesheet" href="<?= $BASE_WEB_URL ?>/css/style.css" />
-  <!-- End Google Tag Manager (noscript) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WTJ5MQD"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
 
-    <div id="container" class="main">
-    
-        <div id="out">
-                     
-            <?php include('includes/nav-bar_new.php'); ?>
-      
-            <!-- <div class="container">  -->
-                <div class="container" >
-                
-                        <!-- begin featured listings summary block -->                                
+<link type="text/css" rel="stylesheet" href="<?= $BASE_WEB_URL ?>/css/style.css"/>
+<!-- End Google Tag Manager (noscript) -->
 
-                    
-                        <?php
+<div id="container" class="main">
 
-                            $controller = new retsController('showmls'); // register controller with page action and parameter
-                            $controller->invoke();                            // invokde controller to get view
+    <div id="out">
 
-                        ?> 
-                     
-                        <!-- /end featured listings summary block -->
+        <?php include('includes/nav-bar_new.php'); ?>
 
-                        
-                    <!-- ==========================MLS Search form starts here=======================================-->
+        <!-- <div class="container">  -->
+        <div class="container">
 
-                    <?php //include('includes/search-form.php'); ?>
+            <!-- begin featured listings summary block -->
+            <?php
 
-                    <!-- MLS Search form ends here -->
-                </div>
-                  
-         <!--   </div>  -->
-            
+            $controller = new retsController('showmls'); // register controller with page action and parameter
+            $controller->invoke();                            // invokde controller to get view
+
+            ?>
+
+            <?php //include('includes/search-form.php'); ?>
+
         </div>
-        <div id="empty"></div>
+
+        <!--   </div>  -->
+
     </div>
+    <div id="empty"></div>
+</div>
 
-    <!-- begin footer -->
-    <?php include('includes/footer_new.php'); ?>
-    <!-- /end footer -->
+<!-- begin footer -->
+<?php include('includes/footer_new.php'); ?>
+<!-- /end footer -->
 
-    <!-- Javascript/bootstrap + all other scripts -->
-    <?php include('includes/bottom_scripts_new.php');  ?>
-    
-    <!-- /End Scripts -->
+<!-- Javascript/bootstrap + all other scripts -->
+<?php include('includes/bottom_scripts_new.php'); ?>
+
+<!-- /End Scripts -->
 
 </body>
 
