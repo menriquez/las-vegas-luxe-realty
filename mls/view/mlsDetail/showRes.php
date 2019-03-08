@@ -99,7 +99,7 @@
                                         
                                             <div class="details-phone"><a href="tel:415-815-9079"><i class="fa fa-mobile-phone"></i> 415-815-9079</a><br>
                                             <div class="details-phone"><a TARGET="_blank"  href="mailto:saharsaljougui@gmail.com?&subject=Intrested%20in%20<?= $this->model->getStreetAddress()?>,%20<?= $this->model->getCityStZip()?>,%20MLS#%20<?= $this->model-> getMLS()?>&body=Hi%20Sahar,">SaharSaljougui@gmail.com</a> </div><br />            
-                                            <div class="button-center"><button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal<?= $this->model->rowIdx ?>"><i class="fa fa-envelope" aria-hidden="true"></i> Let Me Help You!</button> </div>
+                                            <div class="button-center"><button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal<?= $this->model->row_idx ?>"><i class="fa fa-envelope" aria-hidden="true"></i> Let Me Help You!</button> </div>
                                             
                                             <?php 
                                                 require ('mls/view/contact_modal.view.php');

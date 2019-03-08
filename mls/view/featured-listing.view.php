@@ -1,3 +1,4 @@
+<?php global $BASE_WEB_URL ?>
 
                         <div class="col-lg-4 col-md-4 col-sm-6">
                             <!-- featured item  house #1 summary info -->

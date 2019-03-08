@@ -1,4 +1,4 @@
-<div id="property-item<?= $this->model->rowIdx ?>" class="property-item">
+<div id="property-item<?= $this->model->row_idx ?>" class="property-item">
                                 <div class="wide-divider">
                                     <a class="close-details" href="javascript:void(0)"></a>
                                 </div>
@@ -94,7 +94,7 @@
                                                         
                                                     </div>
                                                     <div class="col-md-12 col-xs-12">
-                                                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal<?= $this->model->rowIdx ?>"><i class="fa fa-envelope" aria-hidden="true"></i> Contact me about this property</button>  
+                                                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal<?= $this->model->row_idx ?>"><i class="fa fa-envelope" aria-hidden="true"></i> Contact me about this property</button>
                                                     </div>  
                                                 </div>
                                                 

@@ -1,5 +1,5 @@
 
-<div id="myModal<?= $this->model->rowIdx ?>" class="modal fade" role="dialog">
+<div id="myModal<?= $this->model->row_idx ?>" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg">
         
         <div class="modal-content">
@@ -53,7 +53,7 @@
                                 <div class="title styler_color">Phone & Email</div>
                                 <address class=" styler_color">   
                                     <a href="tel:415-815-9079"><i class="fa fa-mobile-phone"></i> 415-815-9079</a><br /><a href="tel:702-313-7003"><i class="fa fa-phone"></i> 702-313-7003</a> <br />
-                                    <a TARGET="_blank"  href="mailto:Melaniesaljougui@gmail.com?&subject=Intrested%20in%20<?= $this->model->getStreetAddress()?>,%20<?= $this->model->getCityStZip()?>,%20MLS#%20<?= $this->model-> getMLS()?>&body=Hi%20Melanie,">Melaniesaljougui@gmail.com</a>
+                                    <a TARGET="_blank"  href="mailto:saharsaljougui@gmail.com?&subject=Intrested%20in%20<?= $this->model->getStreetAddress()?>,%20<?= $this->model->getCityStZip()?>,%20MLS#%20<?= $this->model-> getMLS()?>&body=Hi%20Melanie,">Melaniesaljougui@gmail.com</a>
                                 </address>
                             </div>
 
