@@ -1,7 +1,8 @@
 <?php
 
-include_once('mls/model/pdoConfig.php');
-include_once('includes/utils.php');
+
+include_once('pdoConfig.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/includes/utils.php');
 
 //include_once('mls/model/areazone.php');
 
@@ -13,7 +14,7 @@ class dbRetsRoom extends PDOConfig {
 	public  $count;
     public  $room_type_array;
 
-	const MLS_TABLENAME = 'glvar_propertysubtype_rooms';
+	const MLS_TABLENAME = 'glvar_propertysubtype_room';
     
 	public function __construct(){
 		parent::__construct( );

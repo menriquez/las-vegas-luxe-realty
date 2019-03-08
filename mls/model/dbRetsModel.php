@@ -1,10 +1,11 @@
 <?php
 
-include_once('mls/model/pdoConfig.php');
-include_once('mls/model/dbRetsRoomModel.php');
+include_once 'pdoConfig.php';
+include_once 'dbRetsRoomModel.php';
+#include_once 'includesglobals.php';
 
-include_once('includes/utils.php');
-include_once('includes/pagination.php');
+include_once $_SERVER['DOCUMENT_ROOT'].'/includes/utils.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/includes/pagination.php';
 
 //include_once('mls/model/areazone.php');
 
@@ -48,6 +49,7 @@ class dbRets extends pdoConfig {
 
 	public function getStreetAddress() {
 
+        $sfx="";
 		switch ($this->row['street_suffix']) {
 			case "Avenue":
 				$sfx = "Ave";
@@ -64,6 +66,9 @@ class dbRets extends pdoConfig {
 			case "Drive":
 				$sfx = "Dr";
 				break;
+            case "Lane":
+                $sfx = "Ln";
+                break;
 			case "Highway":
 				$sfx = "Hwy";
 				break;
@@ -79,7 +84,9 @@ class dbRets extends pdoConfig {
 			case "Terrace":
 				$sfx = "Ave";
 				break;
-
+            case "Road":
+                $sfx="Rd";
+                break;
 			case "Trail":
 				$sfx = "Tr";
 				break;
@@ -147,6 +154,7 @@ class dbRets extends pdoConfig {
 	public function getPrice() {
 		return "$".number_format($this->row['listing_price']);
 	}
+
 	public function getPriceRaw() {
 		return number_format($this->row['listing_price']);
 	}
@@ -172,22 +180,25 @@ class dbRets extends pdoConfig {
 	}
 
 	public function getThumbSmallFn() {
-		return "mls/thumbs200/".$this->row['sysid']."-1.jpg";
+	    global $BASE_WEB_URL_IMAGES;
+		return $BASE_WEB_URL_IMAGES."/mls/thumbs200/".$this->row['sysid']."-1.jpg";
 	}
 
 	public function getThumbFn() {
-		return  $BASE_WEB_URL . "mls/thumbs/".$this->row['sysid']."-1.jpg";
+        global $BASE_WEB_URL_IMAGES;
+		return  $BASE_WEB_URL_IMAGES. "/mls/thumbs/".$this->row['sysid']."-1.jpg";
 	}
 
 	public function getFrontPicFn() {
 		// return "/mls/photos/".$this->row['sysid']."-1.jpg";
-		return $BASE_WEB_URL . "/mls/photos/".$this->row['sysid']."-1.jpg";    
+        global $BASE_WEB_URL_IMAGES;
+		return $BASE_WEB_URL_IMAGES. "/mls/photos/".$this->row['sysid']."-1.jpg";
 	}
 
 
 	public function getPlantPicFn() {
 		// return "/mls/photos/".$this->row['sysid']."-1.jpg";
-		return $BASE_WEB_URL . "/img/plants/caro/".$this->row['img_fn'];    
+		return $BASE_WEB_URL_IMAGES. "/img/plants/caro/".$this->row['img_fn'];
 	}
 	
 	public function getPlantName() {     
@@ -197,8 +208,6 @@ class dbRets extends pdoConfig {
 	public function getPlantPrice() {     
 		return $this->row['price'];
 	}
-	
-
 
 	public function getExtFeats() {
 		return $this->row['exterior_features'];
@@ -249,8 +258,6 @@ class dbRets extends pdoConfig {
 
 		$first = true;
 
-		//global $BASE_WEB_URL;
-
 		foreach ($images as $image) {
 
 			if ($first==true) $stg = "bugaga"; else $stg = "";
@@ -258,8 +265,8 @@ class dbRets extends pdoConfig {
 			$imageArr = explode("/",$image);
 			$fn = array_pop($imageArr);
 
-			$img = $BASE_WEB_URL."/mls/photos/".$fn;
-			$thumb = $BASE_WEB_URL."/mls/thumbs96/".$fn;
+			$img = $BASE_WEB_URL_LIVE."/mls/photos/".$fn;
+			$thumb = $BASE_WEB_URL_LIVE."/mls/thumbs96/".$fn;
 
 			echo "<a class='rsImg $stg' data-rsw='540' data-rsh='374' data-rsBigImg='$img' href='$img'><img width='96' height='72' class='rsTmb' src='$img' alt='' /></a>\n\n";
 			$first = false;
@@ -329,7 +336,7 @@ class dbRetsModel extends dbRets {
 
 	// vars to handle internal row management
 	private $rows;
-	public $rowIdx;
+	public  $row_idx;
 	private $stm;
 	private $vars;
 	private $paging;
@@ -396,7 +403,7 @@ class dbRetsModel extends dbRets {
 	}
 
 	public function isFirst() {
-		return ($this->rowIdx==1?"1":"0");
+		return ($this->row_idx==1?"1":"0");
 	}
 
 	// set functions for searches
@@ -528,10 +535,10 @@ class dbRetsModel extends dbRets {
 		$this->rows= $this->stm2->fetchAll(self::FETCH_ASSOC);
 
 		$this->count = $this->stm2->rowCount();
-		$this->rowIdx = 0;
+		$this->row_idx = 0;
 
 		// set row to first
-		$this->row=$this->rows[$this->rowIdx++];
+		$this->row=$this->rows[$this->row_idx++];
 
 	}
 
@@ -551,12 +558,12 @@ class dbRetsModel extends dbRets {
 		$this->stm->execute();
 		$this->rows= $this->stm->fetchAll(self::FETCH_ASSOC);
 		$this->count = $this->stm->rowCount();
-		$this->rowIdx = 0;
+		$this->row_idx = 0;
 
 		// set row to first
 		if ($this->count) {
 
-			$this->row=$this->rows[$this->rowIdx++];
+			$this->row=$this->rows[$this->row_idx++];
 			// go ahead and try to load the room data as well now...
 			$this->rooms = new dbRetsRoomModel($this->getData('sysid'));
 
@@ -643,10 +650,10 @@ class dbRetsModel extends dbRets {
 		$this->stm->execute();
 		$this->rows= $this->stm->fetchAll(self::FETCH_ASSOC);
 		$this->count = $this->stm->rowCount();
-		$this->rowIdx = 0;
+		$this->row_idx = 0;
 
 		// set row to first
-		$this->row=$this->rows[$this->rowIdx++];
+		$this->row=$this->rows[$this->row_idx++];
 
 	}
 
@@ -717,10 +724,10 @@ class dbRetsModel extends dbRets {
 		$this->stm->execute();
 		$this->rows= $this->stm->fetchAll(self::FETCH_ASSOC);
 		$this->count = $this->stm->rowCount();
-		$this->rowIdx = 0;
+		$this->row_idx = 0;
 
 		// set row to first
-		$this->row=$this->rows[$this->rowIdx++];
+		$this->row=$this->rows[$this->row_idx++];
 
 	}
 	
@@ -739,10 +746,10 @@ class dbRetsModel extends dbRets {
 		$this->stm->execute();
 		$this->rows= $this->stm->fetchAll(self::FETCH_ASSOC);
 		$this->count = $this->stm->rowCount();
-		$this->rowIdx = 0;
+		$this->row_idx = 0;
 
 		// set row to first
-		$this->row=$this->rows[$this->rowIdx++];
+		$this->row=$this->rows[$this->row_idx++];
 
 	}
 
@@ -756,10 +763,10 @@ class dbRetsModel extends dbRets {
 		$this->stm->execute();
 		$this->rows= $this->stm->fetchAll(self::FETCH_ASSOC);
 		$this->count = $this->stm->rowCount();
-		$this->rowIdx = 0;
+		$this->row_idx = 0;
 
 		// set row to first
-		$this->row=$this->rows[$this->rowIdx++];
+		$this->row=$this->rows[$this->row_idx++];
 
 	}
 	
@@ -773,10 +780,10 @@ class dbRetsModel extends dbRets {
 		$this->stm->execute();
 		$this->rows= $this->stm->fetchAll(self::FETCH_ASSOC);
 		$this->count = $this->stm->rowCount();
-		$this->rowIdx = 0;
+		$this->row_idx = 0;
 
 		// set row to first
-		$this->row=$this->rows[$this->rowIdx++];
+		$this->row=$this->rows[$this->row_idx++];
 
 	}
 	
@@ -796,10 +803,10 @@ class dbRetsModel extends dbRets {
 		$this->stm->execute();
 		$this->rows= $this->stm->fetchAll(self::FETCH_ASSOC);
 		$this->count = $this->stm->rowCount();
-		$this->rowIdx = 0;
+		$this->row_idx = 0;
 
 		// set row to first
-		$this->row=$this->rows[$this->rowIdx++];
+		$this->row=$this->rows[$this->row_idx++];
 	}
 
 	public function getNewestProperties() {
@@ -816,10 +823,10 @@ class dbRetsModel extends dbRets {
 		$this->stm->execute();
 		$this->rows= $this->stm->fetchAll(self::FETCH_ASSOC);
 		$this->count = $this->stm->rowCount();
-		$this->rowIdx = 0;
+		$this->row_idx = 0;
 
 		// set row to first
-		$this->row=$this->rows[$this->rowIdx++];
+		$this->row=$this->rows[$this->row_idx++];
 
 	}
 
@@ -875,10 +882,10 @@ class dbRetsModel extends dbRets {
 		$this->stm->execute();
 		$this->rows= $this->stm->fetchAll(self::FETCH_ASSOC);
 		$this->count = $this->stm->rowCount();
-		$this->rowIdx = 0;
+		$this->row_idx = 0;
 
 		// set row to first
-		$this->row=$this->rows[$this->rowIdx++];
+		$this->row=$this->rows[$this->row_idx++];
 
 	}
 
@@ -893,10 +900,10 @@ class dbRetsModel extends dbRets {
 		$this->stm->execute();
 		$this->rows= $this->stm->fetchAll(self::FETCH_ASSOC);
 		$this->count = $this->stm->rowCount();
-		$this->rowIdx = 0;
+		$this->row_idx = 0;
 
 		// set row to first
-		$this->row=$this->rows[$this->rowIdx++];
+		$this->row=$this->rows[$this->row_idx++];
 
 	}
 
@@ -915,10 +922,10 @@ class dbRetsModel extends dbRets {
 		$this->stm->execute();
 		$this->rows= $this->stm->fetchAll(self::FETCH_ASSOC);
 		$this->count = $this->stm->rowCount();
-		$this->rowIdx = 0;
+		$this->row_idx = 0;
 
 		// set row to first
-		$this->row=$this->rows[$this->rowIdx++];
+		$this->row=$this->rows[$this->row_idx++];
 
 	}
 
@@ -952,11 +959,11 @@ class dbRetsModel extends dbRets {
 
 		$this->count=count($this->rows);
 
-		$this->rowIdx = 0;
+		$this->row_idx = 0;
 
 		// set row to first
 		if ($this->count > 0)
-			$this->row=$this->rows[$this->rowIdx++];
+			$this->row=$this->rows[$this->row_idx++];
 	}
 
 	public function getAreaListings () {
@@ -998,10 +1005,10 @@ class dbRetsModel extends dbRets {
 
 		$this->rows= $this->stm->fetchAll(self::FETCH_ASSOC);
 		$this->count = $this->stm->rowCount();
-		$this->rowIdx = 0;
+		$this->row_idx = 0;
 
 		// set row to first
-		$this->row=$this->rows[$this->rowIdx++];
+		$this->row=$this->rows[$this->row_idx++];
 
 	}
 
@@ -1014,10 +1021,10 @@ class dbRetsModel extends dbRets {
 
 		$this->stm->execute();
 		$this->rows= $this->stm->fetchAll(self::FETCH_ASSOC);
-		$this->rowIdx = 0;
+		$this->row_idx = 0;
 
 		// set row to first
-		$this->row=$this->rows[$this->rowIdx++];
+		$this->row=$this->rows[$this->row_idx++];
 		$this->count = $this->row['cnt'];
 
 	}
@@ -1083,11 +1090,11 @@ class dbRetsModel extends dbRets {
 
 		$this->count=count($this->rows);
 
-		$this->rowIdx = 0;
+		$this->row_idx = 0;
 
 		// set row to first
 		if ($this->count > 0)
-			$this->row=$this->rows[$this->rowIdx++];
+			$this->row=$this->rows[$this->row_idx++];
 
 	}
 	/******************************************************************************************************************/
@@ -1096,12 +1103,12 @@ class dbRetsModel extends dbRets {
 
 	public function next() {
 
-		if ($this->rowIdx < $this->count) {
-			$this->row=$this->rows[$this->rowIdx++];
+		if ($this->row_idx < $this->count) {
+			$this->row=$this->rows[$this->row_idx++];
 			return true;
 		}
 		else {
-			$this->rowIdx=0;
+			$this->row_idx=0;
 			return false;
 		}
 	}
