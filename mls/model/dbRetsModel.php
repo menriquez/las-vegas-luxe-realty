@@ -191,8 +191,8 @@ class dbRets extends pdoConfig {
 
 	public function getFrontPicFn() {
 		// return "/mls/photos/".$this->row['sysid']."-1.jpg";
-        global $BASE_WEB_URL_IMAGES;
-		return $BASE_WEB_URL_IMAGES. "/mls/photos/".$this->row['sysid']."-1.jpg";
+        
+		return "//lasvegasluxerealty.com/mls/photos/".$this->row['sysid']."-0.jpg";
 	}
 
 

@@ -38,7 +38,7 @@ require "$base_file_path/includes/header.php";
             height="0" width="0" style="display:none;visibility:hidden"></iframe>
 </noscript>
 
-<link type="text/css" rel="stylesheet" href="css/style.css"/>
+<!-- <link type="text/css" rel="stylesheet" href="css/style.css"/>  -->
 
 
 <!-- End Google Tag Manager (noscript) -->
@@ -66,7 +66,7 @@ require "$base_file_path/includes/header.php";
 
         <!-- /end slider -->
 
-        <div class="container">   <?= "sean test" ?>
+        <div class="container">
             <div class="row">
 
                 <div class="col-sm-12 col-ms-12">
