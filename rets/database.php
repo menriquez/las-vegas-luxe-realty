@@ -1,10 +1,10 @@
-<?php  
+<?php
 
-$ACTIVE_DOMAIN="localhost:81";
+// $ACTIVE_DOMAIN="//lasvegasluxerealty.com";
 
-$is_sean = true;
 
-if ($is_sean) {
+if (DEV_NAME=="sean") {
+    $ACTIVE_DOMAIN="localhost:81";
     $configDB = array(
       'DB_HOST' => 'lasvegasluxerealty.com',
       'DB_NAME' => 'admin_lvluxe',
@@ -12,7 +12,7 @@ if ($is_sean) {
       'DB_PASS' => 'CQTXTvwB6O',
       'DB_DRIVER' => 'mysql'
     );
-    
+
 }
 else {
     $configDB = array(
@@ -22,7 +22,7 @@ else {
       'DB_PASS' => 'CQTXTvwB6O',
       'DB_DRIVER' => 'mysql'
     );
-    
+
 }
 
 echo "Connecting to database..";
@@ -32,36 +32,36 @@ $conn=mysqli_connect($configDB['DB_HOST'], $configDB['DB_USER'], $configDB['DB_P
 function getState($state = '', $postal_code = '') {
 
     global $conn;
-    
+
     if(!empty($postal_code))
     {
-        
+
     $zipcode_sql = "SELECT * FROM zipcode_lookup WHERE Zipcode = '{$postal_code}' AND LocationType = 'Primary'";
     $query_result = mysqli_query($conn,$zipcode_sql);
-    
+
     while($rows = mysqli_fetch_array($query_result))
     {
       $zipcode_lookup = $rows;
     }
-    
+
     return $zipcode_lookup['State'];
-  
+
   }
   elseif(!empty($state)) {
-    
+
     $state_abb_sql = "SELECT * FROM states_abbreviation WHERE State = '{$state}'";
     $query_result = mysqli_query($conn,$state_abb_sql);
-    
+
     while($rows = mysqli_fetch_array($query_result))
     {
       $state_abb_lookup = $rows;
     }
-    
+
     return $state_abb_lookup['Abbreviation'];
   }
-    
+
     return false;
-    
+
 }
 
 // Get County

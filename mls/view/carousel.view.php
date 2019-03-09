@@ -1,5 +1,5 @@
 
-
+<h1>asdasdasdads</h1>
             <div class="ls-slide<?= $this->model->row_idx ?>" data-ls="transition2d:1;timeshift:-1000; transition2d: 9;">
 
                 <img  alt="Slide background" class="ls-bg" src="<?= $this->model->getFrontPicFn()?>" />
