@@ -1,6 +1,6 @@
 <?php
 
-//session_start();                  
+//session_start();
 error_reporting(E_ERROR + E_WARNING);
 $base_file_path = $_SERVER['DOCUMENT_ROOT'];
 require "includes/globals.php";
@@ -17,7 +17,7 @@ $city = $city_array[rand(0, $tot)];
 
 $page_title = "Las Vegas Luxe Real Estate - Simply the Best Las Vegas and Nevada MLS Homes, Condos, and Townhomes `For Sale";
 $page_desc = "Real estate agents specializing finding a Realtor in Las Vegas, Nevada  Sell a Home Fast. Homes and Condos For Sale, how to find a Realtor in Las Vegas ";
-$page_keys = "real estate, for sale, for rent, best Realtor near Las Vegas, top realtor for buying a new home, selling a home, sell home fast, home selling tips, cost of selling your home, 
+$page_keys = "real estate, for sale, for rent, best Realtor near Las Vegas, top realtor for buying a new home, selling a home, sell home fast, home selling tips, cost of selling your home,
               sell a home fast, fastest way to sell a home in Las Vegas, home selling tips, cost of selling your home, marketing your home, ways to sell your home, house staging tips, how to stage your home,
               foreclosure in Las Vegas, foreclosures in Las Vegas, short sales, short selling, short sale process, foreclosure, cons of a short sale, short selling your home, for sale by owner, why to use a Realtor,
               property for sale by owner,  for sale by owner listings, listing property for sale by owner, selling your home by owner, tips for selling your home, top tips to get the best offer, mls listings,
@@ -66,7 +66,7 @@ require "$base_file_path/includes/header.php";
 
         <!-- /end slider -->
 
-        <div class="container">   <?= "test" ?>
+        <div class="container">   <?= "sean test" ?>
             <div class="row">
 
                 <div class="col-sm-12 col-ms-12">
