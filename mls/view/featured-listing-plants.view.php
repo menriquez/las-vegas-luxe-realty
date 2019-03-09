@@ -3,7 +3,7 @@
                             <!-- featured item  house #1 summary info -->
                             <div class="featured-item box-seq shadow-back">
                                 <!-- house #1 image -->
-                                <a id="mls-<?= $this->model->getMLS() ?>" href="<?= $BASE_WEB_URL ?>/mlsid/<?= $this->model->getMLS() ?>" class="property-link"> <img class="img-responsive" style=" " src="<?= $this->model->getFrontPicFn()?>" alt=""></a>
+                                <a id="mls-<?= $this->model->getMLS() ?>" href="//<?= $BASE_WEB_URL ?>/mlsid/<?= $this->model->getMLS() ?>" class="property-link"> <img class="img-responsive" style=" " src="<?= $this->model->getFrontPicFn()?>" alt=""></a>
                                 <!-- house #1 headline -->                        
                                 <div class="heading styler_bg_color lead"><?= $this->model->getPrice()?></div>
                                 <!-- house #1 summary content -->
@@ -32,7 +32,7 @@
                                             <div class="col-md-6 col-sm-6">
                                                 <!-- link to house #1 featured item detail -->
                                                 <div class="more">
-                                                    <a id="mls-<?= $this->model->getMLS() ?>" href="<?= $BASE_WEB_URL ?>/mlsid/<?= $this->model->getMLS() ?>" class="styler_color">View Details</a>
+                                                    <a id="mls-<?= $this->model->getMLS() ?>" href="//<?= $BASE_WEB_URL ?>/mlsid/<?= $this->model->getMLS() ?>" class="styler_color">View Details</a>
                                                 </div>
                                             </div>
                                         </div>                                                            
