@@ -459,7 +459,7 @@ class dbRetsModel extends dbRets {
 	}
 
 	public function setArea ($inStg) {
-
+                                         
 		if (strtolower($inStg)=="all") {
 			return;
 		}

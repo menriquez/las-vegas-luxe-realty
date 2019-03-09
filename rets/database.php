@@ -1,12 +1,12 @@
 <?php  
 
-$ACTIVE_DOMAIN="lasvegasluxerealty.com";
+$ACTIVE_DOMAIN="localhost:81";
 
-$is_sean = false;
+$is_sean = true;
 
 if ($is_sean) {
     $configDB = array(
-      'DB_HOST' => 'localhost',
+      'DB_HOST' => 'lasvegasluxerealty.com',
       'DB_NAME' => 'admin_lvluxe',
       'DB_USER' => 'admin_lvluxe',
       'DB_PASS' => 'CQTXTvwB6O',

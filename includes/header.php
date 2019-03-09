@@ -4,7 +4,7 @@
 <head>                     
                         
     <!-- meta data -->
-    <?php $base_url = "https://$_SERVER[HTTP_HOST]"; ?>
+    <?php $base_url = "//$_SERVER[HTTP_HOST]"; ?>
     <meta name="msvalidate.01" content="19E223A1E6F7194FF81B34A16EF3FDFC"/>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
     <title><?= $page_title ?></title>

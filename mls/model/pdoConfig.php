@@ -20,10 +20,10 @@ class pdoConfig extends PDO {
 
 		// DB CONFIG
 		if ( $is_sean ) {
-			$dbhost = 'localhost';
-			$dbuser = 'root';
-			$dbpass = '';
-			$dbname = 'plants';
+			$dbhost = 'lasvegasluxerealty.com';
+			$dbuser = 'admin_lvluxe';
+			$dbpass = 'CQTXTvwB6O';
+			$dbname = 'admin_lvluxe';
 		} else {
 			$dbhost = 'localhost';
 			$dbuser = 'admin_lvluxe';
