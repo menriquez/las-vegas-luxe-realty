@@ -3,8 +3,10 @@
 //session_start();
 error_reporting(E_ERROR + E_WARNING);
 $base_file_path = $_SERVER['DOCUMENT_ROOT'];
+require "env.php";
 require "includes/globals.php";
 require "mls/controller/retsController.php";
+
 
 //$action=basename(__FILE__, '.php');               // load action from filename for consistency (index for this case)
 //$controller = new retsController($action);        // register controller with page action and parameter
