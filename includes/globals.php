@@ -1,7 +1,8 @@
 <?php
 
 
-if (constant("DEV_NAME") =="sean")  {
+if (constant("DEV_NAME") != "prod")  {
+	
     $site_root_dir =  $_SERVER['DOCUMENT_ROOT'];
     $base_image_dir = "//lasvegasluxerealty.com" .DIRECTORY_SEPARATOR."mls/photos/";
 

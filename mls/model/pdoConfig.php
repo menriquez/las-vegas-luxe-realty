@@ -15,11 +15,8 @@ class pdoConfig extends PDO {
 	 */
 	public function __construct(){
 
-		require_once('includes/globals.php');
-		global $is_sean;
-
 		// DB CONFIG
-		if ( $is_sean ) {
+		if (constant("DEV_NAME") != "prod" ) {
 			$dbhost = 'lasvegasluxerealty.com';
 			$dbuser = 'admin_lvluxe';
 			$dbpass = 'CQTXTvwB6O';

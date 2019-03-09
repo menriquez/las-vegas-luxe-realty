@@ -204,11 +204,11 @@ require "$base_file_path/includes/header.php";
                                         <div class="col-sm-4 col-ms-4">
 
                                             <img class="img-responsive vcenter img-circle center-block ease-left-2"
-                                                 src="https://imagizer.imageshack.com/v2/150x100q90/921/IC1dFN.jpg"
-                                                 alt="Melanie Saljougui, your real estate pro!"/>
+                                                 src="//lasvegasluxerealty.com/img/Melanie.png"
+                                                 alt="Sahar Saljougui, your real estate pro!"/>
                                             <img class="img-responsive vcenter scale-img  center-block ease-left-2"
-                                                 src="https://imagizer.imageshack.com/v2/150x100q90/921/IC1dFN.jpg"
-                                                 alt="Melanie Saljougui, your real estate pro!"/>
+                                                 src="//lasvegasluxerealty.com/img/mel_dog.png"
+                                                 alt="Sahar Saljougui, your real estate pro!"/>
                                         </div>
                                     </div>
                                 </div>
