@@ -57,7 +57,9 @@ require "$base_file_path/includes/header.php";
 
             <!-- slide contents goes here -->
 
+
             <?php
+
 
 	            $controller = new retsController('carousel');        // register controller with page action and parameter
 	            $controller->invoke();                            // invokde controller to get view

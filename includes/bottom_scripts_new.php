@@ -4,11 +4,8 @@
     <script type="text/javascript" src="<?= $BASE_WEB_URL ?>/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="<?= $BASE_WEB_URL ?>/js/bootstrap.js"></script>
     <script type="text/javascript" src="<?= $BASE_WEB_URL ?>/js/jquery.smooth-scroll.js"></script>
-    <!-- External libraries: jQuery & GreenSock -->
-    <!-- <script src="<?= $BASE_WEB_URL ?>/layerslider/js/jquery.js" type="text/javascript"></script> -->
-    <script src="<?= $BASE_WEB_URL ?>/layerslider/js/greensock.js" type="text/javascript"></script>
-    <script src="<?= $BASE_WEB_URL ?>/layerslider/js/layerslider.transitions.js" type="text/javascript"></script>
-    <script src="<?= $BASE_WEB_URL ?>/layerslider/js/layerslider.kreaturamedia.jquery.js" type="text/javascript"></script>
+
+
 
     <script type="text/javascript" src="<?= $BASE_WEB_URL ?>/js/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
     <script type="text/javascript" src="<?= $BASE_WEB_URL ?>/js/rs-plugin/js/jquery.themepunch.plugins.min.js"></script>
@@ -24,11 +21,16 @@
     <script type="text/javascript" src="<?= $BASE_WEB_URL ?>/js/jquery.royalslider.min.js"></script>
     <script type="text/javascript" src="<?= $BASE_WEB_URL ?>/js/accordion.js"></script>
 
+    <!-- External libraries: jQuery & GreenSock -->
+    <!-- <script src="<?= $BASE_WEB_URL ?>/layerslider/js/jquery.js" type="text/javascript"></script> -->
+    <script src="<?= $BASE_WEB_URL ?>/js/layerslider/js/greensock.js" type="text/javascript"></script>
+    <script src="<?= $BASE_WEB_URL ?>/js/layerslider/js/layerslider.kreaturamedia.jquery.js" type="text/javascript"></script>
+    <script src="<?= $BASE_WEB_URL ?>/js/layerslider/js/layerslider.transitions.js" type="text/javascript"></script>
+
     <!-- Layer Slider JS controller (view documentation for refrence) -->
     <script type="text/javascript">
       // Running the code when the document is ready
       $(document).ready(function(){
-
         // Calling LayerSlider on the target element
         $('#layerslider').layerSlider({
 
@@ -38,7 +40,7 @@
           // please check the 'List of slider options' section in the documentation
 
         });
-        
+
       });
     </script>
     <!-- /End  Layer Slider JS controller -->
@@ -58,7 +60,7 @@
         easing   :"ease-in",
         scale    :1,
         origin   :"top",
-      }         
+      }
 
       var appear ={
         delay      :500,
@@ -85,7 +87,7 @@
         delay      :1000,
         duration   :800,
 
-      } 
+      }
       window.sr = ScrollReveal();
       sr.reveal(".sr-header", header);
       sr.reveal(".box-seq", { duration: 3000 }, 200);
@@ -104,4 +106,3 @@
 
 
 <!-- /end scripting -->
-
