@@ -1,7 +1,7 @@
 <!-- Accordian start-->
 <div class="about-container">
     <div id="search_marker"></div>
-    <div class="row" style="padding-top: 90px;padding-bottom: 90px">
+    <div class="row" style="padding-top: 40px;padding-bottom: 60px">
         <h2 class="block-title sr-header">
             QuickSearch Greater Las Vegas Area Properties by Price and Style
         </h2>
