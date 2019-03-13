@@ -1,6 +1,7 @@
 <?php
 session_start();
 error_reporting(E_ALL);
+require "env.php";
 include('mls/controller/retsController.php');
 
 $action=basename(__FILE__, '.php');               // load action from filename for consistancy (index for this case)

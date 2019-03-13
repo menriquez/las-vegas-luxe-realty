@@ -1,7 +1,8 @@
 <?
 error_reporting(E_ALL);
-include('includes/globals.php');
 
+require "env.php";
+include('includes/globals.php');
 require('mls/controller/retsController.php');
 require('mls/controller/pageController.php');
 
@@ -41,8 +42,8 @@ include('includes/header.php');
             <!-- begin featured listings summary block -->
             <?php
 
-            $controller = new retsController('showmls'); // register controller with page action and parameter
-            $controller->invoke();                            // invokde controller to get view
+	            $controller = new retsController('showmls'); // register controller with page action and parameter
+	            $controller->invoke();                            // invokde controller to get view
 
             ?>
 
