@@ -253,6 +253,8 @@ class dbRets extends pdoConfig {
 
 	// functions to build quicksearch links
 	public function getImageDisplayList() {
+		
+		global $BASE_WEB_URL;
 
 		$images = $this->getImageArray();
 
@@ -265,8 +267,8 @@ class dbRets extends pdoConfig {
 			$imageArr = explode("/",$image);
 			$fn = array_pop($imageArr);
 
-			$img = $BASE_WEB_URL_LIVE."/mls/photos/".$fn;
-			$thumb = $BASE_WEB_URL_LIVE."/mls/thumbs96/".$fn;
+			$img = $BASE_WEB_URL."/mls/photos/".$fn;
+			$thumb = $BASE_WEB_URL."/mls/thumbs96/".$fn;
 
 			echo "<a class='rsImg $stg' data-rsw='540' data-rsh='374' data-rsBigImg='$img' href='$img'><img width='96' height='72' class='rsTmb' src='$img' alt='' /></a>\n\n";
 			$first = false;
