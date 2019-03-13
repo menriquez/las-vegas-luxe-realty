@@ -56,41 +56,41 @@
       };
       var down = {
         delay    :100,
-        distance :"10px",
+        distance :"50px",
         easing   :"ease-in",
         scale    :1,
         origin   :"top",
       }
 
       var appear ={
-        delay      :500,
-        distance   :"0px",
+        delay      :400,
+        distance   :"50px",
         easing    :"ease-out",
         scale      : 1,
 
       }
       var header = {
         origin: "bottom",
-        duration:2000,
+        duration: 300,
       }
 
       var easeLeft = {
         origin     :"right",
         distance   :"50px",
-        delay      :1000,
-        duration   :800,
+        delay      :200,
+        duration   :500,
 
       }
       var easeRight = {
         origin     :"left",
         distance   :"50px",
-        delay      :1000,
-        duration   :800,
+        delay      :200,
+        duration   :500,
 
       }
       window.sr = ScrollReveal();
       sr.reveal(".sr-header", header);
-      sr.reveal(".box-seq", { duration: 3000 }, 200);
+      sr.reveal(".box-seq", { duration: 800 }, 200);
       sr.reveal(".jump", up, 100 );
       sr.reveal(".jump-container", {delay: +100},up);
       sr.reveal(".appear", appear);
