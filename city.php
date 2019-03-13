@@ -1,6 +1,7 @@
 <?php
 //session_start();
 error_reporting(E_ALL);
+require "env.php";
 include('mls/controller/retsController.php');
 include('mls/controller/seoController.php');
 
