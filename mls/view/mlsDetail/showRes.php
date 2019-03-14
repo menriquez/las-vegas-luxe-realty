@@ -4,7 +4,7 @@
                         <!-- edit featured listings headline here -->
                         <h2 class="block-title sr-header">
                             Detail Listing for <?= $this->model->getStreetAddress(); ?>
-                        </h2>                      
+                        </h2>
                     </div>
                 </div>
 
@@ -18,41 +18,41 @@
                                 <div class="address">
                                     <div class="address-top">
                                         <?= $this->model->getStreetAddress()?>
-                                    </div>    
+                                    </div>
                                     <div class="address-bottom">
                                         <?= $this->model->getCityStZip()?>
                                     </div>
-                                </div>                                                
+                                </div>
                             </div>
-                            
+
                             <div class="col-md-4 col-sm-4">
                                 <!-- edit featured property #1 price -->
                                 <div class="price styler_color">
                                     <?= $this->model->getPrice()?>
                                 </div>
                             </div>
-                            
+
                         </div>
 
                         <div class="row">
 
                             <div class="col-md-8 col-sm-8">
-                            
+
                                 <!-- featured property #1 photo gallery starts here -->
                                 <div class="slider-block">
-                                
+
                                     <div id="rs_gallery1" class="royalSlider rsDefault">
-                                    
+
                                         <?php
-                                                $this->model->getImageDisplayList();             
+                                                $this->model->getImageDisplayList();
                                         ?>
-                                        
-                                        <!-- edit featured property #1 photo #1 here 
+
+                                        <!-- edit featured property #1 photo #1 here
                                         <a class="rsImg bugaga" data-rsw="540" data-rsh="374" data-rsBigImg="img/gal1-house1.jpg" href="img/gal1-house1.jpg">Gallery 1: House Image #1<img width="96" height="72" class="rsTmb" src="img/gal1-house1_t.jpg" alt="" /></a>
-                                        <!-- edit featured property #1 photo #2 here     
+                                        <!-- edit featured property #1 photo #2 here
                                         <a class="rsImg" data-rsw="540" data-rsh="374" data-rsBigImg="img/gal1-house2.jpg" href="img/gal1-house2.jpg">Gallery 1: House Image #2<img width="96" height="72" class="rsTmb" src="img/gal1-house2_t.jpg" alt="" /></a>
                                          -->
-                                    
+
                                     </div>
                                 </div>
                             </div>
@@ -84,29 +84,29 @@
                                             </div>
                                         </div>
                                         <!-- edit featured property #1 details summary info (listing agent name, address and phone number) -->
-                                        <div class="col-md-6 col-sm-6">                                                                                                                                                                                                                                                                             
+                                        <div class="col-md-6 col-sm-6">
                                             <div class="agent-block">
                                                 <div class="details-name">Sahar Saljougui</div>
-                                                <div class="details-place">Key Realty</div>        
+                                                <div class="details-place">Key Realty</div>
                                             </div>
 
                                         </div>
-                                    
+
                                     </div>
                                     <div class="row">
-                                    
+
                                         <div class="col-md-12 col-xs-12" style="padding-bottom: 20px;" >
-                                        
+
                                             <div class="details-phone"><a href="tel:415-815-9079"><i class="fa fa-mobile-phone"></i> 415-815-9079</a><br>
-                                            <div class="details-phone"><a TARGET="_blank"  href="mailto:saharsaljougui@gmail.com?&subject=Intrested%20in%20<?= $this->model->getStreetAddress()?>,%20<?= $this->model->getCityStZip()?>,%20MLS#%20<?= $this->model-> getMLS()?>&body=Hi%20Sahar,">SaharSaljougui@gmail.com</a> </div><br />            
+                                            <div class="details-phone"><a TARGET="_blank"  href="mailto:saharsaljougui@gmail.com?&subject=Intrested%20in%20<?= $this->model->getStreetAddress()?>,%20<?= $this->model->getCityStZip()?>,%20MLS#%20<?= $this->model-> getMLS()?>&body=Hi%20Sahar,">SaharSaljougui@gmail.com</a> </div><br />
                                             <div class="button-center"><button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal<?= $this->model->row_idx ?>"><i class="fa fa-envelope" aria-hidden="true"></i> Let Me Help You!</button> </div>
-                                            
-                                            <?php 
+
+                                            <?php
                                                 require ('mls/view/contact_modal.view.php');
                                             ?>
 
-                                        </div>  
-                                        
+                                        </div>
+
                                     </div>
 
                                 </div>
@@ -118,20 +118,20 @@
                             <!-- featured listings house #1 property tabs -->
                             <div class="details-tabs">
                                 <div class="col-md-12 col-sm-12">
-                                
+
                                     <ul class="tabs">
                                         <!-- edit featured listings house #1 property tab label #1 (property details) here -->
                                         <li class="active"><a class="styler_bg_color" href="#details1" data-toggle="tab">PROPERTY DETAILS </a></li>
                                         <!-- edit featured listings house #1 property tab label #2 (map) here -->
                                         <li><a class="styler_bg_color" href="#tab-map" data-toggle="tab">MAP</a></li>
                                     </ul>
-                                    
+
                                     <div class="tab-content tabs_blocks">
                                         <div class="active" id="details1">
 
                                             <!-- featured listings house #1 property details tab info slides start here -->
                                             <ul class="info_slides">
-                       
+
                                                 <li class="active">
                                                     <!-- edit featured listings house #1 property tab info slide #1 (details) label here -->
                                                     <a href="#" class="styler_color"><i class="arr styler_color"></i>Details</a>
@@ -166,15 +166,15 @@
                                                                         </tr>
                                                                         <tr>
                                                                             <td><strong>Age restricted:</strong></td>
-                                                                            <td> <?= $this->model-> getData("over_55")?>   </td> 
+                                                                            <td> <?= $this->model-> getData("over_55")?>   </td>
                                                                         </tr>
                                                                         <tr>
                                                                             <td><strong>Accessibility features:</strong></td>
-                                                                            <td> <?= $this->model-> getData("accessibility_desc")?>   </td> 
+                                                                            <td> <?= $this->model-> getData("accessibility_desc")?>   </td>
                                                                         </tr>
                                                                         <tr>
                                                                             <td><strong>Ranching:</strong></td>
-                                                                            <td> <?= $this->model-> getData("ranching")?>   </td> 
+                                                                            <td> <?= $this->model-> getData("ranching")?>   </td>
                                                                         </tr>
 
                                                                     </table>
@@ -202,26 +202,26 @@
                                                                         </tr>
                                                                         <tr>
                                                                             <td><strong>Garage:</strong></td>
-                                                                            <td><?= $this->model-> getData("garage")?> cars | <?= $this->model-> getData("garage_desc")?>  <?= $this->model-> getData("parking")?>  </td> 
+                                                                            <td><?= $this->model-> getData("garage")?> cars | <?= $this->model-> getData("garage_desc")?>  <?= $this->model-> getData("parking")?>  </td>
                                                                         </tr>
                                                                         <tr>
                                                                             <td><strong>Carport:</strong></td>
-                                                                            <td><?= $this->model-> getData("carport")?> | <?= $this->model-> getData("carport_desc")?>   </td> 
+                                                                            <td><?= $this->model-> getData("carport")?> | <?= $this->model-> getData("carport_desc")?>   </td>
                                                                         </tr>
                                                                         <tr>
                                                                             <td><strong>Construction Info:</strong></td>
-                                                                            <td> <?= $this->model-> getData("construction")?>   </td> 
+                                                                            <td> <?= $this->model-> getData("construction")?>   </td>
                                                                         </tr>
                                                                         <tr>
                                                                             <td><strong>Gated Community:</strong></td>
-                                                                            <td> <?= $this->model-> getData("gated_community")?>   </td> 
+                                                                            <td> <?= $this->model-> getData("gated_community")?>   </td>
                                                                         </tr>
-                                                                    </table>     
+                                                                    </table>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </li>                                                                
+                                                </li>
                                                 <li>
                                                     <!-- edit featured listings house #1 interior slide label here -->
                                                     <a href="#" class="styler_color"><i class="arr styler_color"></i>Interior</a>
@@ -311,7 +311,29 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </li>                                                                
+                                                </li>
+                                                <li>
+                                                    <!-- edit featured listings house #1 room info slide label here -->
+                                                    <a href="#" class="styler_color"><i class="arr styler_color"></i>Room Info</a>
+                                                    <!-- edit featured listings house #1 room info slide text summary here -->
+                                                    <div class="text">
+                                                        <div class="row">
+                                                            <div class="col-md-12 col-sm-12">
+                                                                <!-- edit featured listings house #1 roominfo slide left-side content here -->
+                                                                <div class="left-tab-wrapper">
+                                                                    <table class="details-values">
+
+                                                                          <tr>
+                                                                            <td><strong>Master Bedroom:17x22</strong></td>
+                                                                            <td>Balcony,Built-in Bookcases,Ceiling Fan,Sitting Room</td>
+                                                                          </tr>
+
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
                                                 <li>
                                                     <!-- edit featured listings house #1 exterior slide label here -->
                                                     <a href="#" class="styler_color"><i class="arr styler_color"></i>Exterior</a>
@@ -351,7 +373,7 @@
                                                                             <td><strong>Roof:</strong></td>
                                                                             <td><?= $this->model-> getData("roof_type")?></td>
                                                                         </tr>
-                                                                    </table>                     
+                                                                    </table>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6 col-sm-6">
@@ -387,7 +409,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </li>                                                                
+                                                </li>
                                                 <li>
                                                     <!-- edit featured listings house #1 additional details slide label here -->
                                                     <a href="#" class="styler_color"><i class="arr styler_color"></i>Additional Details</a>
@@ -438,7 +460,7 @@
 
 
 
-                                                                    </table>     
+                                                                    </table>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6 col-sm-6">
@@ -497,7 +519,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </li>                                                                
+                                                </li>
                                             </ul>
 
                                         </div>
@@ -512,5 +534,5 @@
                             </div>
                         </div>
                     </div>
-                    
+
                 <!-- end:article -->
