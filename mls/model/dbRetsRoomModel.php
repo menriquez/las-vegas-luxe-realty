@@ -12,7 +12,7 @@ class dbRetsRoom extends PDOConfig {
 
 	public  $row;
 	public  $count;
-    public  $room_type_array;
+   public  $room_type_array;
 
 	const MLS_TABLENAME = 'glvar_propertysubtype_room';
     
