@@ -17,8 +17,8 @@ $tot = count($city_array);
 
 $city = $city_array[rand(0, $tot)];
 
-$page_title = "Las Vegas Luxe Real Estate - Simply the Best Las Vegas and Nevada MLS Homes, Condos, and Townhomes `For Sale";
-$page_desc = "Real estate agents specializing finding a Realtor in Las Vegas, Nevada  Sell a Home Fast. Homes and Condos For Sale, how to find a Realtor in Las Vegas ";
+$page_title = "Las Vegas Luxe Real Estate - Only the Best Las Vegas, Nevada MLS Homes, Condos, and Townhomes.";
+$page_desc = "Real estate agents specializing finding a MLS home, condo, or townhome in Las Vegas, Nevada to Sell a Home Fast. ";
 $page_keys = "real estate, for sale, for rent, best Realtor near Las Vegas, top realtor for buying a new home, selling a home, sell home fast, home selling tips, cost of selling your home,
               sell a home fast, fastest way to sell a home in Las Vegas, home selling tips, cost of selling your home, marketing your home, ways to sell your home, house staging tips, how to stage your home,
               foreclosure in Las Vegas, foreclosures in Las Vegas, short sales, short selling, short sale process, foreclosure, cons of a short sale, short selling your home, for sale by owner, why to use a Realtor,

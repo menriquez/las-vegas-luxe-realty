@@ -3,8 +3,8 @@
 // $ACTIVE_DOMAIN="//lasvegasluxerealty.com";
 
 
-if (DEV_NAME=="sean") {
-    $ACTIVE_DOMAIN="localhost:81";
+if (constant("DEV_NAME") != "prod")  {
+    $ACTIVE_DOMAIN=$_SERVER['HTTP_HOST'];
     $configDB = array(
       'DB_HOST' => 'lasvegasluxerealty.com',
       'DB_NAME' => 'admin_lvluxe',

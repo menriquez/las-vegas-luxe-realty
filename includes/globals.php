@@ -7,7 +7,7 @@ if (constant("DEV_NAME") != "prod")  {
     $base_image_dir = "//lasvegasluxerealty.com" .DIRECTORY_SEPARATOR."mls/photos/";
 
     $BASE_FILE_DIR =  $_SERVER['DOCUMENT_ROOT'];
-    $BASE_WEB_URL = "//localhost:81/";
+    $BASE_WEB_URL = "//$_SERVER[HTTP_HOST]/";
 }
 else {
     $site_root_dir =  $_SERVER['DOCUMENT_ROOT'];

@@ -144,32 +144,32 @@
 											<div class="left-tab-wrapper">
 												<table class="details-values">
 													<tr>
-														<td><strong>Year Built:</strong></td>
+														<td><strong>Year Built: </strong></td>
 														<td><?= $this->model-> getData("year_built")?></td>
 													</tr>
 													<tr>
-														<td><strong>Property Type:</strong></td>
+														<td><strong>Property Type: </strong></td>
 														<td><?= $this->model-> getPropertyType() ?></td>
 													</tr>
 
 													<tr>
-														<td><strong>Property Tax:</strong></td>
+														<td><strong>Property Tax: </strong></td>
 														<td>$<?= $this->model-> getData("tax_amount")?></td>
 													</tr>
 													<tr>
-														<td><strong>Subdivision:</strong></td>
+														<td><strong>Subdivision: </strong></td>
 														<td><?= $this->model-> getData("subdivision")?></td>
 													</tr>
 													<tr>
-														<td><strong>Pet info:</strong></td>
+														<td><strong>Pet info: </strong></td>
 														<td><?= $this->model-> getData("pets")?>  <?= $this->model-> getData("pet_fee")?></td>
 													</tr>
 													<tr>
-														<td><strong>Age restricted:</strong></td>
+														<td><strong>Age restricted? </strong></td>
 														<td> <?= $this->model-> getData("over_55")?>   </td>
 													</tr>
 													<tr>
-														<td><strong>Accessibility features:</strong></td>
+														<td><strong>Accessibility features: </strong></td>
 														<td> <?= $this->model-> getData("accessibility_desc")?>   </td>
 													</tr>
 													<tr>
@@ -229,16 +229,20 @@
 								<div class="text">
 									<p>Features: <?= $this->model-> getData("interior_features")?></p>
 									<div class="row">
-										<div class="col-md-4 col-sm-6">
+										<div class="col-md-12 col-sm-12">
 											<!-- edit featured listings house #1 interior slide left-side content here -->
 											<div class="left-tab-wrapper">
 												<table class="details-values">
+												                                                                          
+												<?php foreach ($this->model->rooms->room_type_array as $room_name=>$room_info) {  ?>
 												
-												<?php foreach ($this->rooms->room_type_array as $room) {  ?>
+													<tr>
+														<td><strong><?= $room_name ?></strong></td>
+														<td><?= $room_info[1] ?></td> | 
+														<td><?= $room_info[0] ?></td>
+													</tr>
 													
 												<?php }  ?>
-
-
 													<tr>
 														<td><strong>Fireplace: </strong></td>
 														<td><?= $this->model-> getData("fireplace")?> | <?= $this->model-> getData("fireplace_desc")?> | <?= $this->model-> getData("fireplace_loc")?></td>
@@ -255,46 +259,7 @@
 												</table>
 											</div>
 										</div>
-										<div class="col-md-8 col-sm-6">
-											<!-- edit featured listings house #1 interior slide left-side content here -->
-											<div class="left-tab-wrapper">
-												<table class="details-values">
-													<tr>
-														<td><strong>Living Area:</strong></td>
-														<td><?= $this->model-> getData("live_room_dim")?></td>
-													</tr>
-													<tr>
-														<td><strong>Family Room:</strong></td>
-														<td><?= $this->model-> getData("fam_room_dim")?> | <?= $this->model-> getData("fam_room_desc")?></td>
-													</tr>
-													<tr>
-														<td><strong>Den:</strong></td>
-														<td><?= $this->model-> getData("den_dim")?></td>
-													</tr>
-													<tr>
-														<td><strong>Dining Room:</strong></td>
-														<td><?= $this->model-> getData("dining_area")?></td>
-													</tr>
-
-													<tr>
-														<td><strong>Fireplace: </strong></td>
-														<td><?= $this->model-> getData("fireplace")?> | <?= $this->model-> getData("fireplace_desc")?> | <?= $this->model-> getData("fireplace_loc")?></td>
-													</tr>
-													<tr>
-														<td><strong>Flooring: </strong></td>
-														<td><?= $this->model-> getData("floor")?></td>
-													</tr>
-													<tr>
-														<td><strong>Furnishing: </strong></td>
-														<td><?= $this->model-> getData("furnishing")?> <br>
-														<?= $this->model-> getData("furnishing_desc")?> </td>
-													</tr>
-												</table>
-											</div>
-										</div>
-
-
-
+							
 									</div>
 								</div>
 							</li>

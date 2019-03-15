@@ -1,4 +1,4 @@
-A<?php
+<?php
 //Contact form config
 //$email_to = "support@themeleaf.com";
 $email_to = "viprep@gmail.com";
