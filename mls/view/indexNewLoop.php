@@ -8,7 +8,7 @@
             <div class="property-container">
               <div class="property-content-list">
                 <div class="property-image-list">
-                 <a href="/mls/<?= $this->model->getMLS() ?>" >
+                 <a href="/rets/<?= $this->model->getMLS() ?>" >
                   <img src="<?php echo($this->model->getThumbFN()) ?>" alt="shattow">
                  </a>
                   <div class="property-price">

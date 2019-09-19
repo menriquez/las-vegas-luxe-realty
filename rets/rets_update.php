@@ -30,11 +30,13 @@ foreach ($rets_config as $key => $config) {
     foreach ($config['data'] as $data => $setting) {
 
         // flexmls_master_update("multifamily");
-        //flexmls_master_update("residential");
+        //  flexmls_master_update("residential");
         //flexmls_master_update("hirise");
         //  flexmls_master_update("rental");
 
         //exit();
+
+        //goto debug_config;
 
         echo "Starting RETS download for {$config['name']} Data: {$data} into database $configDB[DB_NAME]..." . "\n";
 
@@ -104,7 +106,7 @@ foreach ($rets_config as $key => $config) {
 
         // Query RETS Server
         // this loop controls the number of months to import
-        for ($i = 0; $i <= 3; $i++) {
+        for ($i = 0; $i <= 24; $i++) {
 
             $start_date = date('Y-m-d', strtotime("-$i months"));
             $end = $i + 1;

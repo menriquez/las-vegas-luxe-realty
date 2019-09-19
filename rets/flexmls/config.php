@@ -99,7 +99,7 @@ function flexmls_master_update($property_type)
 
         // A
         case 'residential':
-            flexmls_updateAll();
+            flexmls_updateResidential();
             break;
 
         // B
@@ -141,7 +141,7 @@ function flexmls_master_update($property_type)
  * @return void
  */
 
-function flexmls_updateAll()
+function flexmls_updateResidential()
 {
 
     global $conn;
@@ -154,20 +154,13 @@ function flexmls_updateAll()
     }
 
     // now grab all the new records...
-    $rets_results = mysqli_query($conn, "SELECT * from `glvar_property_listing` ");        // TODO:  make this dynamic
+    $rets_results = mysqli_query($conn, "SELECT * from `glvar_property_listing`  WHERE property_type IN ( 'Residential','High Rise' ) AND Photo_Count <> 0 ");        // TODO:  make this dynami
     $tot_row = mysqli_num_rows($rets_results);
     $cnt_row = 0;
-    echo "Updating All properties into master_rets_table_update [$tot_row]..." . "\n";
+    echo "Updating Residential properties into master_rets_table_update [$tot_row]..." . "\n";
     if ($tot_row > 0) {
         // process the new rows
         while ($row = mysqli_fetch_array($rets_results)) {
-            // Get State
-            $row['state_or_province'] = getState($row['state_or_province'], $row['postal_code']);
-
-            // Get County
-            if (empty($row['county'])) {
-                $row['county'] = getCounty($row['postal_code'], $row['city']);
-            }
 
             // always insert...
             $master_check = 0;
@@ -239,43 +232,32 @@ function flexmls_updateAll()
                     listing_office_phone = '" . mysqli_real_escape_string($conn, $row['List_Office_Phone']) . "',
                     listing_office_address = '" . mysqli_real_escape_string($conn, $row['Public_Address_2861']) . "',
                     listing_office_email = '" . mysqli_real_escape_string($conn, $row['Email_2385']) . "',
-                    lot_sqft = '" . mysqli_real_escape_string($conn, $row['Lot_Sqft']) . "',
+                    sqft_lot = '" . mysqli_real_escape_string($conn, $row['Lot_Sqft']) . "',
                     lot_acres = '" . mysqli_real_escape_string($conn, $row['Num_Acres']) . "',
                     hoa = '" . mysqli_real_escape_string($conn, $row['Association_Name']) . "',  
-                    dwelling_view = '" . mysqli_real_escape_string($conn, $row['House_Views']) . "',
                     over_55 = '" . mysqli_real_escape_string($conn, $row['Age_Restricted_Community_YN']) . "',
                     water_type = '" . mysqli_real_escape_string($conn, $row['Water']) . "',
                     fireplace_desc = '" . mysqli_real_escape_string($conn, $row['Fireplace_Description']) . "',
                     fence_type = '" . mysqli_real_escape_string($conn, $row['Fence_Type']) . "',
                     landscape_desc = '" . mysqli_real_escape_string($conn, $row['Landscape_Description']) . "',
                     sid_lid_yn  = '" . mysqli_real_escape_string($conn, $row['SIDLIDYN']) . "',
-                    assessment_amount_type  = '" . mysqli_real_escape_string($conn, $row['Assessment_Amount_Type_2465']) . "',
+                    assessment_amount_type  = '" . mysqli_real_escape_string($conn, $row['Assessment_Type']) . "',
                     full_bath  = '" . mysqli_real_escape_string($conn, $row['Baths_Full']) . "',
                     bath_down_desc  = '" . mysqli_real_escape_string($conn, $row['Bath_Downstairs_Description']) . "',
                     sale_bonus = '" . mysqli_real_escape_string($conn, $row['Sale_Office_Bonus_YN']) . "',
-                    builder_manu = '" . mysqli_real_escape_string($conn, $row['Builder']) . "',
+                    builder = '" . mysqli_real_escape_string($conn, $row['Builder']) . "',
                     built_desc = '" . mysqli_real_escape_string($conn, $row['Built_Description']) . "',
                     carport = '" . mysqli_real_escape_string($conn, $row['Carports']) . "',
                     carport_desc = '" . mysqli_real_escape_string($conn, $row['Carport_Description']) . "',
-                    accept_date = '" . mysqli_real_escape_string($conn, $row['Acceptance_Date_85']) . "',
                     cooling_fuel = '" . mysqli_real_escape_string($conn, $row['Cooling_Fuel']) . "',
-                    2nd_bed_dim =  '" . mysqli_real_escape_string($conn, $row['2nd_Bedroom_Dimensions_89']) . "',
-                    3rd_bed_dim = '" . mysqli_real_escape_string($conn, $row['3rd_Bedroom_Dimensions_90']) . "',
-                    4th_bed_dim = '" . mysqli_real_escape_string($conn, $row['4th_Bedroom_Dimensions_91']) . "',
-                    5th_bed_dim  = '" . mysqli_real_escape_string($conn, $row['5th_Bedroom_Dimensions_94']) . "',
-                    fam_room_dim  = '" . mysqli_real_escape_string($conn, $row['Family_Room_Dimensions_93']) . "',
-                    live_room_dim = '" . mysqli_real_escape_string($conn, $row['Living_Room_Dimensions_95']) . "',
-                    master_bed_dim = '" . mysqli_real_escape_string($conn, $row['Master_Bedroom_Dimensions_96']) . "',
                     dom = '" . mysqli_real_escape_string($conn, $row['DOM']) . "',
-                    earnest_depo = '" . mysqli_real_escape_string($conn, $row['Earnest_Deposit']) . "',
+                    earnest_deposit = '" . mysqli_real_escape_string($conn, $row['Earnest_Deposit']) . "',
                     assessment_yn = '" . mysqli_real_escape_string($conn, $row['Assessment_YN']) . "',
                     conv_garage_yn = '" . mysqli_real_escape_string($conn, $row['Converted_Garage_YN']) . "',
                     ground_mount_yn = '" . mysqli_real_escape_string($conn, $row['Ground_Mounted_YN']) . "',
                     internet_yn  = '" . mysqli_real_escape_string($conn, $row['Internet_YN']) . "',
                     land_use = '" . mysqli_real_escape_string($conn, $row['Land_Use']) . "',
                     sewer  = '" . mysqli_real_escape_string($conn, $row['Sewer']) . "',
-                    last_trans_code = '" . mysqli_real_escape_string($conn, $row['Last_Transaction_Code_134']) . "',
-                    last_trans_date = '" . mysqli_real_escape_string($conn, $row['Last_Transaction_Date_135']) . "',
                     listing_office_code = '" . mysqli_real_escape_string($conn, $row['List_Agent_MUI']) . "',
                     community_name = '" . mysqli_real_escape_string($conn, $row['Community_Name']) . "',
                     metro_map_coor = '" . mysqli_real_escape_string($conn, $row['Metro_Map_Coor_XP']) . "',
@@ -288,12 +270,9 @@ function flexmls_updateAll()
                     power_on_off = '" . mysqli_real_escape_string($conn, $row['Poweronor_Off']) . "',
                     previous_price = '" . mysqli_real_escape_string($conn, $row['Last_List_Price']) . "',
                     property_cond = '" . mysqli_real_escape_string($conn, $row['Property_Condition']) . "',
-                    legal_loc_range = '" . mysqli_real_escape_string($conn, $row['Legal_Location_Range_204']) . "',
                     realtor_yn = '" . mysqli_real_escape_string($conn, $row['Realtor_YN']) . "',
                     existing_rent = '" . mysqli_real_escape_string($conn, $row['Existing_Rent']) . "',
-                    buyer_broker = '" . mysqli_real_escape_string($conn, $row['Buyer_Broker_211']) . "',
-                    yr_round_school = '" . mysqli_real_escape_string($conn, $row['Year_Round_School_216']) . "',
-                    legal_loc_section = '" . mysqli_real_escape_string($conn, $row['Legal_Location_Section_217']) . "',
+                    yr_round_school = '" . mysqli_real_escape_string($conn, $row['Year_Round_School_YN']) . "',
                     sid_lid_balance = '" . mysqli_real_escape_string($conn, $row['SIDLID_Balance']) . "',
                     amount_owner_carry = '" . mysqli_real_escape_string($conn, $row['Owner_Will_Carry']) . "',
                     loft_num = '" . mysqli_real_escape_string($conn, $row['Num_Loft']) . "',
@@ -315,7 +294,6 @@ function flexmls_updateAll()
                     4th_bed_desc = '" . mysqli_real_escape_string($conn, $row['4th_Bedroom_Description_284']) . "',
                     possession_desc = '" . mysqli_real_escape_string($conn, $row['Possession_Description_285']) . "',
                     financing = '" . mysqli_real_escape_string($conn, $row['Financing_Considered']) . "',
-                    show_additional = '" . mysqli_real_escape_string($conn, $row['Show_(Additional)_288']) . "',
                     oven_desc = '" . mysqli_real_escape_string($conn, $row['Oven_Description']) . "',
                     ranching = '" . mysqli_real_escape_string($conn, $row['Equestrian_Description']) . "',
                     misc_desc = '" . mysqli_real_escape_string($conn, $row['Miscellaneous_Description']) . "',
@@ -328,18 +306,11 @@ function flexmls_updateAll()
                     building_num = '" . mysqli_real_escape_string($conn, $row['Building_Number']) . "',
                     court_approv_yn = '" . mysqli_real_escape_string($conn, $row['Court_Approval']) . "',
                     fireplace_loc = '" . mysqli_real_escape_string($conn, $row['Fireplace_Location']) . "',
-                    furnishing_desc = '" . mysqli_real_escape_string($conn, $row['']) . "',
-                    great_room_yn = '" . mysqli_real_escape_string($conn, $row['']) . "',
-                    great_room_dim = '" . mysqli_real_escape_string($conn, $row['']) . "',
-                    great_room_desc = '" . mysqli_real_escape_string($conn, $row['']) . "',
                     inc_washer_yn = '" . mysqli_real_escape_string($conn, $row['Washer_Dryer_Included']) . "',
                     inc_dryer_yn = '" . mysqli_real_escape_string($conn, $row['Dryer_Included']) . "',
                     litigation = '" . mysqli_real_escape_string($conn, $row['Litigation']) . "',
                     ownership = '" . mysqli_real_escape_string($conn, $row['Ownership']) . "',
-                    den_dim = '" . mysqli_real_escape_string($conn, $row['DEN_Dim_2511']) . "',
-                    loft_dim = '" . mysqli_real_escape_string($conn, $row['LOFT_Dim_2513']) . "',
-                    loft_desc = '" . mysqli_real_escape_string($conn, $row['Loft_Description_2539']) . "',
-                    studio_yn = '" . mysqli_real_escape_string($conn, $row['Studio_YN']) . "',
+                   studio_yn = '" . mysqli_real_escape_string($conn, $row['Studio_YN']) . "',
                     public_address_yn = '" . mysqli_real_escape_string($conn, $row['Public_Address_YN']) . "',
                     public_address = '" . mysqli_real_escape_string($conn, $row['Public_Address']) . "',
                     commentary_yn = '" . mysqli_real_escape_string($conn, $row['CommentaryY/N_2859']) . "',
@@ -351,7 +322,7 @@ function flexmls_updateAll()
                     hoa_dues = '" . mysqli_real_escape_string($conn, $row['Association_Fee_1']) . "',
                     hoa_dues_term = '" . mysqli_real_escape_string($conn, $row['Association_Fee_1_MQYN']) . "',
                     street_suffix = '" . mysqli_real_escape_string($conn, $row['Street_Suffix']) . "',
-                    additional_rooms = '" . mysqli_real_escape_string($conn, $row['additional_rooms']) . "',
+                    additional_rooms = '" . mysqli_real_escape_string($conn, $row['Additional_Liv_Area']) . "',
                     ada_info = '" . mysqli_real_escape_string($conn, $row['Accessibility_Features']) . "',
                     maint_fee_inc =  '" . mysqli_real_escape_string($conn, $row['Maintenance']) . "',
                     interior_improvements = '" . mysqli_real_escape_string($conn, $row['interior_improvements']) . "',                         

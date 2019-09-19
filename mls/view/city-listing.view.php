@@ -1,4 +1,4 @@
-                             
+<?php $BASE_WEB_URL = "//$_SERVER[HTTP_HOST]"; ?>
 																							<div class="col-lg-4 col-md-4 col-sm-6">
 																								<!-- featured item  house #1 summary info -->
 																								<div class="featured-item box-seq shadow-back">

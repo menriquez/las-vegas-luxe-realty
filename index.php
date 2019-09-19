@@ -2,7 +2,8 @@
 
 //session_start();
 error_reporting(E_ERROR + E_WARNING);
-$base_file_path = $_SERVER['DOCUMENT_ROOT'];
+$base_file_path = getcwd();
+$base_image_path = getcwd() . "/rets/";
 require "env.php";
 require "includes/globals.php";
 require "mls/controller/retsController.php";
@@ -29,7 +30,7 @@ $page_keys = "real estate, for sale, for rent, best Realtor near Las Vegas, top 
 $homepage = true;
 
 
-require "$base_file_path/includes/header.php";
+require "includes/header.php";
 
 ?>
 <body>
@@ -57,9 +58,7 @@ require "$base_file_path/includes/header.php";
 
             <!-- slide contents goes here -->
 
-
             <?php
-
 
 	            $controller = new retsController('carousel');        // register controller with page action and parameter
 	            $controller->invoke();                            // invokde controller to get view
@@ -138,7 +137,7 @@ require "$base_file_path/includes/header.php";
                                 <?php
 
                                 $controller = new retsController('featured-listing'); // register controller with page action and parameter
-                                $controller->invoke();                            // invokde controller to get view
+                                $controller->invoke();                            // invoke controller to get view
 
                                 ?>
                             </div>

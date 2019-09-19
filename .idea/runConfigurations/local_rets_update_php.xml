@@ -1,5 +1,0 @@
-<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="local rets_update.php" type="PhpWebAppRunConfigurationType" factoryName="PHP Web Application" server_name="local xampp apache" start_url="/rets/rets_update.php">
-    <method v="2" />
-  </configuration>
-</component>

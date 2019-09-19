@@ -229,7 +229,7 @@ function create_table($table_name, $fields, $rets_config, $conn) {
     $fields = $clean_fields;
    
     // drop the old table
-    $drop_sql = "DROP TABLE $table_name;";
+    $drop_sql = "DROP TABLE IF EXISTS $table_name;";
 
 
 

@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="xdebug local with apache port 81" type="PhpWebAppRunConfigurationType" factoryName="PHP Web Application" server_name="local xampp apache">
+  <configuration default="false" name="xdebug local with apache port 81" type="PhpWebAppRunConfigurationType" factoryName="PHP Web Application" server_name="local xampp72 lvlr">
     <method v="2" />
   </configuration>
 </component>

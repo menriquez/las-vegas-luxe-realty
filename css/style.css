@@ -1,12 +1,14 @@
 @charset "utf-8";
 /* CSS Document */
 
+@import url('https://fonts.googleapis.com/css?family=Manjari&display=swap');
+
 body * {
     padding: 0;
     margin: 0;
     -webkit-font-smoothing: antialiased;
-    font: 17px/28px 'Raleway', sans-serif;
-    font-weight: 300;
+    font: 17px/28px 'Manjari', sans-serif;
+    font-weight: 400;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
 }
@@ -3493,6 +3495,8 @@ form {
 
 .content-box {
     margin: 5px;
+
+    padding: 40px;
     background-color: #fff;
 }
 

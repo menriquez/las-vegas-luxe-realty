@@ -1,4 +1,7 @@
 <?php
+
+use enriquez\basic_image;
+
 error_reporting(E_ERROR + E_WARNING);
 date_default_timezone_set("America/New_York");
 //set_time_limit(0);
@@ -7,6 +10,8 @@ $send_notification_email = true;
 require __DIR__ . '/flexmls/config.php';
 require __DIR__ . '/database.php';
 require __DIR__ . '/basic_image.php';
+
+global $conn;
 
 $current_root_dir = __DIR__ . "/";
 
@@ -99,18 +104,17 @@ function begin_image_update($rets_object, $rets_name, $rets_config) {
     echo "Starting $rets_name image download..." . PHP_EOL;
 
     // ok.. create update time table if needed
-    makeTable();
-
     global $conn;
+    makeTable();
 
     // pull listing_ids for all properties without update fl`ag being set...
     //$rets_results = mysql_query("SELECT * from `master_rets_table` WHERE `rets_system` = '$rets_name' AND `photo_update` = 0 and photo_count > 0 order by listing_id ASC") or die(mysql_error());
 
-    $sql = "SELECT photo_count,sysid,photo_timestamp FROM master_rets_table_update 
-                WHERE photo_timestamp >= (select end_time_db_ts from photo_dl_info order by id DESC limit 1) 
+    $sql = "SELECT photo_count,sysid,listing_id,photo_timestamp FROM master_rets_table_update 
+                WHERE photo_timestamp > (select end_time_db_ts from photo_dl_info order by id DESC limit 1) 
                 AND photo_count > 0
-                AND property_type IN ( 'Residential'|'High Rise' )
-                  ORDER BY photo_timestamp ASC";
+                AND property_type IN ( 'Residential','High Rise' )
+                  ORDER BY photo_timestamp DESC ";
 
     $rets_results = mysqli_query($conn, $sql);
     $totRows = mysqli_num_rows($rets_results);
@@ -136,6 +140,9 @@ function begin_image_update($rets_object, $rets_name, $rets_config) {
             if ($first) {
                 // we need to store the exact phototime of the newest record of this set bcuz we need it for the next set
                 $end_db_ts = $row['photo_timestamp'];
+                $end_mlsid = $row['listing_id'];
+                $end_sysid = $row['sysid'];
+
                 $first = 0;
             }
 
@@ -146,8 +153,10 @@ function begin_image_update($rets_object, $rets_name, $rets_config) {
             $perDone = number_format($curRow / $totRows * 100, 1, '.', '');
             echo "[$perDone% Done]" . PHP_EOL;
 
-            // keep updating the "last" photo timestamp bcuz at the end it will represent the newest one
+            // keep updating the "last" vars bcuz at the end it will represent the newest one
             $last_is_first_import_ts = $row['photo_timestamp'];
+            $start_mlsid = $row['listing_id'];
+            $start_sysid = $row['sysid'];
 
         }
 
@@ -155,8 +164,12 @@ function begin_image_update($rets_object, $rets_name, $rets_config) {
         $sql = "UPDATE photo_dl_info 
                     SET end_time = NOW(),
                     start_time_db_ts = '$last_is_first_import_ts',
-                    end_time_db_ts='$end_db_ts' 
-                    WHERE id = $timeRecId";
+                    start_time_mlsid = '$start_mlsid',
+                    start_time_sysid = '$start_sysid',
+                    end_time_db_ts='$end_db_ts',
+                    end_time_sysid='$end_sysid',
+                    end_time_mlsid= '$end_mlsid'
+                    WHERE id = $timeRecId ";
 
         $endUpdate = mysqli_query($conn, $sql);
         if (!$endUpdate) {
@@ -330,7 +343,7 @@ function get_images($listing_id, $photo_count, $rets_key, $rets_object, $rets_co
             $pic_fname = $dir . $listing_id . '-' . $photo['Object-ID'] . '.jpg';
 
             try {
-                $si = new \enriquez\basic_image();
+                $si = new basic_image();
                 $si->fromString($photo['Data']);
                 $exif = $si->getExif();
             } catch (Exception $e) {
@@ -391,7 +404,7 @@ function fixDBPhotoRecs()
     global $conn;
 
     // Get MLS Records"
-    $mls_r = mysqli_query($conn, "SELECT `rets_system`, `listing_id`, `photo_count`, photo_update FROM `master_rets_table_update` where photo_update=0 order by listing_id DESC");
+    $mls_r = mysqli_query($conn, "SELECT `rets_system`, `listing_id`, `photo_count`, photo_update FROM `master_rets_table_update` where photo_update=0 AND photo_count > 0 ORDER BY photo_modification_timestamp  ASC");
 
     // Record Count Check
     if (mysqli_num_rows($mls_r) == 0) {
@@ -474,7 +487,11 @@ function makeTable()
     id int(11) NOT NULL AUTO_INCREMENT,
     start_time timestamp NULL DEFAULT NULL ,
     start_time_db_ts timestamp NULL DEFAULT NULL,
+    start_time_mlsid int(11) NULL DEFAULT NULL,
+    start_time_sysid int(11) NULL DEFAULT NULL,
     end_time_db_ts timestamp NULL DEFAULT NULL,
+    end_time_mlsid int(11) NULL DEFAULT NULL,
+    end_time_sysid int(11) NULL DEFAULT NULL,
     end_time timestamp NULL DEFAULT NULL,
     PRIMARY KEY (id))
   ENGINE = MYISAM;");

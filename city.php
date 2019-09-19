@@ -2,6 +2,7 @@
 //session_start();
 error_reporting(E_ALL);
 require "env.php";
+require "includes/globals.php";
 include('mls/controller/retsController.php');
 include('mls/controller/seoController.php');
 
@@ -14,8 +15,8 @@ $action = basename(__FILE__, '.php');               // load action from filename
 
 if (isset($_GET['loprice'])) $stg = "Between $$_GET[loprice] And $$_GET[hiprice]";
 
-$page_title = "Las Vegas Luxe Realty - $city $proptype Properties For Sale $stg";
-    $page_desc = "Luxury custom $proptype for sale in $city $stg";
+$page_title = "$city NV $proptype For Sale $stg";
+$page_desc = "Luxury custom $proptype for sale in $city $stg";
 $page_keys = "$city, $proptype, real estate, for sale, $stg";
 
 $homepage = false;
@@ -58,6 +59,7 @@ include('includes/header.php');
                 <div class="col-sm-12 col-ms-12">
                     <div class="wide-block">
                         <div class="featured-listings">
+
                             <div class="row">
                                 <div id="featured-listings_marker"></div>
                                 <div class="col-md-12 col-sm-12 col-xs-12">
@@ -67,20 +69,20 @@ include('includes/header.php');
                                     </h2>
                                 </div>
                             </div>
-                            <!-- row #1 featured listings summary block -->
 
                             <div class="row">
+
                                 <?php
 
-                                $controller = new retsController('city-search');    // register controller with page action and parameter
-                                $controller->invoke();                              // invokde controller to get view
+                                    $controller = new retsController('city-search');    // register controller with page action and parameter
+                                    $controller->invoke();                              // invokde controller to get view
 
                                 ?>
+
                             </div>
+
                         </div>
                         <!-- /end featured listings summary block -->
-
-                        <!-- featured property #1 details start here -->
 
                         <?php
 
@@ -88,13 +90,6 @@ include('includes/header.php');
                         //	    $controller->invoke();                           // invokde controller to get view
 
                         ?>
-
-                        <!-- ==========================MLS Search form starts here=======================================-->
-                        <!-- Disabled php, remove the "//" before include to activate -->
-
-                        <?php //include('includes/search-form.php'); ?>
-
-                        <!-- MLS Search form ends here -->
 
                         <?php include('includes/accordion.php'); ?>
 

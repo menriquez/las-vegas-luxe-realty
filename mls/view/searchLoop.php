@@ -3,7 +3,7 @@
             <div class="property-container">
               <div class="property-content-list">
                 <div class="property-image-list">
-                  <a href="/mls/<?= $this->model->getMLS() ?>" >
+                  <a href="/mlsid/<?= $this->model->getMLS() ?>" >
                     <img src="<?php echo ($this->model->getThumbFN()) ?>" alt="shattow">
                   </a>
                   
@@ -18,7 +18,7 @@
                   </div>
                 </div>
                 <div class="property-text">
-                  <h3><a href="/mls/<?= $this->model->getMLS() ?>" ><?php $stg=$this->model->getPropertyTypeTag(); echo $stg ?><br><?php $stg=$this->model->getCity(); echo $stg ?></a> <small><?php $stg=$this->model->getStreetAddress(); echo $stg ?></small></h3>
+                  <h3><a href="/mlsid/<?= $this->model->getMLS() ?>" ><?php $stg=$this->model->getPropertyTypeTag(); echo $stg ?><br><?php $stg=$this->model->getCity(); echo $stg ?></a> <small><?php $stg=$this->model->getStreetAddress(); echo $stg ?></small></h3>
                   <p><?php $stg=$this->model->getShortDesc(76); echo $stg ?></p>
                 </div>
               </div>

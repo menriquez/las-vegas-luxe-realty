@@ -1,7 +1,7 @@
 <?php
 
-define("DS","/",true);
-define('BASE_PATH',$_SERVER['DOCUMENT_ROOT'].DS,true);
+define("DS", "/", true);
+define('BASE_PATH', $_SERVER['DOCUMENT_ROOT'] . DS, true);
 
 // eliminates the need for all those messy include files
 // IMPORTANT! MUST NAME THE CLASS THE SAME AS THE FILENAME!
@@ -13,475 +13,474 @@ define('BASE_PATH',$_SERVER['DOCUMENT_ROOT'].DS,true);
 // IMPORTANT! MUST NAME THE CLASS THE SAME AS THE FILENAME!
 
 spl_autoload_register(function ($class) {
-	include 'mls/model/' . $class . '.php';
+    include 'mls/model/' . $class . '.php';
 });
 
 include_once('includes/utils.php');
 
-class retsController {
+class retsController
+{
 
-	private $model;
-	private $user;
-	private $action;
-	private $page;
-	private $pagename;
+    private $model;
+    private $user;
+    private $action;
+    private $page;
+    private $pagename;
 
-	public function __construct($action) {
+    public function __construct($action)
+    {
 
-		$this->action = $action;
-		//  session_start();									// for persistant data store
-	}
+        $this->action = $action;
+        //  session_start();									// for persistant data store
+    }
 
-	//
-	//  invoke() holds the business logic that connects the data to the view for each page in the switch() conditional
-	//
-	public function invoke($action="") {
-        
+    //
+    //  invoke() holds the business logic that connects the data to the view for each page in the switch() conditional
+    //
+    public function invoke($action = "")
+    {
+
         // added
-		if (!empty($action)) $this->action=$action;
+        if (!empty($action)) $this->action = $action;
 
-		switch ($this->action) {
+        switch ($this->action) {
 
-			// site landing page...get random properties for display
-			case 'adduser':
+            // site landing page...get random properties for display
+            case 'adduser':
 
-				$this->user = new dbUserModel();
+                $this->user = new dbUserModel();
 
-				//  get data...
-				$this->user->addUser();
+                //  get data...
+                $this->user->addUser();
 
-				header("location: /index.php");
+                header("location: /index.php");
 
-				break;
+                break;
 
-			case 'loginuser':
+            case 'loginuser':
 
-				$this->user = new dbUserModel();
+                $this->user = new dbUserModel();
 
-				//  get data...
-				$this->user->addUser();
+                //  get data...
+                $this->user->addUser();
 
-				header("location: /index.php");
+                header("location: /index.php");
 
-				break;
+                break;
 
-			case 'logoffuser':
+            case 'logoffuser':
 
-				$this->user = new dbUserModel();
+                $this->user = new dbUserModel();
 
-				//  get data...
-				$this->user->logoffUser();
+                //  get data...
+                $this->user->logoffUser();
 
-				header("location: /index.php");
+                header("location: /index.php");
 
-				break;
+                break;
 
-				// site landing page...get random properties for display
-			case 'carousel':
+            // site landing page...get random properties for display
+            case 'carousel':
 
-				$this->model = new dbRetsModel();
+                $this->model = new dbRetsModel();
 
-				//  get data...
-				$this->model->getCarouselProps();
+                //  get data...
+                $this->model->getCarouselProps();
 
-				// process view
-				do {
-					require ('mls/view/carousel.view.php');
-				} while ($this->model->next());
+                // process view
+                do {
+                    require('mls/view/carousel.view.php');
+                } while ($this->model->next());
 
-				break;
+                break;
 
-			case 'carousel-plants':
+            case 'carousel-plants':
 
-				$this->model = new dbRetsModel();
+                $this->model = new dbRetsModel();
 
-				//  get data...
-				$this->model->getCarouselPlants();
+                //  get data...
+                $this->model->getCarouselPlants();
 
-				// process view
-				do {
-					require ('mls/view/carousel-plants.view.php');
-				} while ($this->model->next());
+                // process view
+                do {
+                    require('mls/view/carousel-plants.view.php');
+                } while ($this->model->next());
 
-				break;
+                break;
 
-				// site landing page...get random properties for display
-			case 'featured-listing':
+            // site landing page...get random properties for display
+            case 'featured-listing':
 
-				$this->model = new dbRetsModel();
+                $this->model = new dbRetsModel();
 
-				//  get data...
-				$this->model->getFeaturedListingProps();
+                //  get data...
+                $this->model->getFeaturedListingProps();
 
-				// process view
+                // process view
 
-				do {
-					require ('mls/view/featured-listing.view.php');
-				} while ($this->model->next());
+                do {
+                    require('mls/view/featured-listing.view.php');
+                } while ($this->model->next());
 
-				break;
-				
-				require ('mls/view/contact_modal.view.php');
+                break;
 
+                require('mls/view/contact_modal.view.php');
 
-				// site landing page...get display data for properties!
-			case 'property-item':
 
-				//$this->model = new dbRetsModel();
+            // site landing page...get display data for properties!
+            case 'property-item':
 
-				//  get data...
-				//$this->model->getFeaturedListingProps();
+                //$this->model = new dbRetsModel();
 
-				// process view
+                //  get data...
+                //$this->model->getFeaturedListingProps();
 
-				//do {
-				//} while ($this->model->next());
+                // process view
 
-				//break;
+                //do {
+                //} while ($this->model->next());
 
-				// Dynamic Contact Modal for details tablet
-			case 'contact-modal':
+                //break;
 
-				$this->model = new dbRetsModel();
+                // Dynamic Contact Modal for details tablet
+            case 'contact-modal':
 
-				//$this->model->getFeaturedListingProps();
+                $this->model = new dbRetsModel();
 
-				// process view
+                //$this->model->getFeaturedListingProps();
 
-				do {
-				} while ($this->model->next());
+                // process view
 
-				break;
+                do {
+                } while ($this->model->next());
 
-			case 'index-random':
+                break;
 
-				$this->model = new dbRetsModel();
+            case 'index-random':
 
-				//  get data...
-				$this->model->setCity('jupiter');
-				$this->model->getIndexProps();
+                $this->model = new dbRetsModel();
 
-				// process view
-				do {
-					require ('mls/view/index-random.php');
-				} while ($this->model->next());
+                //  get data...
+                $this->model->setCity('jupiter');
+                $this->model->getIndexProps();
 
-				break;
+                // process view
+                do {
+                    require('mls/view/index-random.php');
+                } while ($this->model->next());
 
-			case 'index-loop':
+                break;
 
-				// load model need for this action
-				$this->model = new dbRetsModel();
+            case 'index-loop':
 
-				// set params for search and get data
-				$this->model->getRandomProperty();
+                // load model need for this action
+                $this->model = new dbRetsModel();
 
-				// process view using listing loop code...nice re-use
-				do {
-					require ('mls/view/indexLoop.php');
-				} while ($this->model->next());
+                // set params for search and get data
+                $this->model->getRandomProperty();
 
-				break;
+                // process view using listing loop code...nice re-use
+                do {
+                    require('mls/view/indexLoop.php');
+                } while ($this->model->next());
 
-			case 'index-cities':
+                break;
 
-				// load model needed for this action
-				$this->model = new dbRetsModel();
+            case 'index-cities':
 
-				// set params for search and get data
-				$this->model->getCityCounts();
+                // load model needed for this action
+                $this->model = new dbRetsModel();
 
-				// process view using listing loop code...nice re-use
-				do {
-					require ('mls/view/indexCities.php');
-				} while ($this->model->next());
+                // set params for search and get data
+                $this->model->getCityCounts();
 
-				break;
+                // process view using listing loop code...nice re-use
+                do {
+                    require('mls/view/indexCities.php');
+                } while ($this->model->next());
 
-			case 'index-newloop':
+                break;
 
-				// load model need for this action
-				$this->model = new dbRetsModel();
+            case 'index-newloop':
 
-				$aCities = array("Jupiter","Palm Beach Gardens","West Palm Beach","Delray Beach","Boca Raton","Boynton Beach","Juno Beach","North Palm Beach","Palm Beach","Singer Island");
-				sort($aCities);
+                // load model need for this action
+                $this->model = new dbRetsModel();
 
-				/*
-				foreach ($aCities as $city) {
-				// set params for search and get data
-				$this->model->getNewestPropertyByCity($city);
-				require ('mls/view/indexNewListingHeader.php');
+                $aCities = array("Jupiter", "Palm Beach Gardens", "West Palm Beach", "Delray Beach", "Boca Raton", "Boynton Beach", "Juno Beach", "North Palm Beach", "Palm Beach", "Singer Island");
+                sort($aCities);
 
-				// process view using listing loop code...nice re-use
-				do {
-				require ('mls/view/indexNewLoop.php');
-				} while ($this->model->next());
+                /*
+                foreach ($aCities as $city) {
+                // set params for search and get data
+                $this->model->getNewestPropertyByCity($city);
+                require ('mls/view/indexNewListingHeader.php');
 
-				*/
+                // process view using listing loop code...nice re-use
+                do {
+                require ('mls/view/indexNewLoop.php');
+                } while ($this->model->next());
 
-				// set params for search and get data
-				$this->model->getNewestProperties();
+                */
 
-				// process view using listing loop code...nice re-use
-				do {
-					require ('mls/view/indexNewLoop.php');
-				} while ($this->model->next());      
+                // set params for search and get data
+                $this->model->getNewestProperties();
 
-				break;
+                // process view using listing loop code...nice re-use
+                do {
+                    require('mls/view/indexNewLoop.php');
+                } while ($this->model->next());
 
-			case 'subdiv-counts':
+                break;
 
-				$this->model = new dbRetsModel();
+            case 'subdiv-counts':
 
-				//  get data...
-				$this->model->setCity($_GET['city']);
-				$this->model->getSubdivCounts();
+                $this->model = new dbRetsModel();
 
-				// process view
-				do {
-					require ('mls/view/subdiv-counts.php');
-				} while ($this->model->next());
+                //  get data...
+                $this->model->setCity($_GET['city']);
+                $this->model->getSubdivCounts();
 
-				break;
+                // process view
+                do {
+                    require('mls/view/subdiv-counts.php');
+                } while ($this->model->next());
 
-			case 'search-loop':
+                break;
 
-				// load model need for this action
-				$this->model = new dbRetsModel();
+            case 'search-loop':
 
-				// set params for search and get data
-				$this->model->setArea($_GET['area']);
-				$this->model->doSearch();
+                // load model need for this action
+                $this->model = new dbRetsModel();
 
-				// process view using listing loop code...nice re-use
-				if ($this->model->count > 0) {
-					do {
-						require ('mls/view/searchLoop.php');
-					} while ($this->model->next());
-				}
-				else {
-					require ('mls/view/searchNoFound.php');
+                // set params for search and get data
+                $this->model->setArea($_GET['area']);
+                $this->model->doSearch();
 
-				}
+                // process view using listing loop code...nice re-use
+                if ($this->model->count > 0) {
+                    do {
+                        require('mls/view/searchLoop.php');
+                    } while ($this->model->next());
+                } else {
+                    require('mls/view/searchNoFound.php');
 
-				echo $this->model->pagination->render();
+                }
 
-				break;
+                echo $this->model->pagination->render();
 
-			case 'community-search':
+                break;
 
-				// load model need for this action
-				$this->model = new dbRetsModel();
+            case 'community-search':
 
-				$city = fixDashes($_GET['area']);
-				$subdiv = fixDashes($_GET['subdiv']);
+                // load model need for this action
+                $this->model = new dbRetsModel();
 
-				// set params for search and get data
-				$this->model->setArea($_GET['area']);
-				$this->model->setCommunity($_GET['subdiv']);
-				$this->model->getAreaListings();
+                $city = fixDashes($_GET['area']);
+                $subdiv = fixDashes($_GET['subdiv']);
 
-				// process view using listing loop code...nice re-use
-				if ($this->model->count > 0) {
-					do {
-						require ('mls/view/searchLoop.php');
-					} while ($this->model->next());
-				}
-				else {
-					require ('mls/view/searchNoFound.php');
+                // set params for search and get data
+                $this->model->setArea($_GET['area']);
+                $this->model->setCommunity($_GET['subdiv']);
+                $this->model->getAreaListings();
 
-				}
+                // process view using listing loop code...nice re-use
+                if ($this->model->count > 0) {
+                    do {
+                        require('mls/view/searchLoop.php');
+                    } while ($this->model->next());
+                } else {
+                    require('mls/view/searchNoFound.php');
 
-				break;
+                }
 
-			case 'quick-search-cities':
+                break;
 
-				// load model needed for this action
-				$this->model = new dbRetsModel();
+            case 'quick-search-cities':
 
-				$this->model->getCityDropDown("palm beach");
+                // load model needed for this action
+                $this->model = new dbRetsModel();
 
+                $this->model->getCityDropDown("palm beach");
 
-				break;   
 
-			case 'city-search':
+                break;
 
-				// load model need for this action
-				$this->model = new dbRetsModel();
+            case 'city-search':
 
-				$city = fixDashes($_GET['city']);
-        
-        $proptype = fixDashes($_GET['proptype']);
-        
-        if (isset($_GET['loprice'])) $this->model->setLoPrice( $_GET['loprice']);
-        if (isset($_GET['hiprice'])) $this->model->setHiPrice( $_GET['hiprice']);
-                
-				$this->model->setCity($city);
-				$this->model->setPropertySubType($proptype);
-                
-        $this->model->getAreaSubTypeListings() ;      
-        
-        echo $this->model->pagination->render();
-        echo "<br>";
-                
-				if ($this->model->count > 0) {
-					do {
-						require ('mls/view/city-listing.view.php');
-					} while ($this->model->next());
-				}
-				else {
-					require ('mls/view/searchNoFound.php');
-				}
+                // load model need for this action
+                $this->model = new dbRetsModel();
 
-        echo $this->model->pagination->render();
-				//require ('includes/city-quick-search.php');
-				break;
-				
-			// for the city-search loop
-			case 'city-property-item':
+                $city = fixDashes($_GET['city']);
 
-				$this->model = new dbRetsModel();
+                $proptype = fixDashes($_GET['proptype']);
 
-				//  get data...
-				//$this->model->getFeaturedListingProps();
+                if (isset($_GET['loprice'])) $this->model->setLoPrice($_GET['loprice']);
+                if (isset($_GET['hiprice'])) $this->model->setHiPrice($_GET['hiprice']);
 
-				// process view
-            do {
-					require ('mls/view/property-item.view.php');
-					require ('mls/view/contact_modal.view.php');
-				} while ($this->model->next());
+                $this->model->setCity($city);
+                $this->model->setPropertySubType($proptype);
 
+                $this->model->getAreaSubTypeListings();
 
-				break;
+                echo $this->model->pagination->render();
+                echo "<br>";
 
+                if ($this->model->count > 0) {
+                    do {
+                        require('mls/view/city-listing.view.php');
+                    } while ($this->model->next());
+                } else {
+                    require('mls/view/searchNoFound.php');
+                }
 
+                echo $this->model->pagination->render();
+                //require ('includes/city-quick-search.php');
+                break;
 
-			case 'city-sale-search':
+            // for the city-search loop
+            case 'city-property-item':
 
-				// load model need for this action
-				//$this->model = new dbRetsModel();
+                $this->model = new dbRetsModel();
 
-				$city = fixDashes($_GET['area']);
+                //  get data...
+                //$this->model->getFeaturedListingProps();
 
-				require ('includes/city-sale-search.php');
+                // process view
+                do {
+                    require('mls/view/property-item.view.php');
+                    require('mls/view/contact_modal.view.php');
+                } while ($this->model->next());
 
-				break;
 
-			case 'city-rental-search':
+                break;
 
-				// load model need for this action
-				//$this->model = new dbRetsModel();
 
-				$city = fixDashes($_GET['area']);
+            case 'city-sale-search':
 
-				require ('includes/city-rental-search.php');
+                // load model need for this action
+                //$this->model = new dbRetsModel();
 
+                $city = fixDashes($_GET['area']);
 
-				break;
+                require('includes/city-sale-search.php');
 
-				//  handle news data retreval and display ////////////////////////////////////////////////////////////////////////
-                
-			case 'shownews':
+                break;
 
-				$this->model = new dbNewsModel();
+            case 'city-rental-search':
 
-				//  get data...
-				$this->model->setId($_GET['id']);
-				$this->model->getNewsItem();
+                // load model need for this action
+                //$this->model = new dbRetsModel();
 
-				// process view
-				require ('mls/view/shownews.php');
+                $city = fixDashes($_GET['area']);
 
-				break;
+                require('includes/city-rental-search.php');
 
-			case 'news-loop':
 
-				$this->model = new dbNewsModel();
+                break;
 
-				//  get data...no params needed
-				$this->model->getNewsListings();
+            //  handle news data retreval and display ////////////////////////////////////////////////////////////////////////
 
-				// process view
-				do {
-					require ('mls/view/newsLoop.php');
-				} while ($this->model->next());
+            case 'shownews':
 
-				break;
-				// end news //////////////////////////////////////////////////////////////////////////////////////////////////////
+                $this->model = new dbNewsModel();
 
+                //  get data...
+                $this->model->setId($_GET['id']);
+                $this->model->getNewsItem();
 
-			case 'listings-loop':
+                // process view
+                require('mls/view/shownews.php');
 
-				$this->model = new dbRetsModel();
+                break;
 
-				// set params for search and get data
-				$this->model->setPropertyType("residential");
-				$this->model->setAgentId("20130716175942774876000000");
-				$this->model->getClientSummaryListings();
+            case 'news-loop':
 
-				// process view
-				do {
-					require ('mls/view/listingLoop.php');
-				} while ($this->model->next());
+                $this->model = new dbNewsModel();
 
-				break;
+                //  get data...no params needed
+                $this->model->getNewsListings();
 
-			case 'area':
+                // process view
+                do {
+                    require('mls/view/newsLoop.php');
+                } while ($this->model->next());
 
-				//explode($_GET);
-				$this->pagename = $_GET['page'];
+                break;
+            // end news //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-				// load model need for this action
-				$this->page = new dbPageModel();
 
-				// set params for search and get data
-				$this->page->setPageName($this->pagename);
-				$this->page->getPage();
-				$_SESSION['page'] = $this->page->row;		// store for later use in search
+            case 'listings-loop':
 
-				// process view
-				require ('mls/view/area.php');
+                $this->model = new dbRetsModel();
 
-				break;
+                // set params for search and get data
+                $this->model->setPropertyType("residential");
+                $this->model->setAgentId("20130716175942774876000000");
+                $this->model->getClientSummaryListings();
 
-			case 'area-loop':
+                // process view
+                do {
+                    require('mls/view/listingLoop.php');
+                } while ($this->model->next());
 
-				// load model need for this action
-				$this->model = new dbRetsModel();
-				$area = $_SESSION['page']['page_name'];
+                break;
 
-				// set params for search and get data
-				$this->model->setArea($area);
-				$this->model->getAreaListings();
+            case 'area':
 
-				// process view
-				do {
-					require ('mls/view/areaLoop.php');
-				} while ($this->model->next());
+                //explode($_GET);
+                $this->pagename = $_GET['page'];
 
-				break;
+                // load model need for this action
+                $this->page = new dbPageModel();
 
-			case 'search-results':
+                // set params for search and get data
+                $this->page->setPageName($this->pagename);
+                $this->page->getPage();
+                $_SESSION['page'] = $this->page->row;        // store for later use in search
 
-				// load model need for this action
-				$this->model = new dbRetsModel();
+                // process view
+                require('mls/view/area.php');
 
-				// set params for search and get data
-				if (!empty($_GET['area']))
-					$this->model->setArea($_GET['area']);
-                    
-				else if (!empty($_GET['area_deep_resi']))
-                
-					$this->model->setArea($_GET['area_deep_resi']);
-					else if (!empty($_GET['area_deep_rent']))
-						$this->model->setArea($_GET['area_deep_rent']);
+                break;
 
-						$this->model->getSearchHeaderInfo();
+            case 'area-loop':
 
-				// process view
-				require ('mls/view/search.php');
+                // load model need for this action
+                $this->model = new dbRetsModel();
+                $area = $_SESSION['page']['page_name'];
 
-				break;
+                // set params for search and get data
+                $this->model->setArea($area);
+                $this->model->getAreaListings();
+
+                // process view
+                do {
+                    require('mls/view/areaLoop.php');
+                } while ($this->model->next());
+
+                break;
+
+            case 'search-results':
+
+                // load model need for this action
+                $this->model = new dbRetsModel();
+
+                // set params for search and get data
+                if (!empty($_GET['area']))
+                    $this->model->setArea($_GET['area']);
+
+                else if (!empty($_GET['area_deep_resi']))
+
+                    $this->model->setArea($_GET['area_deep_resi']);
+                else if (!empty($_GET['area_deep_rent']))
+                    $this->model->setArea($_GET['area_deep_rent']);
+
+                $this->model->getSearchHeaderInfo();
+
+                // process view
+                require('mls/view/search.php');
+
+                break;
 
             case 'all-search':
 
@@ -491,63 +490,63 @@ class retsController {
                 // set params for search and get data
                 if (!empty($_GET['area']))
                     $this->model->setArea($_GET['area']);
-                    
-                else if (!empty($_GET['area_deep_resi']))
-                
-                    $this->model->setArea($_GET['area_deep_resi']);
-                    else if (!empty($_GET['area_deep_rent']))
-                        $this->model->setArea($_GET['area_deep_rent']);
 
-                        $this->model->getSearchHeaderInfo();
+                else if (!empty($_GET['area_deep_resi']))
+
+                    $this->model->setArea($_GET['area_deep_resi']);
+                else if (!empty($_GET['area_deep_rent']))
+                    $this->model->setArea($_GET['area_deep_rent']);
+
+                $this->model->getSearchHeaderInfo();
 
                 // process view
-                require ('mls/view/search.php');
+                require('mls/view/search.php');
 
                 break;
 
-			case 'showmls':
-			case 'single':
+            case 'showmls':
+            case 'single':
 
-			    // load model need for this action
-			    $this->model = new dbRetsModel();
-
-			    // set params for search and get data
-			    $this->model->setMLS($_GET['mls']);
-			    $this->model->getSingleProperty();
-
-			    // process view
-			    switch ($this->model->getPropertyType()) {
-
-				    case "Residential":
-				    case "RES":
-                    case "High Rise":
-					    require ('mls/view/mlsDetail/showRes.php');
-					    break;
-				    case "Rental":
-				    case "rental":
-					    require ('mls/view/mlsDetail/showRent.php');
-					    break;
-
-			    }
-
-			    break;
-
-            case 'loadmls':
-            
                 // load model need for this action
                 $this->model = new dbRetsModel();
 
                 // set params for search and get data
                 $this->model->setMLS($_GET['mls']);
                 $this->model->getSingleProperty();
-                
-                break;
-            
-			default:
-				throw new Exception('Controller ERROR - unknown action type {'.$this->action.'} Please make sure the filename WITHOUT extension matches the switch/case strings in the invoke() method.');
-		}
 
-	}
+                // process view
+                switch ($this->model->getPropertyType()) {
+
+                    case "Residential":
+                    case "RES":
+                    case "High Rise":
+                        require('mls/view/mlsDetail/showRes.php');
+                        break;
+                    case "Rental":
+                    case "rental":
+                        require('mls/view/mlsDetail/showRent.php');
+                        break;
+
+                }
+
+                break;
+
+            case 'loadmls':
+
+                // load model need for this action
+                $this->model = new dbRetsModel();
+
+                // set params for search and get data
+                $this->model->setMLS($_GET['mls']);
+                $this->model->getSingleProperty();
+
+                break;
+
+            default:
+                throw new Exception('Controller ERROR - unknown action type {' . $this->action . '} Please make sure the filename WITHOUT extension matches the switch/case strings in the invoke() method.');
+        }
+
+    }
 }
 
 ?>

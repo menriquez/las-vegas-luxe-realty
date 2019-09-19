@@ -2,7 +2,7 @@
 
 
 include_once('pdoConfig.php');
-include_once($_SERVER['DOCUMENT_ROOT'].'/includes/utils.php');
+include_once $_SERVER['DOCUMENT_ROOT'].'/includes/utils.php';
 
 //include_once('mls/model/areazone.php');
 

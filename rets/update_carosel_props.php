@@ -24,6 +24,7 @@ $sql = 'INSERT INTO custom_listings (listing_id)
                 AND city = "Las Vegas"
                 AND listing_price > 1200000
                 AND listing_price <= 3000000
+                AND dom
               ORDER BY rand() DESC
               LIMIT 5';   
                     

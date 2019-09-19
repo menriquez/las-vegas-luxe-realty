@@ -1,15 +1,15 @@
 <?php
 
-// $ACTIVE_DOMAIN="//lasvegasluxerealty.com";
+$ACTIVE_DOMAIN="lasvegasluxerealty.com";
 
 
 if (constant("DEV_NAME") != "prod")  {
-    $ACTIVE_DOMAIN=$_SERVER['HTTP_HOST'];
+    //$ACTIVE_DOMAIN=$_SERVER['HTTP_HOST'];
     $configDB = array(
       'DB_HOST' => 'lasvegasluxerealty.com',
-      'DB_NAME' => 'admin_lvluxe',
-      'DB_USER' => 'admin_lvluxe',
-      'DB_PASS' => 'CQTXTvwB6O',
+      'DB_NAME' => 'admin_lvlr',
+      'DB_USER' => 'admin_admin_lvlr',
+      'DB_PASS' => 'JTgOaOVZrd',
       'DB_DRIVER' => 'mysql'
     );
 
@@ -17,16 +17,17 @@ if (constant("DEV_NAME") != "prod")  {
 else {
     $configDB = array(
       'DB_HOST' => 'localhost',
-      'DB_NAME' => 'admin_lvluxe',
-      'DB_USER' => 'admin_lvluxe',
-      'DB_PASS' => 'CQTXTvwB6O',
+      'DB_NAME' => 'admin_lvlr',
+      'DB_USER' => 'admin_admin_lvlr',
+      'DB_PASS' => 'JTgOaOVZrd',
       'DB_DRIVER' => 'mysql'
     );
 
 }
 
-echo "Connecting to database..";
+echo "Connecting to database..\n";
 $conn=mysqli_connect($configDB['DB_HOST'], $configDB['DB_USER'], $configDB['DB_PASS'], $configDB['DB_NAME']) or die(mysqli_error());
+if ($conn) echo "db ".$configDB['DB_HOST'].":".$configDB['DB_NAME']." CONNECT OK\n";
 
 // Get State Abbreviation
 function getState($state = '', $postal_code = '') {

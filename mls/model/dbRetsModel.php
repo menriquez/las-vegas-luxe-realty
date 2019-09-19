@@ -2,7 +2,6 @@
 
 include_once 'pdoConfig.php';
 include_once 'dbRetsRoomModel.php';
-#include_once 'includesglobals.php';
 
 include_once $_SERVER['DOCUMENT_ROOT'].'/includes/utils.php';
 include_once $_SERVER['DOCUMENT_ROOT'].'/includes/pagination.php';
@@ -20,7 +19,7 @@ class dbRets extends pdoConfig {
 
 	const CARD_FIEDS = ' sysid, listing_id,listing_price, listing_date, street_name,street_dir,street_number, 
 	street_suffix, city, state_province, postal_code, 3_4_bath ,
-	sqft_living, sqft_tot, halfbaths, full_bath , bedrooms  ';
+	sqft_living, sqft_tot, halfbaths, full_bath , bedrooms , year_built ';
 
 	public function __construct(){
 		parent::__construct( );
@@ -181,18 +180,18 @@ class dbRets extends pdoConfig {
 
 	public function getThumbSmallFn() {
 	    global $BASE_WEB_URL_IMAGES;
-		return $BASE_WEB_URL_IMAGES."/mls/thumbs200/".$this->row['sysid']."-1.jpg";
+		return $BASE_WEB_URL_IMAGES."/rets/thumbs200/".$this->row['sysid']."-1.jpg";
 	}
 
 	public function getThumbFn() {
         global $BASE_WEB_URL_IMAGES;
-		return  $BASE_WEB_URL_IMAGES. "/mls/thumbs/".$this->row['sysid']."-1.jpg";
+		return  $BASE_WEB_URL_IMAGES. "/rets/thumbs/".$this->row['sysid']."-1.jpg";
 	}
 
 	public function getFrontPicFn() {
 		// return "/mls/photos/".$this->row['sysid']."-1.jpg";
         
-		return "//lasvegasluxerealty.com/mls/photos/".$this->row['sysid']."-0.jpg";
+		return "//lasvegasluxerealty.com/rets/photos/".$this->row['sysid']."-0.jpg";
 	}
 
 
@@ -267,8 +266,8 @@ class dbRets extends pdoConfig {
 			$imageArr = explode("/",$image);
 			$fn = array_pop($imageArr);
 
-			$img = $BASE_WEB_URL."/mls/photos/".$fn;
-			$thumb = $BASE_WEB_URL."/mls/thumbs96/".$fn;
+			$img = $BASE_WEB_URL."/rets/photos/".$fn;
+			$thumb = $BASE_WEB_URL."/rets/thumbs96/".$fn;
 
 			echo "<a class='rsImg $stg' data-rsw='540' data-rsh='374' data-rsBigImg='$img' href='$img'><img width='96' height='72' class='rsTmb' src='$img' alt='' /></a>\n\n";
 			$first = false;
@@ -420,14 +419,14 @@ class dbRetsModel extends dbRets {
 		if ($inStg == "homes") {
 			$searchStg = "Single Family";
 		}                                  
-		else if ($inStg == "townhome") {
+		else if ($inStg == "townhomes") {
 			$searchStg = "Townhouse";
 		}
-		else if ($inStg == "condo") {
+		else if ($inStg == "condos") {
 			$searchStg = "Condominium";
 		}     
 		else {
-			$this->property_type=self::quote("High Rise"); 
+			$this->property_type=self::quote("High-Rise");
 			$searchStg = "";
 		}
 
@@ -718,7 +717,7 @@ class dbRetsModel extends dbRets {
 		WHERE listing_price > 600000 AND listing_price < 1300000 
 		AND photo_count > 0 
 		AND property_status IN  ( 'active' )
-		AND property_type IN  ( 'Residential'|'High Rise' )
+		AND property_type IN  ( 'Residential','High Rise' )
 		ORDER BY photo_timestamp DESC LIMIT 12";
 
 		$this->stm = $this->prepare($sql);
@@ -740,7 +739,7 @@ class dbRetsModel extends dbRets {
 		WHERE listing_price > 600000 AND listing_price < 1300000 
 		AND photo_count > 0 
 		AND property_status IN  ( 'active' )
-		AND property_type IN  ( 'Residential'|'High Rise' )
+		AND property_type IN  ( 'Residential','High Rise' )
 		ORDER BY photo_timestamp DESC LIMIT 12";
 
 		$this->stm = $this->prepare($sql);
@@ -935,8 +934,7 @@ class dbRetsModel extends dbRets {
 
 		$sql = 'SELECT '.self::CARD_FIEDS.' FROM '.self::MLS_TABLENAME. '
 		WHERE city = '.$this->city.'
-		AND property_type REGEXP '.$this->property_type.'
-		AND  property_sub_type REGEXP '.$this->property_subtype.'
+		AND  property_sub_type = '.$this->property_subtype.'
 		AND listing_price >= '.$this->min_price.' AND listing_price <= '.$this->max_price.'
 		ORDER BY listing_price DESC ';
 
