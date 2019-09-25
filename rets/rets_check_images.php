@@ -61,7 +61,7 @@ function fixDBPhotoRecs() {
           $ls++;
           // Update Photo Update Column so images can be downloaded
           $update_r = mysql_query("UPDATE `master_rets_table` SET `photo_update` = '0' WHERE `listing_id` = '{$row['listing_id']}' AND `rets_system` = '{$row['rets_system']}'");
-          exec("php rets_update_images.php $row[listing_id]");
+          exec("php rets_update_images_mrtu.php $row[listing_id]");
 
           // check again after attempted fix..
            $dir_image_count = check_directory_count($row['listing_id'],$row['rets_system']);

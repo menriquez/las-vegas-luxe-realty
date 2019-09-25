@@ -1,5 +1,7 @@
 <?php
 
+$base_root_dir = dirname(__DIR__);
+require_once  $base_root_dir . '/env.php';
 require('database.php');
   
 $sql= " DROP table IF EXISTS mrt_bu";

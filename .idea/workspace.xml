@@ -1,42 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="AnalysisUIOptions">
-    <option name="SCOPE_TYPE" value="3" />
-  </component>
   <component name="ChangeListManager">
-    <list default="true" id="1c851c35-a773-43b4-aad6-81ac345b23d3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+    <list default="true" id="1c851c35-a773-43b4-aad6-81ac345b23d3" name="Default Changelist" comment="lots of important fixes">
+      <change beforePath="$PROJECT_DIR$/.htaccess" beforeDir="false" afterPath="$PROJECT_DIR$/.htaccess" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/local_rets_update_images_mrtu_php_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/local_rets_update_images_mrtu_php_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/local_rets_update_php.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/xdebug_local_with_apache_port_81.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/xdebug_local_with_apache_port_81.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/city.php" beforeDir="false" afterPath="$PROJECT_DIR$/city.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/contact.php" beforeDir="false" afterPath="$PROJECT_DIR$/contact.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/css/font-awesome.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/css/font-awesome.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/css/royalslider.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/royalslider.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detail-listing.php" beforeDir="false" afterPath="$PROJECT_DIR$/detail-listing.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/includes/accordion.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/accordion.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/globals.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/globals.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/includes/bottom_scripts_new.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/bottom_scripts_new.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/includes/footer_new.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/footer_new.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/includes/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/header.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/includes/nav-bar_new.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/nav-bar_new.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/function.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/function.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mls/controller/pageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/mls/controller/pageController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mls/controller/retsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/mls/controller/retsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mls/model/dbPageModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/mls/model/dbPageModel.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mls/model/dbRetsModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/mls/model/dbRetsModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mls/model/dbRetsRoomModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/mls/model/dbRetsRoomModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mls/model/pdoConfig.php" beforeDir="false" afterPath="$PROJECT_DIR$/mls/model/pdoConfig.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mls/view/city-listing.view.php" beforeDir="false" afterPath="$PROJECT_DIR$/mls/view/city-listing.view.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mls/view/indexNewLoop.php" beforeDir="false" afterPath="$PROJECT_DIR$/mls/view/indexNewLoop.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mls/view/searchLoop.php" beforeDir="false" afterPath="$PROJECT_DIR$/mls/view/searchLoop.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mls/view/contact_modal.view.php" beforeDir="false" afterPath="$PROJECT_DIR$/mls/view/contact_modal.view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mls/view/featured-listing.view.php" beforeDir="false" afterPath="$PROJECT_DIR$/mls/view/featured-listing.view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mls/view/landing.view.php" beforeDir="false" afterPath="$PROJECT_DIR$/mls/view/landing.view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mls/view/mlsDetail/showRes.php" beforeDir="false" afterPath="$PROJECT_DIR$/mls/view/mlsDetail/showRes.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rets/cookie.txt" beforeDir="false" afterPath="$PROJECT_DIR$/rets/cookie.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rets/database.php" beforeDir="false" afterPath="$PROJECT_DIR$/rets/database.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rets/flexmls/config.php" beforeDir="false" afterPath="$PROJECT_DIR$/rets/flexmls/config.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rets/flexmls/glvar_prop_1.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rets/flexmls/glvar_prop_16.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rets/flexmls/glvar_prop_listing.sql" beforeDir="false" afterPath="$PROJECT_DIR$/rets/flexmls/glvar_prop_listing.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rets/flexmls/mrt.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rets/flexmls/config_rooms.php" beforeDir="false" afterPath="$PROJECT_DIR$/rets/flexmls/config_rooms.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rets/phrets2.php" beforeDir="false" afterPath="$PROJECT_DIR$/rets/phrets2.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rets/rets_check_images.php" beforeDir="false" afterPath="$PROJECT_DIR$/rets/rets_check_images.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rets/rets_update.php" beforeDir="false" afterPath="$PROJECT_DIR$/rets/rets_update.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rets/rets_update_images_mrtu.php" beforeDir="false" afterPath="$PROJECT_DIR$/rets/rets_update_images_mrtu.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rets/rets_update_rooms.php" beforeDir="false" afterPath="$PROJECT_DIR$/rets/rets_update_rooms.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rets/update_carosel_props.php" beforeDir="false" afterPath="$PROJECT_DIR$/rets/update_carosel_props.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rets/update_carouse_props.php" beforeDir="false" afterPath="$PROJECT_DIR$/rets/update_carouse_props.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rets/update_mrt.php" beforeDir="false" afterPath="$PROJECT_DIR$/rets/update_mrt.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rets/update_rets.sh" beforeDir="false" afterPath="$PROJECT_DIR$/rets/update_rets.sh" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -129,7 +130,7 @@
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="SQL&#10;SQLite" />
     <property name="js.buildTools.grunt.grunt-cli.package" value="" />
     <property name="js.buildTools.gulp.gulp_package_dir" value="" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/mls/view" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -142,7 +143,7 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="run.code.analysis.last.selected.profile" value="aDefault" />
-    <property name="settings.editor.selected.configurable" value="web.server" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
     <property name="settings.editor.splitter.proportion" value="0.21225195" />
   </component>
   <component name="RecentsManager">
@@ -150,7 +151,9 @@
       <recent name="C:\xampp72\htdocs\lvlr" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp72\htdocs\lvlr\mls\view" />
       <recent name="C:\xampp72\htdocs\lvlr" />
+      <recent name="C:\xampp72\htdocs\lvlr\rets" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -193,6 +196,9 @@
     <configuration name="local rets_update.php" type="PhpWebAppRunConfigurationType" factoryName="PHP Web Application" browser="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" server_name="remote lvlr" start_url="/rets/rets_update.php">
       <method v="2" />
     </configuration>
+    <configuration name="local rets_update_rooms_mrtu" type="PhpWebAppRunConfigurationType" factoryName="PHP Web Application" singleton="false" browser="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" server_name="local xampp72 lvlr" start_url="/rets/rets_update_rooms_mrtu.php">
+      <method v="2" />
+    </configuration>
     <configuration default="true" type="js.build_tools.grunt">
       <node-interpreter value="project" />
       <envs />
@@ -216,6 +222,7 @@
       <item itemvalue="PHP Script.test_crypt.php" />
       <item itemvalue="PHP Script.rets_update_rooms.php" />
       <item itemvalue="PHP Web Page.local rets_update_images_mrtu.php " />
+      <item itemvalue="PHP Web Page.local rets_update_rooms_mrtu" />
       <item itemvalue="PHP Web Page.local rets_update.php" />
       <item itemvalue="PHP Web Page.xdebug local with apache port 81" />
     </list>
@@ -263,8 +270,24 @@
       <workItem from="1568757438993" duration="9295000" />
       <workItem from="1568775759947" duration="357000" />
       <workItem from="1568824411604" duration="13467000" />
-      <workItem from="1568909701412" duration="1343000" />
+      <workItem from="1568909701412" duration="22217000" />
+      <workItem from="1568947886017" duration="2056000" />
+      <workItem from="1568996083278" duration="17609000" />
+      <workItem from="1569089075986" duration="14351000" />
+      <workItem from="1569167146505" duration="22649000" />
+      <workItem from="1569264617198" duration="16321000" />
+      <workItem from="1569342816121" duration="3610000" />
+      <workItem from="1569354423391" duration="19459000" />
+      <workItem from="1569433787784" duration="4898000" />
     </task>
+    <task id="LOCAL-00001" summary="lots of important fixes">
+      <created>1568911905628</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1568911905628</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -284,57 +307,31 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="CHECK_NEW_TODO" value="false" />
     <ignored-roots>
       <path value="$PROJECT_DIR$/mega" />
     </ignored-roots>
+    <MESSAGE value="lots of important fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="lots of important fixes" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/rets/rets_update.php</url>
-          <line>83</line>
-          <option name="timeStamp" value="4" />
+          <url>file://$PROJECT_DIR$/contact-me.php</url>
+          <line>34</line>
+          <option name="timeStamp" value="58" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/rets/rets_update.php</url>
-          <line>242</line>
-          <option name="timeStamp" value="5" />
+          <url>file://$PROJECT_DIR$/contact-me.php</url>
+          <line>2</line>
+          <option name="timeStamp" value="62" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/rets/rets_update.php</url>
-          <line>180</line>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/rets/rets_update_images.php</url>
-          <line>16</line>
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/rets/rets_update_images_mrtu.php</url>
-          <line>199</line>
-          <option name="timeStamp" value="27" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/rets/rets_update_images_mrtu.php</url>
-          <line>41</line>
-          <option name="timeStamp" value="29" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/rets/rets_update.php</url>
-          <line>3</line>
-          <option name="timeStamp" value="34" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/mls/model/dbRetsModel.php</url>
-          <line>433</line>
-          <option name="timeStamp" value="35" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/mls/controller/retsController.php</url>
-          <line>337</line>
-          <option name="timeStamp" value="37" />
+          <url>file://$PROJECT_DIR$/mls/view/contact_modal_landing.view.php</url>
+          <option name="timeStamp" value="63" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

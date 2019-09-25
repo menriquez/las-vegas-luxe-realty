@@ -4,10 +4,10 @@
 error_reporting(E_ERROR + E_WARNING);
 $base_file_path = getcwd();
 $base_image_path = getcwd() . "/rets/";
+
 require "env.php";
 require "includes/globals.php";
 require "mls/controller/retsController.php";
-
 
 //$action=basename(__FILE__, '.php');               // load action from filename for consistency (index for this case)
 //$controller = new retsController($action);        // register controller with page action and parameter
@@ -18,9 +18,9 @@ $tot = count($city_array);
 
 $city = $city_array[rand(0, $tot)];
 
-$page_title = "Las Vegas Luxe Real Estate - Only the Best Las Vegas, Nevada MLS Homes, Condos, and Townhomes.";
-$page_desc = "Real estate agents specializing finding a MLS home, condo, or townhome in Las Vegas, Nevada to Sell a Home Fast. ";
-$page_keys = "real estate, for sale, for rent, best Realtor near Las Vegas, top realtor for buying a new home, selling a home, sell home fast, home selling tips, cost of selling your home,
+$page_title = "Las Vegas Luxe Real Estate - MLS Real Estate in Las Vegas, Nevada MLS Homes, Condos, and Townhomes.";
+$page_desc = "Sahar Saljougui, a top MLS Realor, specializing in finding that perfect MLS House, Condo, or Townhome in Las Vegas, Nevada, or to sell your home fast!";
+$page_keys = "las vegas real estate, for sale, for rent, best mls realtor near Las Vegas, top realtor for buying a new home, selling a home, sell home fast, home selling tips, cost of selling your home,
               sell a home fast, fastest way to sell a home in Las Vegas, home selling tips, cost of selling your home, marketing your home, ways to sell your home, house staging tips, how to stage your home,
               foreclosure in Las Vegas, foreclosures in Las Vegas, short sales, short selling, short sale process, foreclosure, cons of a short sale, short selling your home, for sale by owner, why to use a Realtor,
               property for sale by owner,  for sale by owner listings, listing property for sale by owner, selling your home by owner, tips for selling your home, top tips to get the best offer, mls listings,
@@ -28,7 +28,6 @@ $page_keys = "real estate, for sale, for rent, best Realtor near Las Vegas, top 
               list of real estate agents, reviews of Realtor, best schools near Las Veges, relocation Realtor in Las Vegas";
 
 $homepage = true;
-
 
 require "includes/header.php";
 
@@ -42,7 +41,6 @@ require "includes/header.php";
 </noscript>
 
 <!-- <link type="text/css" rel="stylesheet" href="css/style.css"/>  -->
-
 
 <!-- End Google Tag Manager (noscript) -->
 
@@ -61,7 +59,7 @@ require "includes/header.php";
             <?php
 
 	            $controller = new retsController('carousel');        // register controller with page action and parameter
-	            $controller->invoke();                            // invokde controller to get view
+	            $controller->invoke();                                      // invokde controller to get view
 
             ?>
 
@@ -119,7 +117,46 @@ require "includes/header.php";
                         </div>
 
                     </div>
+
                     <!-- begin featured listings summary block -->
+                    <div id="bargains_marker"></div>
+                    <div class="wide-block">
+                        <div class="featured-listings">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <!-- edit featured listings headline here -->
+                                    <h2 class="block-title sr-header">
+                                        Sahar's Exclusive GLVAR MLS Hot Picks Of The Week
+                                    </h2>
+                                    <div id="bargain-hide-text" style="display:none" class="col-md-12">
+                                        <h4>[ every day, i handpick properties that represent newly listed "bargains"...where the homeowner has recently dropped the asking price at least 4% from the original price!  no where else can you so easily find these timely deals, and I put in a good deal of work into first finding and then posting them for you. I sincerely hope you find your dream home that you are looking for right here, and if you can save thousands of dollars as well...great! don't forget to contact me and ask about any property you see listed here, or just to say "Hi" and to tell my team and I how we could better serve your home buying needs.  thanks! - Sahar ]</h4>
+                                    </div>
+                                </div>
+                                <div class="dropdown">
+                                    <p id="title-whatsthis" onClick="toggleShowHide('bargain-hide-text')" class="dropdown-toggle" data-toggle="dropdown"  type="button" tabindex="1">[ What Is This? ] <i class="fa fa-bars fa-1x icon-rotates" ></i></p>
+                                </div>
+
+
+                            </div>
+                            <br>
+                            <br>
+                            <!-- row #1 featured listings summary block -->
+                            <div id="featured-listings_marker"></div>
+                            <div class="row">
+				                <?php
+
+				                $controller = new retsController('bargains-listing'); // register controller with page action and parameter
+                                $controller->set_bargain_params(0.04,21);
+				                $controller->invoke();                            // invoke controller to get view
+
+				                ?>
+                            </div>
+
+                        </div>
+                        <!-- /end featured listings summary block -->
+
+
+                        <!-- begin featured listings summary block -->
                     <div id="featured_marker"></div>
                     <div class="wide-block">
                         <div class="featured-listings">
@@ -143,21 +180,6 @@ require "includes/header.php";
                             </div>
                         </div>
                         <!-- /end featured listings summary block -->
-
-                        <!-- featured property #1 details start here -->
-                        <?php
-
-                        //		$controller = new retsController('property-item'); // register controller with page action and parameter
-                        //		$controller->invoke();                           // invokde controller to get view
-
-                        ?>
-
-                        <?php
-
-                        //$controller = new retsController('contact-modal');        // register controller with page action and parameter
-                        //$controller->invoke();                            // invokde controller to get view
-
-                        ?>
 
                         <!-- ==========================MLS Search form starts here=======================================-->
                         <!-- Disabled php, remove the "//" before include to activate -->
@@ -185,21 +207,30 @@ require "includes/header.php";
                                             <div class="promo-text ease-right-2">
                                                 <p>Born and raised in France and with an Iranian background, I have a
                                                     natural understanding and appreciation for the diversity of
-                                                    cultures. I am also fluent in French, Spanish, English and Farsi.
-                                                    I am a tireless worker and will help you in any way that I can
-                                                    because it is what I truly love to do. </p>
+                                                    cultures. I am also fluent in French, Spanish, English and Farsi.</p>
+                                                    <p>I am a tireless worker and will help you in any way that I can
+                                                        because it is what I truly love to do.</p>
                                                 <p>My family being so close and important to me, I understand that the
                                                     right house provides a comfortable place to call your own and a
                                                     gathering place for relatives and friends.</p>
                                                 <p>Outside of work, I enjoy the outdoors. I love to travel, hike with my
-                                                    dog, really anything that gets me outside in nature. I love meeting
+                                                    dogs, really anything that gets me outside in nature. I love meeting
                                                     new people and experiencing new places, I also enjoy painting and
-                                                    reading in my free time.
-                                                    Please help me help you by providing the basics of what you are
-                                                    looking for and your personal real estate likes and dislikes. I will
-                                                    find you what you are looking for!
-                                                    Sincerely,</p>
+                                                    reading in my free time.</p>
+                                                  <p> <strong> Please help me help you by providing the basics of what you are
+                                                    looking for and your personal real estate likes and dislikes.</strong></p>
+                                                <p>I will find you what you are looking for!</p>
                                             </div>
+
+                                            <div class="button-center">
+                                                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModalLanding"><i class="fa fa-envelope" aria-hidden="true"></i>
+                                                    Let Me Help You!
+                                                </button>
+                                            </div>
+
+                                            <?php
+                                             require('mls/view/contact_modal_landing.view.php');
+                                            ?>
                                         </div>
                                         <!-- realtor about image area starts here -->
                                         <div class="col-sm-4 col-ms-4">

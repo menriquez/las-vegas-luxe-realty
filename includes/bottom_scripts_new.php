@@ -60,7 +60,7 @@
         easing   :"ease-in",
         scale    :1,
         origin   :"top",
-      }
+      };
 
       var appear ={
         delay      :400,
@@ -68,11 +68,11 @@
         easing    :"ease-out",
         scale      : 1,
 
-      }
+      };
       var header = {
         origin: "bottom",
         duration: 300,
-      }
+      };
 
       var easeLeft = {
         origin     :"right",
@@ -80,14 +80,14 @@
         delay      :200,
         duration   :500,
 
-      }
+      };
       var easeRight = {
         origin     :"left",
         distance   :"50px",
         delay      :200,
         duration   :500,
 
-      }
+      };
       window.sr = ScrollReveal();
       sr.reveal(".sr-header", header);
       sr.reveal(".box-seq", { duration: 800 }, 200);
@@ -102,7 +102,22 @@
 
     </script>
 
-<!-- /End Scroll Reveal js -->
+    <script type="text/javascript">
+
+        function toggleShowHide(elementId) {
+            var element = document.getElementById(elementId);
+            if (element) {
+                if (element.style.display == "none")
+                    element.style.display = "inline";
+                else
+                    element.style.display = "none";
+            }
+        }
+
+    </script>
+
+
+    <!-- /End Scroll Reveal js -->
 
 
 <!-- /end scripting -->

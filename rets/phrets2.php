@@ -69,7 +69,7 @@ class phRETS {
 
 
 
-	public function phRETS() { }
+	public function __construct() { }
 
 
 	public function GetLastServerResponse() {

@@ -32,7 +32,7 @@ include('includes/header.php');
                                     <!-- edit real estate agent's promo block heading here -->
                                     <br>
                                     <h2 class="block-title styler_color sr-header"  >
-                                        Discover Melanie's Difference...
+                                        Discover Sahar's Difference...
                                     </h2>
                                     <!-- promo real estate agent's block line divider here -->
                                     <div class="block-separator clearfix"></div>                                            
@@ -272,7 +272,7 @@ include('includes/header.php');
                                     <div class=" about-block">                                                                                        
                                         <!-- edit the about heading text here -->
                                         <h2 class="block-title styler_color sr-header">
-                                            About Melanie Saljougui 
+                                            About Sahar Saljougui
                                         </h2>
                                         <div class="block-separator clearfix"></div>
                                         <div class="col-sm-8 col-ms-8">

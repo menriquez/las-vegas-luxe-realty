@@ -210,7 +210,7 @@ function flexmls_updateResidential()
                     tax_amount = '" . mysqli_real_escape_string($conn, $row['Annual_Property_Taxes']) . "',
                     subdivision = '" . mysqli_real_escape_string($conn, $row['Subdivision_Name']) . "',
                     property_status = '" . mysqli_real_escape_string($conn, $row['Status']) . "',
-                    home_view = '" . mysqli_real_escape_string($conn, $row['Views']) . "',
+                    home_view = '" . mysqli_real_escape_string($conn, $row['House_Views']) . "',
                     garage = '" . mysqli_real_escape_string($conn, $row['Garage']) . "',
                     short_sale = '" . mysqli_real_escape_string($conn, $row['Short_Sale']) . "',
                     dining_area = '" . mysqli_real_escape_string($conn, $row['Dining_Room_Description_276']) . "',

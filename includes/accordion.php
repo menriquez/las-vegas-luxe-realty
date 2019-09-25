@@ -5,6 +5,7 @@
         <h2 class="block-title sr-header">
             QuickSearch Greater Las Vegas Area Properties by Price and Style
         </h2>
+        <h4>[ Click City Name For Search ]</h4>
         <div class="accordion-box">
             <div class="accordion-col">
                 <div class="accordion-object">

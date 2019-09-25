@@ -57,13 +57,10 @@ class pageController {
         require "mls/view/community.php";
         
         break;
-        
-        
+
       default:
         throw new Exception('Controller ERROR - unknown action type $this->action. Please make sure the filename WITHOUT extension matches the switch/case strings in the invoke() method.');
     }
 
   }
 }
-
-?>

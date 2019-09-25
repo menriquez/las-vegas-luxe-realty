@@ -1,7 +1,7 @@
 <?php
 
-$ACTIVE_DOMAIN="lasvegasluxerealty.com";
-
+$base_root_dir = dirname(__DIR__);
+require_once  $base_root_dir . '/env.php';
 
 if (constant("DEV_NAME") != "prod")  {
     //$ACTIVE_DOMAIN=$_SERVER['HTTP_HOST'];

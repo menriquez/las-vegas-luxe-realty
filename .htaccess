@@ -31,8 +31,8 @@ ExpiresByType image/x-icon "access 1 year"
 ExpiresDefault "access 1 week"
 </IfModule>
 ## EXPIRES CACHING ##
-     
-     
+
+
 #
 #  bot and other blocking
 #
@@ -113,6 +113,9 @@ ExpiresDefault "access 1 week"
 # dynamic links here
 #
 
+
+RewriteRule ^mail/contact-landing                  contact-me.php?type=contact
+
 RewriteRule ^quicksearch/nv/([^.]+)/([^.]+)-for-sale/page([^.]+)/$             city.php?city=$1&proptype=$2&page=$3
 RewriteRule ^quicksearch/nevada/([^.]+)/([^.]+)-for-sale/page([^.]+)/$             city.php?city=$1&proptype=$2&page=$3
 RewriteRule ^quicksearch/nv/([^.]+)/([^.]+)-for-sale$                          city.php?city=$1&proptype=$2
@@ -133,11 +136,12 @@ RewriteRule ^condos/sale/([^.]+)$             search-result.php?area=$1&proptype
 RewriteRule ^hirise/sale/([^.]+)$             search-result.php?area=$1&proptype=townhome&searchtype=Residential [L,QSA]
 RewriteRule ^townhomes/sale/([^.]+)$             search-result.php?area=$1&proptype=townhome&searchtype=Residential [L,QSA]
 
-#RewriteRule ^homes/rent/([^.]+)$               search-result.php?area=$1&proptype=homes&searchtype=Rental [L,QSA]
-#RewriteRule ^condos/rent/([^.]+)$               search-result.php?area=$1&proptype=homes&searchtype=Rental [L,QSA]
-#RewriteRule ^villas/rent/([^.]+)$               search-result.php?area=$1&proptype=townhome&searchtype=Rental [L,QSA]
-#RewriteRule ^townhomes/rent/([^.]+)$               search-result.php?area=$1&proptype=townhome&searchtype=Rental [L,QSA]
+#RewriteRule ^homes/rent/([^.]+)$                       search-result.php?area=$1&proptype=homes&searchtype=Rental [L,QSA]
+#RewriteRule ^condos/rent/([^.]+)$                      search-result.php?area=$1&proptype=homes&searchtype=Rental [L,QSA]
+#RewriteRule ^villas/rent/([^.]+)$                      search-result.php?area=$1&proptype=townhome&searchtype=Rental [L,QSA]
+#RewriteRule ^townhomes/rent/([^.]+)$                   search-result.php?area=$1&proptype=townhome&searchtype=Rental [L,QSA]
 
+RewriteRule ^property-details/([^.]+)/([^.]+)/mls-([^.]+)                  detail-listing.php?mls=$3
 RewriteRule ^mlsid/([^.]+)$                  detail-listing.php?mls=$1
 RewriteRule ^mls/([^.]+)$                    detail-listing.php?mls=$1
 

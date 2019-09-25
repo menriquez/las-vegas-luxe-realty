@@ -4,18 +4,16 @@ error_reporting(E_ALL);
 require "env.php";
 include('includes/globals.php');
 require('mls/controller/retsController.php');
-require('mls/controller/pageController.php');
 
-// load 
-//$page_title = $this->page->getPageTitle();
-$page_desc = "<insert page desc here>";
-//$page_keys = $this->page->getPageKeywords();
+$controller = new retsController('loadmls');        // register controller with page action and parameter
+$controller->invoke();
+
+
+$page_title = $controller->detail_listing_page_title;
+$page_desc = $controller->detail_listing_page_desc;
+$page_keys = $controller->detail_listing_page_keys;
 
 $homepage = false;
-
-//$controller = new retsController('loadmls');        // register controller with page action and parameter
-//$controller->invoke();
-
 
 include('includes/header.php');
 ?>

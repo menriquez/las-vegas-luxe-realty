@@ -27,11 +27,23 @@ class retsController
     private $page;
     private $pagename;
 
+    public $detail_listing_page_title;
+    public $detail_listing_page_desc;
+    public $detail_listing_page_keys;
+
+    private $pct_bargain;
+    private $days_for_bargain;
+
     public function __construct($action)
     {
 
         $this->action = $action;
         //  session_start();									// for persistant data store
+    }
+
+    public function set_bargain_params($pct_deal,$days_to_check) {
+    	$this->pct_bargain = $pct_deal;
+    	$this->days_for_bargain = $days_to_check;
     }
 
     //
@@ -47,17 +59,6 @@ class retsController
 
             // site landing page...get random properties for display
             case 'adduser':
-
-                $this->user = new dbUserModel();
-
-                //  get data...
-                $this->user->addUser();
-
-                header("location: /index.php");
-
-                break;
-
-            case 'loginuser':
 
                 $this->user = new dbUserModel();
 
@@ -124,8 +125,21 @@ class retsController
 
                 break;
 
-                require('mls/view/contact_modal.view.php');
+	        // site landing page...get random properties for display
+	        case 'bargains-listing':
 
+		        $this->model = new dbRetsModel();
+
+		        //  get data...
+		        $this->model->getBargainProperties($this->pct_bargain,$this->days_for_bargain);
+
+		        // process view
+
+		        do {
+			        require('mls/view/bargain-listing.view.php');
+		        } while ($this->model->next());
+
+		        break;
 
             // site landing page...get display data for properties!
             case 'property-item':
@@ -482,28 +496,6 @@ class retsController
 
                 break;
 
-            case 'all-search':
-
-                // load model need for this action
-                $this->model = new dbRetsModel();
-
-                // set params for search and get data
-                if (!empty($_GET['area']))
-                    $this->model->setArea($_GET['area']);
-
-                else if (!empty($_GET['area_deep_resi']))
-
-                    $this->model->setArea($_GET['area_deep_resi']);
-                else if (!empty($_GET['area_deep_rent']))
-                    $this->model->setArea($_GET['area_deep_rent']);
-
-                $this->model->getSearchHeaderInfo();
-
-                // process view
-                require('mls/view/search.php');
-
-                break;
-
             case 'showmls':
             case 'single':
 
@@ -527,6 +519,7 @@ class retsController
                         require('mls/view/mlsDetail/showRent.php');
                         break;
 
+
                 }
 
                 break;
@@ -539,8 +532,25 @@ class retsController
                 // set params for search and get data
                 $this->model->setMLS($_GET['mls']);
                 $this->model->getSingleProperty();
+                $matrix_id = $this->model->getSysId();
 
-                break;
+                $is_reduced = "";
+                if ($this->model->getPrevPrice()) {
+                    $is_reduced = " which was recently reduced on " . $this->model->getPrevPriceDate() . " from " . $this->model->getPrevPrice();
+                }
+
+                $this->detail_listing_page_title = $this->model->getStreetAddress() . " | " .$this->model->getCityStZip() . " | MLS ID $_GET[mls] | Matrix ID $matrix_id | Sahar Saljougui Top Las Vegas MLS Realtor";
+
+                $this->detail_listing_page_desc = $this->model->getStreetAddress() . " | " .$this->model->getCityStZip() . " is a " . $this->model->getBeds() . " bedroom, " . $this->model->getFullBaths(). " full baths, " .
+                    $this->model->get34Baths() . " 3/4 bath, and " . $this->model->getHalfBaths() . " half bath " . strtolower( $this->model->getPropertyType() ) . " " . strtolower( $this->model->getPropertyTypeTag() ). " .    
+                     The listed price is " . $this->model->getPrice() . "$is_reduced.  The property currently has " . $this->model->getPhotoCount() . " pictures, which are " .
+                    "available for viewing on LasVegasLuxeRealty.com , is constructed of ". $this->model->getConstruction() . " and is " . $this->model->getBuildingDesc() . "  talland exterior include " . $this->model->getExtFeats() . ". The " .
+                    strtolower( $this->model->getPropertyTypeTag() ) . " faces " . $this->model->getFaces() . " and has " .$this->model->getFaces() . ". The landscape features " . trim($this->model->getLandscape() )  . ". View more at LasVegasLuxeRealty.com " .
+                    "or call Sahar Saljougui, a professional MLS realtor, and allow her to help you find what you are looking for..  MLS# " . $this->model->getMLS() .".";
+
+                $this->detail_listing_page_keys = $this->model->getStreetAddress() . "," . $this->model->getStreetAddress() . "," . $this->model->getMLS() . $this->model->getConstruction()  .  $this->model->getPrice();
+
+	            break;
 
             default:
                 throw new Exception('Controller ERROR - unknown action type {' . $this->action . '} Please make sure the filename WITHOUT extension matches the switch/case strings in the invoke() method.');

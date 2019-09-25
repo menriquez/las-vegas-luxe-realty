@@ -2,58 +2,23 @@
 // Field Map because someone at the rets place is on crack
 //include('field_map.php');
 
-// Login Information
-$rets_config['FLEXMLS']['name'] = 'FLEXMLS';
-$rets_config['FLEXMLS']['login_url'] = 'http://retsgw.flexmls.com:80/rets2_1/Login';
-$rets_config['FLEXMLS']['username'] = 'fl.rets.stevenshattow';
-$rets_config['FLEXMLS']['password'] = 'blurt-y17';
-$rets_config['FLEXMLS']['user_agent'] = 'Webware RETS';
-
 $rets_config['FLEXMLS']['name'] = 'FLEXMLS';
 $rets_config['FLEXMLS']['login_url'] = 'http://rets.las.mlsmatrix.com/rets/login.ashx';
 $rets_config['FLEXMLS']['username'] = 'webw';
 $rets_config['FLEXMLS']['password'] = 'glvar212';
 $rets_config['FLEXMLS']['user_agent'] = 'Webware RETS';
 
-// Image Setup
-//$rets_config['FLEXMLS']['image_directory'] = $base_image.'flexmls/';
-//$rets_config['FLEXMLS']['image_type'] = 'HiRes';
 
 // Query and Database Settings
 $rets_config['FLEXMLS']['query_limit'] = '200000';
 $rets_config['FLEXMLS']['server_query_limit'] = '2500000';
 $rets_config['FLEXMLS']['table_prefix'] = 'glvar';
-$rets_config['FLEXMLS']['field_map'] = $flexmls_fields;
 $rets_config['FLEXMLS']['listing_id_field'] = 'LIST_105';
 $rets_config['FLEXMLS']['master_update_script'] = 'flexmls_master_update';
 
 
-// $rets_config['FLEXMLS']['data']['rental'] = array(
-//  "resource" => "Property",
-//  "class" => "F",
-//  "create_table" => true,
-//  "keyfield" => "LIST_1",
-//  "query" => "(138=2012-01-01T00:00:00+),(LIST_15=|12MKV6FH8HUD,PWC_15429SGZYQIT)");
-
 //TODO: setup query date so it's not hard coded (LIST_132)
 
-/*$rets_config['FLEXMLS']['data']['multifamily'] = array(
-"resource" => "Property",
-"create_table" => true,
-"class" => "B",
-"keyfield" => "LIST_1",
-"query" => "(LIST_132=2011-01-01T00:00:00+),(LIST_15=|12MKUJQH3QE8,PWC_15429SGZYQIT,12LL26N0CIFT)");
-
-
-$rets_config['FLEXMLS']['data']['residential'] = array(
-"resource" => "Property",
-"create_table" => true,
-"class" => "Listing",
-"keyfield" => "matrix_unique_id ",
-// "query" => "(1=|RES),(242=|ER,EA,AU,C)"
-"query" => "(Status=|EA,A)"
-);                                                               
-*/    
 $rets_config['FLEXMLS']['data']['room'] = array(
     "resource" => "PropertySubTable",
     "create_table" => true,
@@ -61,16 +26,7 @@ $rets_config['FLEXMLS']['data']['room'] = array(
     "keyfield" => "Matrix_Unique_ID",
     "query" => ""
 );
-/*
 
-$rets_config['FLEXMLS']['data']['rental'] = array(
-"resource" => "Property",
-"create_table" => true,
-"class" => "9",
-"keyfield" => "sysid",
-"query" => "(1=RNT)"
-);
-*/
 /////////////////////////////////////////////////////////////////////////////////////////////////
 //  end of time-chunked residential data download
 /////////////////////////////////////////////////////////////////////////////////////////////////

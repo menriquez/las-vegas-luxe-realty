@@ -8,13 +8,13 @@
 
     <meta name="msvalidate.01" content="19E223A1E6F7194FF81B34A16EF3FDFC"/>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+
     <title><?= $page_title ?></title>
     <meta name="description" content="<?= $page_desc ?>">
     <meta name="keywords" content="<?= $page_keys ?>">`
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="format-detection" content="telephone=no"/>
-    <link type="text/css" rel="stylesheet" href="<?= $base_url ?>/css/style.css" />
 
     <link rel="icon" type="image/png" href="<?= $base_url ?>/img/icons/favicon.ico">
     <!-- /end meta data -->
@@ -34,7 +34,10 @@
     <link type="text/css" rel="stylesheet" href="<?= $base_url ?>/css/accordion.min.css"/>
     <link type="text/css" rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link type="text/css" rel="stylesheet" href="<?= $base_url ?>/css/media.min.css"/>
+
+    <!-- <link type="text/css" rel="stylesheet" href="<?= $base_url ?>/css/all.min.css"/>  -->
+
+    <!--<link type="text/css" rel="stylesheet" href="<?= $base_url ?>/css/media.min.css"/>  -->
     <!-- <link type="text/css" rel="stylesheet" href="css/owl.carousel.css" />
     <link type="text/css" rel="stylesheet" href="css/owl.theme.css" />                -->
     <link type="text/css" rel="stylesheet" href="<?= $base_url ?>/css/royalslider.css"/>
@@ -42,6 +45,8 @@
     <link type="text/css" rel="stylesheet" href="<?= $base_url ?>/css/pagination.css"/>
     <!-- LayerSlider stylesheet -->
     <link type="text/css" rel="stylesheet" href="<?= $base_url ?>/layerslider/css/layerslider.css">
+
+    <link type="text/css" rel="stylesheet" href="<?= $base_url ?>/css/style.css" />
     <!-- /end styles -->
 
     <!-- Global site tag (gtag.js) - Google Analytics -->

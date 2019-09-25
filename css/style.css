@@ -1,16 +1,21 @@
 @charset "utf-8";
 /* CSS Document */
 
-@import url('https://fonts.googleapis.com/css?family=Manjari&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Manjari|Courgette|Nunito|Coustard&display=swap');
 
 body * {
     padding: 0;
     margin: 0;
     -webkit-font-smoothing: antialiased;
-    font: 17px/28px 'Manjari', sans-serif;
-    font-weight: 400;
+    font: 18px/30px 'Manjari', sans-serif;
+    font-weight: 300;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
+}
+
+.col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9 {
+    padding-right: 12px;
+    padding-left: 12px;
 }
 
 html {
@@ -274,12 +279,21 @@ h1, h2, h3 {
 }
 
 .navbar-default .navbar-brand {
-    color: white;
+    color: #6cbecc;
 }
 
 .navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover {
     color: white;
     background-color: transparent;
+    line-height: 36px;
+}
+
+.navbar-brand {
+    float: left;
+    height: 40px;
+    padding: 15px 15px;
+    font-size: 18px;
+    line-height: 36px;
 }
 
 
@@ -289,13 +303,14 @@ h1, h2, h3 {
 
 .logo-name {
     font-size: 28px !important;
-    font-weight: 600;
+    font-weight: 700;
     color: #000;
     margin-left: 10px;
 }
 
 .nav.navbar-toggle {
     margin: 13px 15px 13px 0;
+    border-color: #442356;
 }
 
 .nav-phone {
@@ -2088,7 +2103,7 @@ form {
 
 .wide-block {
     margin: 0 -1000px 0;
-    padding: 30px 1000px 40px;
+    padding: 100px 1000px 80px;
     background: #f0f0f0;
 }
 
@@ -2507,8 +2522,8 @@ form {
 
 .price {
     font-weight: 800;
-    font-size: 24px;
-    padding-top: 5px;
+    font-size: 36px;
+    padding-top: 18px;
 }
 
 #wrapper  #recaptcha_widget_div input[type="text"] {
@@ -3010,6 +3025,61 @@ form {
     margin-bottom: 25px;
 }
 
+#pct-discount {
+    color: maroon;
+    font-size: 19px;
+    font-weight: 800;
+}
+
+#title-whatsthis {
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #6CBECC;
+}
+
+
+#prev-price-strike {
+    color: maroon;
+    font-size: 15px;
+    font-weight: 800;
+}
+
+#days-reduced {
+    color: #6CBECC;
+    font-weight: 700;
+    font-size: 15px;
+    float: right;
+}
+
+.featured-listings h4 {
+    font-size: 13px;
+    font-family: 'Nunito', sans-serif;
+    color: #6CBECC;
+    font-weight: 300;
+    margin: 0 8px;
+    text-align: left;
+    line-height: 1.6;
+}
+
+.icon-rotates {
+    -moz-transition: all 0.66s linear;
+    -webkit-transition: all 0.66s linear;
+    transition: all 0.66s linear;
+}
+
+.icon-rotates.rotate {
+    -moz-transition: rotate(90deg);
+    -webkit-transition: rotate(90deg);
+    transition: rotate(90deg);
+}
+
+.dropdown.open .icon-rotates {
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
 .featured-listings .block-title {
     margin: 10px 0 40px;
 }
@@ -3038,11 +3108,19 @@ form {
     font-size: 24px;
     background-color: #6CBECC;
 }
-
+.featured-listings .featured-item .heading-bargain {
+    text-align: center;
+    font-weight: 800;
+    padding: 20px 0;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 24px;
+    background-color: #ce8483;
+}
 .featured-listings .featured-item address {
     background: url(../img/location.png) scroll 0 5px no-repeat;
     border-bottom: 1px solid #d6d5d5;
-    margin-bottom: 15px;
+    margin-bottom: 17px;
     color: #666;
     padding: 0 0 10px 20px;
     font-size: 15px;
@@ -3053,16 +3131,16 @@ form {
     margin-left: -5px;
     padding: 0;
     list-style: none;
-    margin-bottom: 40px;
+    margin-bottom: 25px;
     overflow: hidden;
 }
 
 .featured-listings .featured-item .characteristics ul li {
     float: left;
-    border-right: 1px solid #666666;
+    border-right: 2px solid #666666;
     margin-left: 5px;
-    font-size: 15px;
-    line-height: 20px;
+    font-size: 16px;
+    line-height: 40px;
     padding-right: 5px;
     color: #666;
     text-transform: capitalize;
@@ -3360,6 +3438,22 @@ form {
     margin: 40px 0 15px;
 }
 
+.about-container h4 {
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #6CBECC;
+    font-family: 'Manjari', sans-serif;
+}
+
+#tinylogo {
+    font-size: 12px;
+    margin-left: 37px;
+    color: antiquewhite;
+    float: left;
+}
+
 .about-block .promo-text {
     padding-top: 30px;
 }
@@ -3384,7 +3478,7 @@ form {
 }
 
 .resources .tab-pane address {
-    font-size: 15px;
+    font-size: 16px;
     line-height: 22px;
     margin-bottom: 3px;
 }
@@ -3398,7 +3492,8 @@ form {
 }
 
 .rsThumbsBlock {
-    background-color: #d9bce8;
+    background-color: #5bc0de;
+    padding: 5px 5px;
 }
 
 .slider-block .rsDefault .rsArrowIcn {
@@ -3495,8 +3590,7 @@ form {
 
 .content-box {
     margin: 5px;
-
-    padding: 40px;
+    padding: 12px;
     background-color: #fff;
 }
 

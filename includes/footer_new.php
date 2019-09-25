@@ -44,13 +44,12 @@
                 </div>
             </div>
         </div>
-        <div class="bottom styler_bg_color">
+        <div class="bottom ">
             <div class="container">
-                <div class="row">
+                <div class="row text-center">
                     <!-- edit copyright notice here -->
                     <div class="copyrights">Design / RETS by <a href="https://webwarephpdevelopment.com">Webware PHP Development</a> &copy2016 - <?= date('Y') ?></div>
                 </div>
             </div>
         </div>
     </div>
-2016

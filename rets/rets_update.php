@@ -4,6 +4,8 @@
 date_default_timezone_set("America/New_York");
 error_reporting(E_ERROR);
 
+include_once "../env.php";
+
 /** Data Config **/
 require __DIR__ . '/database.php';
 require __DIR__ . '/flexmls/config.php';

@@ -7,6 +7,10 @@ date_default_timezone_set("America/New_York");
 //set_time_limit(0);
 $send_notification_email = true;
 //require('config_imageDL.php') ;
+
+$base_root_dir = dirname(__DIR__);
+
+require_once  $base_root_dir . '/env.php';
 require __DIR__ . '/flexmls/config.php';
 require __DIR__ . '/database.php';
 require __DIR__ . '/basic_image.php';
@@ -15,9 +19,9 @@ global $conn;
 
 $current_root_dir = __DIR__ . "/";
 
-if (is_numeric($argv[1])) $instance_id=$argv[1];
-if (is_numeric($argv[2])) $instance_tot=$argv[2];
-if (is_string($argv[1])) $listing_id = $argv[1];
+if (isset($argv[1]) && is_numeric($argv[1])) $instance_id=$argv[1];
+if (isset($argv[2]) && is_numeric($argv[2])) $instance_tot=$argv[2];
+if (isset($argv[1]) && is_string($argv[1])) $listing_id = $argv[1];
 
 // image dir
 $base_photo_image_dir = $current_root_dir . 'photos/';
@@ -66,7 +70,7 @@ if (!$rets->Connect($rets_config['FLEXMLS']['login_url'], $rets_config['FLEXMLS'
 $serverInfo = $rets->GetServerInformation();
 
 // if someone passed an id in, just get that set
-if ($listing_id) {
+if (isset($listing_id) && $listing_id) {
     get_single_image_set($listing_id, $rets);
     exit;
 }
@@ -215,7 +219,7 @@ function get_images($listing_id, $photo_count, $rets_key, $rets_object, $rets_co
         if (!mkdir($dir, 0777, true)) {
             throw new Exception("RETS_UPDATE_IMAGES.PHP - Fatel Error::Cannot Create Directory $dir...terminating.");
         } else {
-            chmod($dir, 0777);
+            @exec("chmod 777 $dir");
             echo "Successfully created $dir " . PHP_EOL;
         }
     } //!file_exists($dir)
@@ -275,7 +279,7 @@ function get_images($listing_id, $photo_count, $rets_key, $rets_object, $rets_co
                     break;
                 } else {
 
-                    // throw a party...we sucessfully saved a image!
+                    // throw a party...we successfully saved a image!
                     $image_count++;
                     echo "FL writing image " . $picFname . " [ $width x $height ]... Ok" . PHP_EOL;
 
@@ -359,7 +363,7 @@ function get_images($listing_id, $photo_count, $rets_key, $rets_object, $rets_co
 
                 $err=false;
                 try {
-                    $si->toFile($pic_fname, "image/jpeg", 60);
+                    $si->toFile($pic_fname, "image/jpeg", 70);
                 } catch (Exception $e) {
                     echo "{$e->getMessage()} :: ERROR writing compressed image file [ $pic_fname ] with basic_image class \n";
                     $err = true;
@@ -501,7 +505,6 @@ function makeTable()
     if (mysqli_num_rows($rowCnt) == 0) {
         $initTbl = mysqli_query($conn, "INSERT INTO photo_dl_info set start_time = '1970-01-01', end_time_db_ts = '1970-01-01';");
     }
-
 
 }
 

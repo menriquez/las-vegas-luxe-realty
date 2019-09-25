@@ -19,7 +19,7 @@ class dbRets extends pdoConfig {
 
 	const CARD_FIEDS = ' sysid, listing_id,listing_price, listing_date, street_name,street_dir,street_number, 
 	street_suffix, city, state_province, postal_code, 3_4_bath ,
-	sqft_living, sqft_tot, halfbaths, full_bath , bedrooms , year_built ';
+	sqft_living, sqft_tot, halfbaths, full_bath , bedrooms , year_built , active_DOM ';
 
 	public function __construct(){
 		parent::__construct( );
@@ -33,12 +33,17 @@ class dbRets extends pdoConfig {
 	public function getPropertyTypeTag () {
 
 		switch ($this->row['property_sub_type']) {
-			case "Single Family Detach":
-				return "Single Family House";
+			case "Single Family Residential":
+				return "House";
 				break;
 			default:
 				return $this->row['property_sub_type'];
 		}
+
+	}
+
+	public function getSysId() {
+		return $this->row['sysid'];
 
 	}
 
@@ -80,8 +85,11 @@ class dbRets extends pdoConfig {
 			case "Square":
 				$sfx = "Sq";
 				break;
+			case "Street":
+				$sfx="St";
+				break;
 			case "Terrace":
-				$sfx = "Ave";
+				$sfx = "Terr";
 				break;
             case "Road":
                 $sfx="Rd";
@@ -89,10 +97,12 @@ class dbRets extends pdoConfig {
 			case "Trail":
 				$sfx = "Tr";
 				break;
+			default:
+				$sff=$this->row['street_suffix'];
 
 		}
 
-		$str = $this->row['street_number']." ".$this->row['street_dir']." ".ucwords(strtolower($this->row['street_name']))." ".$sfx;
+		$str = $this->row['street_number']." ".($this->row['street_dir']<>""?$this->row['street_dir']." ":"").ucwords(strtolower($this->row['street_name']))." ".$sfx;
 
 		//$str= $this->row['public_address'];
 		if ($str=="   ")
@@ -100,8 +110,21 @@ class dbRets extends pdoConfig {
 		return $str;
 	}
 
-	public function getCityStZip() {
-		return $this->row['city'].", NV ".$this->row['postal_code'];
+	public function getCityStZip($comma=true) {
+		if ($comma)
+			return $this->row['city'].", NV ".$this->row['postal_code'];
+		else
+			return $this->row['city']." NV ".$this->row['postal_code'];
+	}
+
+	public function buildURI() {
+
+		$add = str_replace(" ","-", $this->getStreetAddress());
+		$city = str_replace(" ","-", $this->getCityStZip(false));
+		$uri = $add . "-" . $city . "/matrix-" . $this->getSysId() . $this->getMLSLink();
+
+		return $uri;
+
 	}
 
 	public function getMLS() {     
@@ -110,6 +133,23 @@ class dbRets extends pdoConfig {
 
 	public function getMUID() {
 		return $this->row['sysid'];
+	}
+
+	public function getPrevPriceDate() {
+		$do = new DateTime($this->row['last_change_date']);
+		return $do->format("mm/dd/YYYY");
+	}
+
+	public function getFaces() {
+		return $this->row['house_faces'];
+	}
+
+	public function getViews() {
+		return $this->row['home_views'];
+	}
+
+	public function getLandscape() {
+		return $this->row['landscape_desc'];
 	}
 
 	public function getSqFt() {
@@ -138,6 +178,24 @@ class dbRets extends pdoConfig {
 		return ($this->row['full_bath'].".".$this->row['3_4_bath'].".".$this->row['halfbaths']);
 	}
 
+	public function getFullBaths() {
+		return ($this->row['full_bath']);
+	}
+
+	public function get34Baths() {
+		return ($this->row['3_4_bath']);
+	}
+
+	public function getPhotoCount() {
+		return ($this->row['photo_count']);
+	}
+
+
+
+	public function getHalfBaths() {
+		return ($this->row['halfbaths']);
+	}
+
 	public function getLat() {
 		return $this->row['latitude'];
 	}
@@ -146,14 +204,14 @@ class dbRets extends pdoConfig {
 		return $this->row['longitude'];
 	}
 
-	public function getHalfBaths() {
-		return $this->row['halfbaths'];
-	}
 
 	public function getPrice() {
 		return "$".number_format($this->row['listing_price']);
 	}
 
+	public function getPrevPrice() {
+		return "$".number_format($this->row['previous_price']);
+	}
 	public function getPriceRaw() {
 		return number_format($this->row['listing_price']);
 	}
@@ -194,6 +252,13 @@ class dbRets extends pdoConfig {
 		return "//lasvegasluxerealty.com/rets/photos/".$this->row['sysid']."-0.jpg";
 	}
 
+	public function getPctDiscount() {
+		return number_format($this->row['pct_discount'],1);
+	}
+
+	public function getDOM() {
+		return $this->row['active_DOM'];
+	}
 
 	public function getPlantPicFn() {
 		// return "/mls/photos/".$this->row['sysid']."-1.jpg";
@@ -203,7 +268,15 @@ class dbRets extends pdoConfig {
 	public function getPlantName() {     
 		return $this->row['plant_name'];
 	}
-	
+
+	public function getConstruction() {
+		return $this->row['construction'];
+	}
+
+	public function getBuildingDesc() {
+		return $this->row['building_desc'];
+	}
+
 	public function getPlantPrice() {     
 		return $this->row['price'];
 	}
@@ -247,7 +320,7 @@ class dbRets extends pdoConfig {
 
 	// functions to build quicksearch links
 	public function getMLSLink() {
-		return "/".$this->getMLS().".mls";
+		return "/mls-".$this->getMLS();
 	}
 
 	// functions to build quicksearch links
@@ -417,7 +490,7 @@ class dbRetsModel extends dbRets {
 		$this->property_type=self::quote("Residential");
 
 		if ($inStg == "homes") {
-			$searchStg = "Single Family";
+			$searchStg = "Single Family Residential";
 		}                                  
 		else if ($inStg == "townhomes") {
 			$searchStg = "Townhouse";
@@ -818,6 +891,37 @@ class dbRetsModel extends dbRets {
 		AND listing_price > 300000 and county='palm beach' 
 		group by city 
 		order by  CITY asc, listing_entry_timestamp DEsc";
+
+		$this->stm = $this->prepare($sql);
+
+		$this->stm->execute();
+		$this->rows= $this->stm->fetchAll(self::FETCH_ASSOC);
+		$this->count = $this->stm->rowCount();
+		$this->row_idx = 0;
+
+		// set row to first
+		$this->row=$this->rows[$this->row_idx++];
+
+	}
+
+
+	public function getBargainProperties($pct_cutoff,$days_to_scan) {
+
+		$sql = "SELECT  " .self::CARD_FIEDS. "  , previous_price, (( previous_price - listing_price )/ previous_price )* 100 AS 'pct_discount' 
+					FROM
+						" .self::MLS_TABLENAME. " 
+					WHERE
+						last_change_type = 'Price Decrease' 
+						AND
+						(( previous_price - listing_price )/ previous_price ) > $pct_cutoff
+						AND
+						(( previous_price - listing_price )/ previous_price ) < 0.51
+						AND
+						active_DOM < $days_to_scan
+					ORDER BY
+						active_DOM ASC ,
+						pct_discount DESC
+				LIMIT 18";
 
 		$this->stm = $this->prepare($sql);
 
