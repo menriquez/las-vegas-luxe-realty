@@ -102,6 +102,8 @@ exit;
  */
 function begin_image_update($rets_object, $rets_name, $rets_config) {
 
+
+
     global $instance_id,$instance_tot;
 
     // set_time_limit(0);
@@ -114,7 +116,9 @@ function begin_image_update($rets_object, $rets_name, $rets_config) {
     // pull listing_ids for all properties without update fl`ag being set...
     //$rets_results = mysql_query("SELECT * from `master_rets_table` WHERE `rets_system` = '$rets_name' AND `photo_update` = 0 and photo_count > 0 order by listing_id ASC") or die(mysql_error());
 
-    $sql = "SELECT photo_count,sysid,listing_id,photo_timestamp FROM master_rets_table_update 
+    $sql = "SELECT photo_count,sysid,listing_id,photo_timestamp,sysid, listing_id,listing_price, listing_date, street_name,street_dir,street_number, 
+	street_suffix, city, state_province, postal_code, 3_4_bath ,
+	sqft_living, sqft_tot, halfbaths, full_bath , bedrooms , year_built , active_DOM FROM master_rets_table_update 
                 WHERE photo_timestamp > (select end_time_db_ts from photo_dl_info order by id DESC limit 1) 
                 AND photo_count > 0
                 AND property_type IN ( 'Residential','High Rise' )
@@ -150,7 +154,7 @@ function begin_image_update($rets_object, $rets_name, $rets_config) {
                 $first = 0;
             }
 
-            get_images($row['sysid'], $row['photo_count'], $row['sysid'], $rets_object, $rets_config);
+            get_images($row['sysid'], $row['photo_count'], $row['sysid'], $rets_object, $row, $rets_config);
 
             // stuff to keep track of and display percent done
             $curRow++;
@@ -198,7 +202,7 @@ function begin_image_update($rets_object, $rets_name, $rets_config) {
  * @param mixed $rets_config
  * @return bool
  */
-function get_images($listing_id, $photo_count, $rets_key, $rets_object, $rets_config): bool
+function get_images($listing_id, $photo_count, $rets_key, $rets_object, $r, $rets_config): bool
 {
 
     global $base_photo_image_dir, $base_hires_image_dir, $hiRes;
@@ -270,7 +274,7 @@ function get_images($listing_id, $photo_count, $rets_key, $rets_object, $rets_co
                 $width = imagesx($image);
                 $height = imagesy($image);
 
-                $picFname = $dir . $listing_id . '-' . $photoLink['Object-ID'] . '.jpg';
+                $picFname = build_seo_filenames($r,$photoLink['Object-ID']);
 
                 if (file_put_contents($picFname, $picData) == false) {
                     // barf...
@@ -306,13 +310,15 @@ function get_images($listing_id, $photo_count, $rets_key, $rets_object, $rets_co
             // we got the photos in the array..w00t
             foreach ($photos as $photo) {
 
-                $picFname = $dir . $listing_id . '-' . $photo['Object-ID'] . '.jpg';
+	            $picFname = build_seo_filenames($r,$photo['Object-ID']);
 
                 $image = imagecreatefromstring($photo['Data']);
                 $width = imagesx($image);
                 $height = imagesy($image);
 
-                if (file_put_contents($picFname, $photo['Data']) == false) {
+	            i;
+				if (imagewebp($photo['Data'],$picFname,65)==false) {
+                // if (file_put_contents($picFname, $photo['Data']) == false) {
 
                     echo "Could not write the file " . $picFname . PHP_EOL;
                     $write_error = true;
@@ -344,7 +350,7 @@ function get_images($listing_id, $photo_count, $rets_key, $rets_object, $rets_co
         foreach ($photos as $photo) {
 
             $image_count++;
-            $pic_fname = $dir . $listing_id . '-' . $photo['Object-ID'] . '.jpg';
+	        $pic_fname = build_seo_filenames($r,$photo['Object-ID']);
 
             try {
                 $si = new basic_image();
@@ -550,7 +556,7 @@ function get_single_image_set($listing_id, $rets_object)
 
         while ($row = mysqli_fetch_assoc($rets_results)) {
 
-            get_images($row['listing_id'], $row['photo_count'], $row['rets_key'], $rets_object, null);
+            get_images($row['listing_id'], $row['photo_count'], $row['rets_key'], $rets_object, $rownull);
 
         }
 
@@ -620,4 +626,87 @@ function updateMasterRets($listing_id)
     $sql = "UPDATE master_rets_table_update set index_photo = 1 where listing_id = '$listing_id'";
     mysqli_query($sql) or die(mysqli_error() . $sql);
 
+}
+
+function build_seo_filenames($r,$i_set_id) {
+
+	$rv = buildURI($r) . "-$i_set_id.webp";
+	return $rv;
+}
+
+function buildURI($row) {
+
+	$add = str_replace(" ","-", getStreetAddress($row));
+	$city = str_replace(" ","-", getCityStZip($row));
+	$uri = $add . "-" . $city . "-" . getMLS($row);
+
+	return $uri;
+
+}
+
+function getStreetAddress($row) {
+
+	$sfx="";
+	switch ($row['street_suffix']) {
+		case "Avenue":
+			$sfx = "Ave";
+			break;
+		case "Boulevard":
+			$sfx = "Blvd";
+			break;
+		case "Circle":
+			$sfx = "Cir";
+			break;
+		case "Court":
+			$sfx = "Ct";
+			break;
+		case "Drive":
+			$sfx = "Dr";
+			break;
+		case "Lane":
+			$sfx = "Ln";
+			break;
+		case "Highway":
+			$sfx = "Hwy";
+			break;
+		case "Parkway":
+			$sfx = "Pkwy";
+			break;
+		case "Place":
+			$sfx = "Pl";
+			break;
+		case "Square":
+			$sfx = "Sq";
+			break;
+		case "Street":
+			$sfx="St";
+			break;
+		case "Terrace":
+			$sfx = "Terr";
+			break;
+		case "Road":
+			$sfx="Rd";
+			break;
+		case "Trail":
+			$sfx = "Tr";
+			break;
+		default:
+			$sff=$row['street_suffix'];
+
+	}
+
+	$str = $row['street_number']." ".($row['street_dir']<>""?$row['street_dir']." ":"").ucwords(strtolower($row['street_name']))." ".$sfx;
+
+	if ($str=="   ")
+		$str="No Address Found";
+	return $str;
+}
+
+function getCityStZip($row) {
+
+	return $row['city']." NV ".$row['postal_code'];
+}
+
+function getMLS($row) {
+	return "mls-".$row['listing_id'];
 }
