@@ -5,6 +5,7 @@ date_default_timezone_set("America/New_York");
 error_reporting(E_ERROR);
 
 include_once "../env.php";
+$ACTIVE_DOMAIN="lasvegasluxerealty.com";
 
 /** Data Config **/
 require __DIR__ . '/database.php';
