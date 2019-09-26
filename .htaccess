@@ -1,3 +1,4 @@
+
 Options +FollowSymLinks
 RewriteEngine on
 RewriteBase /
@@ -102,16 +103,14 @@ ExpiresDefault "access 1 week"
   # Deny from 123.456.789
 </limit>
 
-################################################################################
-
-#
-#	put all hardcoded links here
-#
-
+###############################################################################
 
 #
 # dynamic links here
 #
+
+
+RewriteRule ^mail/contact-landing                  contact-me.php?type=contact
 
 RewriteRule ^quicksearch/nv/([^.]+)/([^.]+)-for-sale/page([^.]+)/$             city.php?city=$1&proptype=$2&page=$3
 RewriteRule ^quicksearch/nevada/([^.]+)/([^.]+)-for-sale/page([^.]+)/$             city.php?city=$1&proptype=$2&page=$3
@@ -129,7 +128,9 @@ RewriteRule ^nv/([^.]+)/Newest-For-Sale$                                search-r
 #RewriteRule ^nv/([^.]+)/Newest-Rentals/page([^.]+)/$                    search-result.php?area=$1&searchtype=Rental&proptype=new&page=$2
 #RewriteRule ^nv/([^.]+)/Newest-Rentals$                                 search-result.php?area=$1&searchtype=Rental&proptype=new
 
-RewriteRule ^condos/sale/([^.]+)$             search-result.php?area=$1&proptype=condo&searchtype=Residential [L,QSA]RewriteRule ^townhomes/sale/([^.]+)$             search-result.php?area=$1&proptype=townhome&searchtype=Residential [L,QSA]
+RewriteRule ^condos/sale/([^.]+)$             search-result.php?area=$1&proptype=condo&searchtype=Residential [L,QSA]
+RewriteRule ^hirise/sale/([^.]+)$             search-result.php?area=$1&proptype=townhome&searchtype=Residential [L,QSA]
+RewriteRule ^townhomes/sale/([^.]+)$             search-result.php?area=$1&proptype=townhome&searchtype=Residential [L,QSA]
 
 #RewriteRule ^homes/rent/([^.]+)$                       search-result.php?area=$1&proptype=homes&searchtype=Rental [L,QSA]
 #RewriteRule ^condos/rent/([^.]+)$                      search-result.php?area=$1&proptype=homes&searchtype=Rental [L,QSA]
