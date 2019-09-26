@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="a611a8cc-068f-4a5c-8515-e2fe68340ca2" name="centos7" url="http://lasvegasluxerealty.com">
+        <fileTransfer host="192.243.101.140" port="22" rootFolder="/home/admin/web/lasvegasluxerealty.com/public_html" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+      <webServer id="1286ec63-c9fd-4494-bb96-0a5fb50a705b" name="local xampp72" url="http://lvlr.dvp">
+        <fileTransfer port="0" mountedRoot="C:\xampp72\htdocs\lvlr" accessType="MOUNT" />
+      </webServer>
+    </option>
+    <groups>
+      <group>
+        <name>webware</name>
+        <servers>
+          <name value="centos7" />
+        </servers>
+      </group>
+    </groups>
+  </component>
+</project>
