@@ -310,7 +310,7 @@ function get_images($listing_id, $photo_count, $rets_key, $rets_object, $r, $ret
             // we got the photos in the array..w00t
             foreach ($photos as $photo) {
 
-	            $picFname = build_seo_filenames($r,$photo['Object-ID']);
+	            $picFname = $base_photo_image_dir . build_seo_filenames($r,$photo['Object-ID']);
 
                 $image = imagecreatefromstring($photo['Data']);
                 $width = imagesx($image);
@@ -630,19 +630,14 @@ function updateMasterRets($listing_id)
 
 function build_seo_filenames($r,$i_set_id) {
 
-	$rv = buildURI($r) . "-$i_set_id.webp";
+	$add = str_replace(" ","-", getStreetAddress($row));
+	$city = str_replace(" ","-", getCityStZip($row));
+	$uri = $add . "-" . $city . "-" . getMLSPhoto($row);
+
+	$rv = $uri . "-$i_set_id.webp";
 	return $rv;
 }
 
-function buildURI($row) {
-
-	$add = str_replace(" ","-", getStreetAddress($row));
-	$city = str_replace(" ","-", getCityStZip($row));
-	$uri = $add . "-" . $city . "-" . getMLS($row);
-
-	return $uri;
-
-}
 
 function getStreetAddress($row) {
 
@@ -707,6 +702,6 @@ function getCityStZip($row) {
 	return $row['city']." NV ".$row['postal_code'];
 }
 
-function getMLS($row) {
+function getMLSPhoto($row) {
 	return "mls-".$row['listing_id'];
 }
