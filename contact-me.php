@@ -21,7 +21,6 @@ if ($_REQUEST['frompage'] == "landing") {
 
 // Create the email and send the message
 	$to='SaharSaljougui@gmail.com'; // Add your email address inbetween the '' replacing yourname@yourdomain.com - This is where the form will send a message to.
-	$to='markdatavu@gmail.com';
 	$email_subject="Website Landing Page Contact Form:  $fname";
 	$email_body="You have received a new message from your website contact form.\n\nContact name:$fname\nContact email:$femail\nmessage:\n$fmsg";
 	$headers="From: noreply@lasvegasluxerealty.com\n"; // This is the email address the generated message will be from. We recommend using something like noreply@yourdomain.com.
