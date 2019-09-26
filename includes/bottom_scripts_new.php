@@ -3,6 +3,7 @@
     <script type="text/javascript" src="<?= $BASE_WEB_URL ?>/js/jquery-1.8.3.min.js"></script>
     <script type="text/javascript" src="<?= $BASE_WEB_URL ?>/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="<?= $BASE_WEB_URL ?>/js/bootstrap.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script type="text/javascript" src="<?= $BASE_WEB_URL ?>/js/jquery.smooth-scroll.js"></script>
 
 
@@ -101,6 +102,7 @@
       sr.reveal(".sr-down", down);
 
     </script>
+    <script src="<?= $BASE_WEB_URL ?>/js/toastr.js" type="text/javascript"></script>
 
     <script type="text/javascript">
 

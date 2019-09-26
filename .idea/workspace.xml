@@ -1,44 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1c851c35-a773-43b4-aad6-81ac345b23d3" name="Default Changelist" comment="lots of important fixes">
+    <list default="true" id="1c851c35-a773-43b4-aad6-81ac345b23d3" name="Default Changelist" comment="added toastro and got mail working">
       <change beforePath="$PROJECT_DIR$/.htaccess" beforeDir="false" afterPath="$PROJECT_DIR$/.htaccess" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/city.php" beforeDir="false" afterPath="$PROJECT_DIR$/city.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/contact.php" beforeDir="false" afterPath="$PROJECT_DIR$/contact.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/css/font-awesome.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/css/font-awesome.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/css/royalslider.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/royalslider.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/detail-listing.php" beforeDir="false" afterPath="$PROJECT_DIR$/detail-listing.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/accordion.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/accordion.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/includes/bottom_scripts_new.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/bottom_scripts_new.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/footer_new.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/footer_new.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/includes/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/header.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/nav-bar_new.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/nav-bar_new.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/function.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/function.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mls/controller/pageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/mls/controller/pageController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mls/controller/retsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/mls/controller/retsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mls/model/dbPageModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/mls/model/dbPageModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mls/model/dbRetsModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/mls/model/dbRetsModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mls/view/contact_modal.view.php" beforeDir="false" afterPath="$PROJECT_DIR$/mls/view/contact_modal.view.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mls/view/featured-listing.view.php" beforeDir="false" afterPath="$PROJECT_DIR$/mls/view/featured-listing.view.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mls/view/landing.view.php" beforeDir="false" afterPath="$PROJECT_DIR$/mls/view/landing.view.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mls/view/mlsDetail/showRes.php" beforeDir="false" afterPath="$PROJECT_DIR$/mls/view/mlsDetail/showRes.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rets/cookie.txt" beforeDir="false" afterPath="$PROJECT_DIR$/rets/cookie.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rets/database.php" beforeDir="false" afterPath="$PROJECT_DIR$/rets/database.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rets/flexmls/config.php" beforeDir="false" afterPath="$PROJECT_DIR$/rets/flexmls/config.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rets/flexmls/config_rooms.php" beforeDir="false" afterPath="$PROJECT_DIR$/rets/flexmls/config_rooms.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rets/phrets2.php" beforeDir="false" afterPath="$PROJECT_DIR$/rets/phrets2.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rets/rets_check_images.php" beforeDir="false" afterPath="$PROJECT_DIR$/rets/rets_check_images.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rets/rets_update.php" beforeDir="false" afterPath="$PROJECT_DIR$/rets/rets_update.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rets/rets_update_images_mrtu.php" beforeDir="false" afterPath="$PROJECT_DIR$/rets/rets_update_images_mrtu.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rets/rets_update_rooms.php" beforeDir="false" afterPath="$PROJECT_DIR$/rets/rets_update_rooms.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rets/update_mrt.php" beforeDir="false" afterPath="$PROJECT_DIR$/rets/update_mrt.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rets/update_rets.sh" beforeDir="false" afterPath="$PROJECT_DIR$/rets/update_rets.sh" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -78,6 +47,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="package.json" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -147,13 +117,14 @@
     <property name="settings.editor.splitter.proportion" value="0.21225195" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\xampp72\htdocs\lvlr" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\xampp72\htdocs\lvlr\mls\view" />
       <recent name="C:\xampp72\htdocs\lvlr" />
       <recent name="C:\xampp72\htdocs\lvlr\rets" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\xampp72\htdocs\lvlr\js" />
+      <recent name="C:\xampp72\htdocs\lvlr" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -278,7 +249,8 @@
       <workItem from="1569264617198" duration="16321000" />
       <workItem from="1569342816121" duration="3610000" />
       <workItem from="1569354423391" duration="19459000" />
-      <workItem from="1569433787784" duration="4898000" />
+      <workItem from="1569433787784" duration="9262000" />
+      <workItem from="1569445153320" duration="7995000" />
     </task>
     <task id="LOCAL-00001" summary="lots of important fixes">
       <created>1568911905628</created>
@@ -287,7 +259,14 @@
       <option name="project" value="LOCAL" />
       <updated>1568911905628</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="lots of important fixes">
+      <created>1569440775559</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1569440775559</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -313,7 +292,8 @@
       <path value="$PROJECT_DIR$/mega" />
     </ignored-roots>
     <MESSAGE value="lots of important fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="lots of important fixes" />
+    <MESSAGE value="added toastro and got mail working" />
+    <option name="LAST_COMMIT_MESSAGE" value="added toastro and got mail working" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -321,7 +301,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/contact-me.php</url>
-          <line>34</line>
+          <line>35</line>
           <option name="timeStamp" value="58" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
@@ -330,8 +310,14 @@
           <option name="timeStamp" value="62" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/mls/view/contact_modal_landing.view.php</url>
-          <option name="timeStamp" value="63" />
+          <url>file://$PROJECT_DIR$/index.php</url>
+          <line>3</line>
+          <option name="timeStamp" value="64" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/index.php</url>
+          <line>35</line>
+          <option name="timeStamp" value="65" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

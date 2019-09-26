@@ -16,12 +16,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="format-detection" content="telephone=no"/>
 
-    <link rel="icon" type="image/png" href="<?= $base_url ?>/img/icons/favicon.ico">
+    <link rel="icon" type="image/png" href="<?= $base_url ?>/img/icons/favicon.ico"/>
     <!-- /end meta data -->
 
     <!-- styles -->
     <!-- <link type="text/css" rel="stylesheet" href="/css/bootstrap.css" />  -->
-    <link async type="text/css" rel="stylesheet"
+    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+    <link type="text/css" rel="stylesheet"
           href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <!-- <link type="text/css" rel="stylesheet" href="js/rs-plugin/css/settings.css" />  -->
 
