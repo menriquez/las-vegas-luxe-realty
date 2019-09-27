@@ -44,7 +44,7 @@
                 <div id="rs_gallery1" class="royalSlider rsDefault">
 
                     <?php
-                    $this->model->getImageDisplayList();
+                        $this->model->getImageDisplayList();
                     ?>
 
                     <!-- edit featured property #1 photo #1 here

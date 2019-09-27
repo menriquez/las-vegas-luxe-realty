@@ -246,11 +246,12 @@ class dbRets extends pdoConfig {
 		return  $BASE_WEB_URL_IMAGES. "/rets/thumbs/".$this->row['sysid']."-1.jpg";
 	}
 
-	public function getFrontPicFn() {
+/*	public function getFrontPicFn() {
+
 		// return "/mls/photos/".$this->row['sysid']."-1.jpg";
-        
-		return "//lasvegasluxerealty.com/rets/photos/".$this->row['sysid']."-0.jpg";
+		return "//lasvegasluxerealty.com/rets/".$this->row['sysid']."-0.webp";
 	}
+*/
 
 	public function getPctDiscount() {
 		return number_format($this->row['pct_discount'],1);
@@ -258,6 +259,21 @@ class dbRets extends pdoConfig {
 
 	public function getDOM() {
 		return $this->row['active_DOM'];
+	}
+
+	public function getFrontPicFn() {
+
+		$add    = str_replace(" ","-", $this->getStreetAddress());
+		$city   = str_replace(" ","-", $this->getCityStZip(false));
+		$uri    = $add . "-" . $city . "-" . $this->getMLSPhoto();
+
+		$rv = "//lasvegasluxerealty.com/rets/". $uri . "-0.webp";
+
+		return $rv;
+	}
+
+	public function getMLSPhoto() {
+		return "mls-".$this->row['listing_id'];
 	}
 
 	public function getPlantPicFn() {
@@ -339,7 +355,7 @@ class dbRets extends pdoConfig {
 			$imageArr = explode("/",$image);
 			$fn = array_pop($imageArr);
 
-			$img = $BASE_WEB_URL."/rets/photos/".$fn;
+			$img = $BASE_WEB_URL."/rets/".$fn;
 			$thumb = $BASE_WEB_URL."/rets/thumbs96/".$fn;
 
 			echo "<a class='rsImg $stg' data-rsw='540' data-rsh='374' data-rsBigImg='$img' href='$img'><img width='96' height='72' class='rsTmb' src='$img' alt='' /></a>\n\n";
@@ -1588,24 +1604,23 @@ class dbRetsModel extends dbRets {
 	protected function getImageArray() {
 
 		include_once('includes/globals.php');
-
 		global $base_image_dir;
 
-		$listing_id = str_replace("'", "", $this->getMUID() );
+		$listing_fname = $this->buildURI();
 
-		$fnArray1 = glob($base_image_dir.$listing_id."-?.jpg");
+		$fnArray1 = glob($base_image_dir.$listing_fname."-?.webp");
 		if ($fnArray1==false) {
 			$fnArray1 = array();
 		}
 
 		// fix the fact the glob sometimes doens't return an array type...
-		$fnArray2 = glob($base_image_dir.$listing_id."-??.jpg");
+		$fnArray2 = glob($base_image_dir.$listing_fname."-??.webp");
 		if ($fnArray2==false) {
 			$fnArray2 = array();
 		}
 
 		// added for props with over 100 images...sigh..agents need to chill with that shit - marke
-		$fnArray3 = glob($base_image_dir.$listing_id."-???.jpg");
+		$fnArray3 = glob($base_image_dir.$listing_fname."-???.webp");
 		if ($fnArray3==false) {
 			$fnArray3 = array();
 		}
