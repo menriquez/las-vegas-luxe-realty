@@ -8,7 +8,7 @@
                                       <span class="icon-bar"></span>
                                     </button>
                                     <a href="https://lasvegasluxerealty.com">
-                                        <p class="navbar-brand pull-left logo-name">Sahar Saljougui</p><br><span id="tinylogo">Accredited NAR Associate</span>
+                                        <p class="navbar-brand pull-left logo-name">Sahar Saljougui</p><br><span id="tinylogo">GLVAR MLS Agent</span>
                                     </a>
                                   </div>
                                   <div class="collapse navbar-collapse">

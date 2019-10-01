@@ -2,6 +2,13 @@
 <project version="4">
   <component name="PublishConfigData" serverName="centos7" stopOnFirstError="true" uploadOnCheckin="a611a8cc-068f-4a5c-8515-e2fe68340ca2" autoUploadExternalChanges="true">
     <serverData>
+      <paths name="Copy of project-level server 'centos7'">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="centos7">
         <serverdata>
           <mappings>

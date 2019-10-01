@@ -2,6 +2,18 @@
 
 use enriquez\basic_image;
 
+/*
+require 'vendor/autoload.php';
+use WebPConvert\WebPConvert;
+use WebPConvert\Convert\Converters\Gd;
+use WebPConvert\Loggers\EchoLogger;
+Gd::convert($source, $destination, $options=[], new EchoLogger());
+$source = __DIR__ . '/logo.jpg';
+$destination = $source . '.webp';
+$options = [];
+WebPConvert::convert($source, $destination, $options);
+*/
+
 error_reporting(E_ERROR + E_WARNING);
 date_default_timezone_set("America/New_York");
 //set_time_limit(0);
@@ -14,6 +26,9 @@ require_once  $base_root_dir . '/env.php';
 require __DIR__ . '/flexmls/config.php';
 require __DIR__ . '/database.php';
 require __DIR__ . '/basic_image.php';
+
+$webp_compress = 55;
+
 
 global $conn;
 
@@ -101,8 +116,6 @@ exit;
  * @return void
  */
 function begin_image_update($rets_object, $rets_name, $rets_config) {
-
-
 
     global $instance_id,$instance_tot;
 
@@ -207,6 +220,7 @@ function get_images($listing_id, $photo_count, $rets_key, $rets_object, $r, $ret
 
     global $base_photo_image_dir, $base_hires_image_dir, $hiRes;
     global $diskspace_saved;
+    global $webp_compress;
 
     // Image Directory
     /* $dir = $base_image.$rets_config['image_directory'].$listing_id.'/'; */
@@ -270,13 +284,14 @@ function get_images($listing_id, $photo_count, $rets_key, $rets_object, $r, $ret
 
                 // get photo data from link and build filename
                 $picData = file_get_contents($photoLink['Location']);
-                $image = imagecreatefromstring($picData);
-                $width = imagesx($image);
-                $height = imagesy($image);
+	            $image_res = imagecreatefromstring($picData);
+                $width = imagesx($image_res);
+                $height = imagesy($image_res);
 
-                $picFname = build_seo_filenames($r,$photoLink['Object-ID']);
+                 $raw_fn = build_seo_filenames($r,$photoLink['Object-ID']);
+                 $pic_fn = $base_photo_image_dir . $raw_fn;
 
-                if (file_put_contents($picFname, $picData) == false) {
+	             if (imagewebp($image_res,$pic_fn,$webp_compress)==false) {
                     // barf...
                     echo "Could not write the file " . $picFname . "<br>" . PHP_EOL;
                     $write_error = true;
@@ -285,7 +300,7 @@ function get_images($listing_id, $photo_count, $rets_key, $rets_object, $r, $ret
 
                     // throw a party...we successfully saved a image!
                     $image_count++;
-                    echo "FL writing image " . $picFname . " [ $width x $height ]... Ok" . PHP_EOL;
+                    echo "FL writing image " . $raw_fn . " [ $width x $height ]... Ok" . PHP_EOL;
 
                     // so take it next level and create thumbs as well
                     //stampThumb($listing_id . '-' . $photoLink['Object-ID'] . '.jpg',400);
@@ -295,6 +310,7 @@ function get_images($listing_id, $photo_count, $rets_key, $rets_object, $r, $ret
             }
 
             $totPhotos = count($photosLinks);
+
             if ($image_count == $totPhotos) {
 
                 echo "FORCED LINK image DL count ok [$image_count]...updating database for listing_id $listing_id..." . PHP_EOL;
@@ -310,24 +326,25 @@ function get_images($listing_id, $photo_count, $rets_key, $rets_object, $r, $ret
             // we got the photos in the array..w00t
             foreach ($photos as $photo) {
 
-	            $picFname = $base_photo_image_dir . build_seo_filenames($r,$photo['Object-ID']);
+            	$raw_fn = build_seo_filenames($r,$photo['Object-ID']);
+	            $pic_fn = $base_photo_image_dir . $raw_fn;
 
-                $image = imagecreatefromstring($photo['Data']);
-                $width = imagesx($image);
-                $height = imagesy($image);
+                $image_res = imagecreatefromstring($photo['Data']);
+                $width = imagesx($image_res);
+                $height = imagesy($image_res);
 
-	            i;
-				if (imagewebp($photo['Data'],$picFname,65)==false) {
+				if (imagewebp($image_res,$pic_fn,$webp_compress)==false) {
+
                 // if (file_put_contents($picFname, $photo['Data']) == false) {
 
-                    echo "Could not write the file " . $picFname . PHP_EOL;
+                    echo "Could not write the file " . $raw_fn . PHP_EOL;
                     $write_error = true;
                     break;
 
                 } else {
 
                     $image_count++;
-                    echo "FP writing image " . $picFname . "  [ $width x $height ]...Ok" . PHP_EOL;
+                    echo "FP writing image " . $raw_fn . "  [ $width x $height ]...Ok" . PHP_EOL;
                     //stampThumb($listing_id . '-' . $photoLink['Object-ID'] . '.jpg',400);
 
                 }
@@ -349,53 +366,18 @@ function get_images($listing_id, $photo_count, $rets_key, $rets_object, $r, $ret
 
         foreach ($photos as $photo) {
 
+	        $jpeg_res=imagecreatefromstring($photo['Data']);
+
             $image_count++;
-	        $pic_fname = build_seo_filenames($r,$photo['Object-ID']);
+	        $raw_fn = build_seo_filenames($r,$photo['Object-ID']);
+	        $pic_fn = $base_photo_image_dir . $raw_fn;
 
-            try {
-                $si = new basic_image();
-                $si->fromString($photo['Data']);
-                $exif = $si->getExif();
-            } catch (Exception $e) {
-
-                echo "{$e->getMessage()} :: ERROR creating image object [ $pic_fname ] with basic_image class..skipping\n";
-                continue;
-
-            }
-
-            $orig_file_size = $exif['FileSize'];
-
-            if ($orig_file_size > 40000) {
-
-                $err=false;
-                try {
-                    $si->toFile($pic_fname, "image/jpeg", 70);
-                } catch (Exception $e) {
-                    echo "{$e->getMessage()} :: ERROR writing compressed image file [ $pic_fname ] with basic_image class \n";
-                    $err = true;
-                } finally {
-
-                    if ($err) {
-                        if (file_put_contents($pic_fname, $photo['Data']) == false) {
-                            echo "Could not write the file [ " . $pic_fname . " ] Skipping...".PHP_EOL;
-                        } else {
-                            echo "Writing BASE image [ " . $pic_fname . " ] Ok" . PHP_EOL;
-                        }
-                    }
-                    else
-                        echo "Writing COMPRESSED image [ " . $pic_fname . " ] Ok" . PHP_EOL;
-                }
-
-            }
-            else {
-                if (file_put_contents($pic_fname, $photo['Data']) == false) {
-                    echo "Could not write the file " . $pic_fname . PHP_EOL;
-                    $write_error = true;
-                    break;
-                } else {
-                    echo "Writing image" . $pic_fname . " Ok" . PHP_EOL;
-                }
-            }
+	        // webp it here
+	        if (imagewebp($jpeg_res,$pic_fn,$webp_compress)==false) {
+		        echo "Could not write the file [ " . $raw_fn . " ] Skipping...".PHP_EOL;
+	        } else {
+		        echo "Writing BASE image [ " . $raw_fn . " ] Ok" . PHP_EOL;
+	        }
         }
     }
 
@@ -556,7 +538,7 @@ function get_single_image_set($listing_id, $rets_object)
 
         while ($row = mysqli_fetch_assoc($rets_results)) {
 
-            get_images($row['listing_id'], $row['photo_count'], $row['rets_key'], $rets_object, $rownull);
+            get_images($row['listing_id'], $row['photo_count'], $row['rets_key'], $rets_object, $row, null);
 
         }
 
@@ -630,9 +612,9 @@ function updateMasterRets($listing_id)
 
 function build_seo_filenames($r,$i_set_id) {
 
-	$add = str_replace(" ","-", getStreetAddress($row));
-	$city = str_replace(" ","-", getCityStZip($row));
-	$uri = $add . "-" . $city . "-" . getMLSPhoto($row);
+	$add = str_replace(" ","-", getStreetAddress($r));
+	$city = str_replace(" ","-", getCityStZip($r));
+	$uri = $add . "-" . $city . "-" . getMLSPhoto($r);
 
 	$rv = $uri . "-$i_set_id.webp";
 	return $rv;

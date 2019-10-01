@@ -31,18 +31,6 @@ $homepage = true;
 
 require "includes/header.php";
 
-$femail="mark@sasdasdf.com";
-
-$to='markdatavu@gmail.com';
-$email_subject="Website Landing Page Contact Form:";
-$email_body="You have received a new message from your website contact form.\n\nContact name:blah";
-$headers="From: noreply@lasvegasluxerealty.com\n"; // This is the email address the generated message will be from. We recommend using something like noreply@yourdomain.com.
-$headers.="Reply-To: $femail";
-
-//mail($to, $email_subject, $email_body, $headers);
-
-
-
 ?>
 <body>
 
@@ -95,9 +83,6 @@ $headers.="Reply-To: $femail";
                                     Discover Sahar's Difference...
                                 </h2>
 
-                                <button type="button" id="tryMe" class="btn btn-success" aria-label="Left Align">
-                                    <span class="fa fa-tablet fa-2x" aria-hidden="true"></span>
-                                </button>
                                 <!-- promo real estate agent's block line divider here -->
 
                                 <div class="col-sm-4 col-ms-4">

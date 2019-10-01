@@ -66,11 +66,11 @@ class basic_image {
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
     //
-    // Loads an image from a data URI.
+    //  load image from uri (link)
     //
     //  $uri* (string) - A data URI.
     //
-    // Returns a SimpleImage object.
+    //  returns simple_image (SI) obj
     //
     public function fromDataUri($uri) {
         // Basic formatting check
