@@ -267,7 +267,7 @@ class dbRets extends pdoConfig {
 		$city   = str_replace(" ","-", $this->getCityStZip(false));
 		$uri    = $add . "-" . $city . "-" . $this->getMLSPhoto();
 
-		$rv = "//lasvegasluxerealty.com/rets/". $uri . "-0.webp";
+		$rv = "//lasvegasluxerealty.com/rets/photos/". $uri . "-0.webp";
 
 		return $rv;
 	}
@@ -354,8 +354,7 @@ class dbRets extends pdoConfig {
 
 			$imageArr = explode("/",$image);
 			$fn = array_pop($imageArr);
-
-			$img = $BASE_WEB_URL."/rets/".$fn;
+			$img = $BASE_WEB_URL."/rets/photos/".$fn;
 			$thumb = $BASE_WEB_URL."/rets/thumbs96/".$fn;
 
 			echo "<a class='rsImg $stg' data-rsw='540' data-rsh='374' data-rsBigImg='$img' href='$img'><img width='96' height='72' class='rsTmb' src='$img' alt='' /></a>\n\n";
