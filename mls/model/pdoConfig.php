@@ -39,9 +39,9 @@ class pdoConfig extends PDO {
 
 			// self::$_conn = parent::__construct( $dsn, $this->user, $this->pass );
 			self::$_conn = new parent( $dsn, $this->user, $this->pass, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION) );
-			self::$_conn ->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
+//			self::$_conn ->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
 
-		}
+	}
 
 	}
 
