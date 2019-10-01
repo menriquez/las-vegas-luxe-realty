@@ -223,7 +223,7 @@ function flexmls_updateResidential()
                     rooms = '" . mysqli_real_escape_string($conn, $row['Room_Count']) . "',  
                     tax_places =  '" . mysqli_real_escape_string($conn, $row['Tax_District']) . "',
                     unit_desc = '" . mysqli_real_escape_string($conn, $row['Unit_Description']) . "',                       
-                    elem_school =  '" . mysqli_real_escape_string($conn, $row['Elementary_School_K-2_2377']) . "',
+                    elem_school =  '" . mysqli_real_escape_string($conn, $row['Elementary_School_35']) . "',
                     middle_school =  '" . mysqli_real_escape_string($conn, $row['Jr_High_School']) . "',
                     high_school =  '" . mysqli_real_escape_string($conn, $row['High_School']) . "',
                     bank_owned =  '" . mysqli_real_escape_string($conn, $row['Repo_Reo_YN']) . "',

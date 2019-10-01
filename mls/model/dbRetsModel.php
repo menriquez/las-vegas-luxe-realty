@@ -97,8 +97,13 @@ class dbRets extends pdoConfig {
 			case "Trail":
 				$sfx = "Tr";
 				break;
+			case "Way":
+				$sfx = "Way";
+				break;
+			case "Valley":
+				$sfx = "Vly";
 			default:
-				$sff=$this->row['street_suffix'];
+				$sfx=$this->row['street_suffix'];
 
 		}
 
@@ -124,6 +129,13 @@ class dbRets extends pdoConfig {
 		$uri = $add . "-" . $city . "/matrix-" . $this->getSysId() . $this->getMLSLink();
 
 		return $uri;
+
+	}
+
+	public function buildAltTag() {
+		$add =  $this->getStreetAddress());
+		$city =  $this->getCityStZip(true);
+		$uri = $add . ", " . $city . "/matrix-" . $this->getSysId() . $this->getMLSLink();
 
 	}
 
@@ -189,8 +201,6 @@ class dbRets extends pdoConfig {
 	public function getPhotoCount() {
 		return ($this->row['photo_count']);
 	}
-
-
 
 	public function getHalfBaths() {
 		return ($this->row['halfbaths']);
@@ -460,6 +470,8 @@ class dbRetsModel extends dbRets {
 
 	// the search "title" is at the search level, not row level
 	public function getDisplayTitle () {
+
+		$tag="";
 
 		if (!(isset($_GET['page']))) {
 			if ($this->tag=="")
@@ -1155,6 +1167,7 @@ class dbRetsModel extends dbRets {
 
 		$this->stm = $this->prepare($sql);
 
+		$retval="";
 		$this->stm->execute();
 		foreach ($this->stm->fetchAll(self::FETCH_ASSOC) as $row) {
 			$retval.="<option value='".str_replace(' ','-',$row['city'])."'> ".$row['city']."</option>";

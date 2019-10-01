@@ -5,14 +5,5 @@
       <path value="$PROJECT_DIR$" />
     </include_path>
   </component>
-  <component name="PhpProjectServersManager">
-    <servers>
-      <server host="lvlr.test" id="0e0b45db-ecf6-471d-aa5c-b8c0c825579b" name="remote lvlr">
-        <path_mappings>
-          <mapping local-root="$PROJECT_DIR$" remote-root="/home/admin/web/lasvegasluxerealty.com/public_html" />
-        </path_mappings>
-      </server>
-    </servers>
-  </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.2" />
 </project>
