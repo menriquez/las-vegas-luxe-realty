@@ -136,11 +136,7 @@ function begin_image_update($rets_object, $rets_name, $rets_config) {
                 AND photo_count > 0
                 AND property_type IN ( 'Residential','High Rise' )
                   ORDER BY photo_timestamp DESC ";
-
-    $sql = "select photo_count,sysid,listing_id,photo_timestamp,sysid, listing_id,listing_price, listing_date, street_name,street_dir,street_number, 
-	street_suffix, city, state_province, postal_code, 3_4_bath ,
-	sqft_living, sqft_tot, halfbaths, full_bath , bedrooms , year_built , active_DOM from master_rets_table_update where street_suffix in ( 'Valley','pass','walk','cove','way','loop','lane')";
-
+    
     $rets_results = mysqli_query($conn, $sql);
     $totRows = mysqli_num_rows($rets_results);
     $curRow = 0;

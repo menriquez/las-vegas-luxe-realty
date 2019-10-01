@@ -47,12 +47,6 @@
                         $this->model->getImageDisplayList();
                     ?>
 
-                    <!-- edit featured property #1 photo #1 here
-                    <a class="rsImg bugaga" data-rsw="540" data-rsh="374" data-rsBigImg="img/gal1-house1.jpg" href="img/gal1-house1.jpg">Gallery 1: House Image #1<img width="96" height="72" class="rsTmb" src="img/gal1-house1_t.jpg" alt="" /></a>
-                    edit featured property #1 photo #2 here
-                    <a class="rsImg" data-rsw="540" data-rsh="374" data-rsBigImg="img/gal1-house2.jpg" href="img/gal1-house2.jpg">Gallery 1: House Image #2<img width="96" height="72" class="rsTmb" src="img/gal1-house2_t.jpg" alt="" /></a>
-                    -->
-
                 </div>
             </div>
         </div>

@@ -19,7 +19,7 @@ class dbRets extends pdoConfig {
 
 	const CARD_FIEDS = ' sysid, listing_id,listing_price, listing_date, street_name,street_dir,street_number, 
 	street_suffix, city, state_province, postal_code, 3_4_bath ,
-	sqft_living, sqft_tot, halfbaths, full_bath , bedrooms , year_built , active_DOM ';
+	sqft_living, sqft_tot, halfbaths, full_bath , bedrooms , year_built , active_DOM , property_sub_type , property_type';
 
 	public function __construct(){
 		parent::__construct( );
@@ -133,9 +133,9 @@ class dbRets extends pdoConfig {
 	}
 
 	public function buildAltTag() {
-		$add =  $this->getStreetAddress());
+		$add =  $this->getStreetAddress();
 		$city =  $this->getCityStZip(true);
-		$uri = $add . ", " . $city . "/matrix-" . $this->getSysId() . $this->getMLSLink();
+		$uri = "Primary image for " . strtolower($this->getPropertyTypeTag()) . " for sale for " . $this->getPrice() . " located at address " . $add . ", " . $city . " | matrix id-" . $this->getSysId() . $this->getMLSLink();
 
 	}
 
@@ -149,7 +149,7 @@ class dbRets extends pdoConfig {
 
 	public function getPrevPriceDate() {
 		$do = new DateTime($this->row['last_change_date']);
-		return $do->format("mm/dd/YYYY");
+		return $do->format("m/d/Y");
 	}
 
 	public function getFaces() {
