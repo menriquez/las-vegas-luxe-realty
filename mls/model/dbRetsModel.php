@@ -15,6 +15,11 @@ class dbRets extends pdoConfig {
 	public  $row;
 	public  $count;
 
+	protected $rows;
+	public  $row_idx;
+	protected $stm;
+
+
 	const MLS_TABLENAME = 'master_rets_table';
 
 	const CARD_FIEDS = ' sysid, listing_id,listing_price, listing_date, street_name,street_dir,street_number, 
@@ -300,6 +305,8 @@ class dbRets extends pdoConfig {
 
 	public function getPlantPicFn() {
 		// return "/mls/photos/".$this->row['sysid']."-1.jpg";
+		global $BASE_WEB_URL_IMAGES;
+
 		return $BASE_WEB_URL_IMAGES. "/img/plants/caro/".$this->row['img_fn'];
 	}
 	
@@ -442,6 +449,19 @@ class dbRets extends pdoConfig {
 		return $this->row['street_number']."+".$this->row['street_dir']."+".$this->row['street_name']."+".$this->row['street_suffix']."+".$this->row['city']."+FL";
 	}
 
+	public function initQueryResults($sql) {
+
+		$this->stm = $this->prepare($sql);
+
+		$this->stm->execute();
+		$this->rows= $this->stm->fetchAll(self::FETCH_ASSOC);
+		$this->count = $this->stm->rowCount();
+		$this->row_idx = 0;
+
+		// set row to first
+		$this->row=$this->rows[$this->row_idx++];
+	}
+
 
 }
 
@@ -449,9 +469,7 @@ class dbRets extends pdoConfig {
 class dbRetsModel extends dbRets {
 
 	// vars to handle internal row management
-	private $rows;
-	public  $row_idx;
-	private $stm;
+
 	private $vars;
 	private $paging;
 
@@ -628,9 +646,7 @@ class dbRetsModel extends dbRets {
 			if ($rowcnt++ == 6) {
 				break;
 			}
-
 		}
-
 	}
 
 	public function getSubdivCounts () {
@@ -761,16 +777,7 @@ class dbRetsModel extends dbRets {
 		limit 1
 		)";            
 
-		$this->stm = $this->prepare($sql);
-
-		$this->stm->execute();
-		$this->rows= $this->stm->fetchAll(self::FETCH_ASSOC);
-		$this->count = $this->stm->rowCount();
-		$this->row_idx = 0;
-
-		// set row to first
-		$this->row=$this->rows[$this->row_idx++];
-
+		$this->initQueryResults($sql);
 	}
 
 	public function getCitySearchButtonTag($city,$proptype,$searchtype) {
@@ -807,6 +814,7 @@ class dbRetsModel extends dbRets {
 		GROUP BY subdivision 
 		HAVING cnt > 10
 		ORDER BY cnt desc";
+
 	}
 
 	public function getCityDesc($city) {
@@ -835,15 +843,7 @@ class dbRetsModel extends dbRets {
 		AND property_type IN  ( 'Residential','High Rise' )
 		ORDER BY photo_timestamp DESC LIMIT 12";
 
-		$this->stm = $this->prepare($sql);
-
-		$this->stm->execute();
-		$this->rows= $this->stm->fetchAll(self::FETCH_ASSOC);
-		$this->count = $this->stm->rowCount();
-		$this->row_idx = 0;
-
-		// set row to first
-		$this->row=$this->rows[$this->row_idx++];
+		$this->initQueryResults($sql);
 
 	}
 	
@@ -857,32 +857,16 @@ class dbRetsModel extends dbRets {
 		AND property_type IN  ( 'Residential','High Rise' )
 		ORDER BY photo_timestamp DESC LIMIT 12";
 
-		$this->stm = $this->prepare($sql);
-
-		$this->stm->execute();
-		$this->rows= $this->stm->fetchAll(self::FETCH_ASSOC);
-		$this->count = $this->stm->rowCount();
-		$this->row_idx = 0;
-
-		// set row to first
-		$this->row=$this->rows[$this->row_idx++];
+		$this->initQueryResults($sql);
 
 	}
 
 	public function getCarouselProps() {
 
 		$sql = 'SELECT * from master_rets_table 
-		WHERE listing_id IN (SELECT listing_id from custom_listings)'; 
+		WHERE listing_id IN (SELECT listing_id from custom_listings)';
 
-		$this->stm = $this->prepare($sql);
-
-		$this->stm->execute();
-		$this->rows= $this->stm->fetchAll(self::FETCH_ASSOC);
-		$this->count = $this->stm->rowCount();
-		$this->row_idx = 0;
-
-		// set row to first
-		$this->row=$this->rows[$this->row_idx++];
+		$this->initQueryResults($sql);
 
 	}
 	
@@ -891,15 +875,7 @@ class dbRetsModel extends dbRets {
 
 		$sql = 'SELECT * from custom_listings_plants'; 
 
-		$this->stm = $this->prepare($sql);
-
-		$this->stm->execute();
-		$this->rows= $this->stm->fetchAll(self::FETCH_ASSOC);
-		$this->count = $this->stm->rowCount();
-		$this->row_idx = 0;
-
-		// set row to first
-		$this->row=$this->rows[$this->row_idx++];
+		$this->initQueryResults($sql);
 
 	}
 	
@@ -914,15 +890,7 @@ class dbRetsModel extends dbRets {
 		limit 2";
 
 
-		$this->stm = $this->prepare($sql);
-
-		$this->stm->execute();
-		$this->rows= $this->stm->fetchAll(self::FETCH_ASSOC);
-		$this->count = $this->stm->rowCount();
-		$this->row_idx = 0;
-
-		// set row to first
-		$this->row=$this->rows[$this->row_idx++];
+		$this->initQueryResults($sql);
 	}
 
 	public function getNewestProperties() {
@@ -934,15 +902,7 @@ class dbRetsModel extends dbRets {
 		group by city 
 		order by  CITY asc, listing_entry_timestamp DEsc";
 
-		$this->stm = $this->prepare($sql);
-
-		$this->stm->execute();
-		$this->rows= $this->stm->fetchAll(self::FETCH_ASSOC);
-		$this->count = $this->stm->rowCount();
-		$this->row_idx = 0;
-
-		// set row to first
-		$this->row=$this->rows[$this->row_idx++];
+		$this->initQueryResults($sql);
 
 	}
 
@@ -965,15 +925,7 @@ class dbRetsModel extends dbRets {
 						pct_discount DESC
 				LIMIT 18";
 
-		$this->stm = $this->prepare($sql);
-
-		$this->stm->execute();
-		$this->rows= $this->stm->fetchAll(self::FETCH_ASSOC);
-		$this->count = $this->stm->rowCount();
-		$this->row_idx = 0;
-
-		// set row to first
-		$this->row=$this->rows[$this->row_idx++];
+		$this->initQueryResults($sql);
 
 	}
 
@@ -1023,16 +975,7 @@ class dbRetsModel extends dbRets {
 		limit 2
 		)";            
 
-
-		$this->stm = $this->prepare($sql);
-
-		$this->stm->execute();
-		$this->rows= $this->stm->fetchAll(self::FETCH_ASSOC);
-		$this->count = $this->stm->rowCount();
-		$this->row_idx = 0;
-
-		// set row to first
-		$this->row=$this->rows[$this->row_idx++];
+		$this->initQueryResults($sql);
 
 	}
 
@@ -1042,15 +985,7 @@ class dbRetsModel extends dbRets {
 		$sql = 'SELECT * from city_information
 		ORDER BY city ASC';            
 
-		$this->stm = $this->prepare($sql);
-
-		$this->stm->execute();
-		$this->rows= $this->stm->fetchAll(self::FETCH_ASSOC);
-		$this->count = $this->stm->rowCount();
-		$this->row_idx = 0;
-
-		// set row to first
-		$this->row=$this->rows[$this->row_idx++];
+		$this->initQueryResults($sql);
 
 	}
 
@@ -1064,15 +999,8 @@ class dbRetsModel extends dbRets {
 		$sql = 'SELECT * FROM '.self::MLS_TABLENAME. '
 		WHERE property_type = '.$this->property_type.'  AND agent_id = '.$this->agent_id.'
 		ORDER BY listing_price DESC';
-		$this->stm = $this->prepare($sql);
 
-		$this->stm->execute();
-		$this->rows= $this->stm->fetchAll(self::FETCH_ASSOC);
-		$this->count = $this->stm->rowCount();
-		$this->row_idx = 0;
-
-		// set row to first
-		$this->row=$this->rows[$this->row_idx++];
+		$this->initQueryResults($sql);
 
 	}
 
@@ -1146,15 +1074,7 @@ class dbRetsModel extends dbRets {
 
 		}
 
-		$this->stm = $this->prepare($sql);
-		$this->stm->execute();
-
-		$this->rows= $this->stm->fetchAll(self::FETCH_ASSOC);
-		$this->count = $this->stm->rowCount();
-		$this->row_idx = 0;
-
-		// set row to first
-		$this->row=$this->rows[$this->row_idx++];
+		$this->initQueryResults($sql);
 
 	}
 

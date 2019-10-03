@@ -78,6 +78,7 @@ require "includes/header.php";
                                 <h2 class="block-title styler_color sr-header">
                                     Discover Sahar's Difference...
                                 </h2>
+                                <div class="block-separator clearfix"></div>
 
                                 <!-- promo real estate agent's block line divider here -->
 
@@ -116,6 +117,7 @@ require "includes/header.php";
                     </div>
 
 	                <?php require 'includes/accordion.php'; ?>
+	                <?php require 'includes/search-form.php'; ?>
 
                     <!-- begin featured listings summary block -->
                     <div id="bargains_marker"></div>
@@ -127,8 +129,9 @@ require "includes/header.php";
                                     <h2 class="block-title sr-header">
                                         Sahar's Exclusive GLVAR MLS Hot Picks Of The Week
                                     </h2>
+                                    <div class="block-separator clearfix"></div>
                                     <div id="bargain-hide-text" style="display:none" class="col-md-12">
-                                        <h4>[ every day, i handpick properties that represent newly listed "bargains"...where the homeowner has recently dropped the asking price at least 4% from the original price!  no where else can you so easily find these timely deals, and I put in a good deal of work into first finding and then posting them for you. I sincerely hope you find your dream home that you are looking for right here, and if you can save thousands of dollars as well...great! don't forget to contact me and ask about any property you see listed here, or just to say "Hi" and to tell my team and I how we could better serve your home buying needs.  thanks! - Sahar ]</h4>
+                                        <h4>[ every day, i hdpickan properties that represent newly listed "bargains"...where the homeowner has recently dropped the asking price at least 4% from the original price!  no where else can you so easily find these timely deals, and I put in a good deal of work into first finding and then posting them for you. I sincerely hope you find your dream home that you are looking for right here, and if you can save thousands of dollars as well...great! don't forget to contact me and ask about any property you see listed here, or just to say "Hi" and to tell my team and I how we could better serve your home buying needs.  thanks! - Sahar ]</h4>
                                     </div>
                                 </div>
                                 <div class="dropdown">
@@ -165,7 +168,8 @@ require "includes/header.php";
                                     <h2 class="block-title styler_color sr-header">
                                         Las Vegas & Henderson NV New MLS Listings
                                     </h2>
-                                </div>
+
+                                    <div class="block-separator clearfix"></div>
                             </div>
                             <!-- row #1 featured listings summary block -->
                             <div id="featured-listings_marker"></div>
@@ -199,7 +203,7 @@ require "includes/header.php";
                                         <h2 class="block-title styler_color sr-header">
                                             About Sahar Saljougui
                                         </h2>
-                                        <div class="block-separator clearfix"></div>
+
                                         <div class="col-sm-8 col-ms-8">
                                             <!-- edit the about text here -->
                                             <div class="promo-text ease-right-2">
@@ -240,6 +244,9 @@ require "includes/header.php";
                                                  src="//lasvegasluxerealty.com/img/mel_dog.png"
                                                  alt="Sahar Saljougui, your real estate pro!"/>
                                         </div>
+
+                                        <div class="block-separator clearfix"></div>
+
                                     </div>
                                 </div>
                             </div>

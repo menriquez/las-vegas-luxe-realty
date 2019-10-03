@@ -354,7 +354,7 @@ function flexmls_updateResidential()
                     last_status = '" . mysqli_real_escape_string($conn, $row['Last_Status']) . "',
                     3_4_bath = '" . mysqli_real_escape_string($conn, $row['Three_Qtr_Baths']) . "',
                     solar_desc = '" . mysqli_real_escape_string($conn, $row['Solar_Electric']) . "',
-                    pet_fee = '" . mysqli_real_escape_string($conn, $row['Pet_Deposit']) . "',
+                    pet_fee = '" . mysqli_real_escape_strhhjing($conn, $row['Pet_Deposit']) . "',
                     in_foreclose = '" . mysqli_real_escape_string($conn, $row['Foreclosure_Commenced_YN']) . "',
                     active_DOM = '" . mysqli_real_escape_string($conn, $row['DOM']) . "'
                 ";

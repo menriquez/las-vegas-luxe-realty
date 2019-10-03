@@ -327,7 +327,7 @@
                                                         </tr>
                                                         <tr>
                                                             <td><strong>Solar </strong></td>
-                                                            <td> <?= $this->model->getData("solar") ?></td>
+                                                            <td> <?= $this->model->getData("solar_desc") ?></td>
                                                         </tr>
                                                     </table>
                                                 </div>
@@ -340,7 +340,7 @@
                                     <a href="#" class="styler_color"><i class="arr styler_color"></i>Additional Details</a>
                                     <!-- edit featured listings house #1 exterior slide text summary here -->
                                     <div class="text">
-                                        <p><?= $this->model->getData("show_additional") ?></p>
+                                        <p><?= $this->model->getData("additional_rooms") ?></p>
                                         <div class="row">
                                             <div class="col-md-6 col-sm-6">
                                                 <!-- edit featured listings house #1 additional details slide left-side content here -->
