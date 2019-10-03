@@ -29,7 +29,6 @@ require __DIR__ . '/basic_image.php';
 
 $webp_compress = 55;
 
-
 global $conn;
 
 $current_root_dir = __DIR__ . "/";
@@ -136,7 +135,7 @@ function begin_image_update($rets_object, $rets_name, $rets_config) {
                 AND photo_count > 0
                 AND property_type IN ( 'Residential','High Rise' )
                   ORDER BY photo_timestamp DESC ";
-    
+
     $rets_results = mysqli_query($conn, $sql);
     $totRows = mysqli_num_rows($rets_results);
     $curRow = 0;
@@ -528,8 +527,11 @@ function get_single_image_set($listing_id, $rets_object)
 {
 
     global $conn;
+    global $webp_compress;
 
-    $rets_results = mysqli_query($conn, "select * from `master_rets_table_update` WHERE  listing_id = '$listing_id';");
+    $webp_compress=100;
+
+    $rets_results = mysqli_query($conn, "select * from `master_rets_table` WHERE  listing_id = '$listing_id';");
     $totRows = mysqli_num_rows($rets_results);
     $curRow = 0;
 
@@ -538,7 +540,8 @@ function get_single_image_set($listing_id, $rets_object)
 
         while ($row = mysqli_fetch_assoc($rets_results)) {
 
-            get_images($row['listing_id'], $row['photo_count'], $row['rets_key'], $rets_object, $row, null);
+
+            get_images($row['sysid'], $row['photo_count'], $row['sysid'], $rets_object, $row, null);
 
         }
 

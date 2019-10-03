@@ -6,17 +6,28 @@ var w;
 $(function () {
 
     $("#modal-contact-detail").click(function () {
-        let fullname = $('#detail-validForm').find('inSput[name="fullname"]').val();
+
+        let fullname = $('#detail-validForm').find('input[name="fullname"]').val();
         let fullemail = $('#detail-validForm').find('input[name="fullemail"]').val();
         let fullmsg = $('#text-detail-contact').val();
 
-        const url = 'mail/contact-landing';
         const data = {
             fname: fullname,
             femail: fullemail,
             fmsg: fullmsg,
             frompage: "detail"
         };
+
+        $.post("/contact-me.php", data)
+            .done(function () {
+                toastr.options.positionClass = 'toast-top-full-width';
+                toastr['success']('Thank you for requesting personalized service...Sahar will contact you ASAP');
+            })
+            .fail(function () {
+                toastr.options.positionClass = 'toast-top-full-width';
+                toastr['error']('Uh Oh...there was a problem with the website and sending the message. Please call Sahar at 415-815-9079.');
+            });
+
     });
 
     $("#modal-contact-landing").click(function () {
@@ -35,17 +46,13 @@ $(function () {
 
         $.post("/contact-me.php", data)
             .done(function () {
-                new Toast('success', 'toast-top-full-width', 'Thank you for requesting personalized service...Sahar will contact you ASAP');
-                let t = toasts[0];
-                toastr.options.positionClass = t.css;
-                toastr[t.type](t.msg);
+                toastr.options.positionClass = 'toast-top-full-width';
+                toastr['success']('Thank you for requesting personalized service...Sahar will contact you ASAP');
             })
             .fail(function () {
-                new Toast('error', 'toast-top-full-width', 'Unoh...there was a problem with the website. Please call Sahar at 415-815-9079.');
-                let t =
-                    [0];
-                toastr.options.positionClass = t.css;
-                toastr[t.type](t.msg);
+
+                toastr.options.positionClass = 'toast-top-full-width';
+                toastr['error']('Uh Oh...there was a problem with the website and sending the message. Please call Sahar at 415-815-9079.');
             });
 
     });

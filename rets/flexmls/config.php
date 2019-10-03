@@ -347,12 +347,15 @@ function flexmls_updateResidential()
                     pets =  '" . mysqli_real_escape_string($conn, $row['Pets_Allowed']) . "',        
                     design =  '" . mysqli_real_escape_string($conn, $row['design']) . "',
                     home_style = '" . mysqli_real_escape_string($conn, $row['Style']) . "',
-                    floor_num = '" . mysqli_real_escape_string($conn, $row['Elevator_Floor_Num']) . "',
+                    floor_num = '" . mysqli_real_escape_string($conn, $row['Num_Floors']) . "',
                     house_faces = '" . mysqli_real_escape_string($conn, $row['House_Faces']) . "',
                     last_change_type = '" . mysqli_real_escape_string($conn, $row['Last_Change_Type']) . "',
                     last_change_date = '" . mysqli_real_escape_string($conn, $row['Last_Change_Timestamp']) . "',
                     last_status = '" . mysqli_real_escape_string($conn, $row['Last_Status']) . "',
                     3_4_bath = '" . mysqli_real_escape_string($conn, $row['Three_Qtr_Baths']) . "',
+                    solar_desc = '" . mysqli_real_escape_string($conn, $row['Solar_Electric']) . "',
+                    pet_fee = '" . mysqli_real_escape_string($conn, $row['Pet_Deposit']) . "',
+                    in_foreclose = '" . mysqli_real_escape_string($conn, $row['Foreclosure_Commenced_YN']) . "',
                     active_DOM = '" . mysqli_real_escape_string($conn, $row['DOM']) . "'
                 ";
                 //if hoa dues + hoa dues term is wrong, fix.

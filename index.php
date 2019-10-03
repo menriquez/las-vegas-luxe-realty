@@ -9,10 +9,6 @@ require "env.php";
 require "includes/globals.php";
 require "mls/controller/retsController.php";
 
-//$action=basename(__FILE__, '.php');               // load action from filename for consistency (index for this case)
-//$controller = new retsController($action);        // register controller with page action and parameter
-//$controller->invoke();                            // invoke controller to get view
-
 $city_array = array("Henderson", "North Las Vegas", "Pahrump", "Boulder City", "Overton", "Ely", "Logandale", "Laughlin");
 $tot = count($city_array);
 
@@ -119,6 +115,8 @@ require "includes/header.php";
 
                     </div>
 
+	                <?php require 'includes/accordion.php'; ?>
+
                     <!-- begin featured listings summary block -->
                     <div id="bargains_marker"></div>
                     <div class="wide-block">
@@ -189,7 +187,6 @@ require "includes/header.php";
 
                     </div>
 
-                    <?php require 'includes/accordion.php'; ?>
 
                     <!-- the about section starts here -->
                     <div class="about-container">

@@ -61,4 +61,8 @@ class pdoConfig extends PDO {
 		return self::$_conn->quote($inStg, $inParam);        
 	}
 
+	public function fix_dashes($in) {
+		return str_replace("-"," ",$in);
+	}
+
 }

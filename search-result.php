@@ -8,8 +8,13 @@ $action = basename(__FILE__, '.php');               // load action from filename
 //$controller = new retsController($action);            // register controller with page action and parameter
 //$controller->invoke();                            // invokde controller to get view
 
-$page_title = "Las Vegas Luxe Realty - ";
-$page_desc = "Realtor, Realtors, Real estate agents specializing finding a Realtor in $city and Henderson Nevada  Sell a Home Fast. Homes and Condos For Sale, how to find a Realtor in $city ";
+$city = ucwords(fixDashes($_POST['city']));
+$prop_tag = ucwords(fixDashes($_POST['property-subtype']));
+if ($_POST['property-subtype']=="any") $prop_tag = "House, Condo, and Townhome";
+$title_tag = "$prop_tag List Price Between $$_POST[price_from] and $$_POST[price_to] and $_POST[baths_from] and $_POST[bath_to] bathrooms";
+
+$page_title = "$city GLVAR MLS $proptype Search Results | $title_tag | Sahar Saljougui Best Las Vegas MLS Realtor LasVegasLuxeRealty.com ";
+$page_desc = "$title_tag";
 $page_keys = "real estate, for sale, for rent, best Realtor near $city, top realtor for buying a new home, selling a home, sell home fast, home selling tips, cost of selling your home, 
               sell a home fast, fastest way to sell a home in $city, home selling tips, cost of selling your home, marketing your home, ways to sell your home, house staging tips, how to stage your home,
               foreclosure in $city, foreclosures in $city, short sales, short selling, short sale process, foreclosure, cons of a short sale, short selling your home, for sale by owner, why to use a Realtor,
@@ -49,7 +54,7 @@ include('includes/header.php');
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <!-- edit featured listings headline here -->
                                     <h2 class="block-title styler_color sr-header">
-                                        <?= $city ?> MLS Listings
+                                        <?= $city ?> <?= $prop_tag ?> GLVAR MLS Listings
                                     </h2>
                                 </div>
                             </div>
@@ -82,7 +87,8 @@ include('includes/header.php');
                         <!-- MLS Search form ends here -->
 
                         <?php include('includes/accordion.php'); ?>
-                        <?php include('includes/search-form.php'); ?>
+
+	                    <?php include('includes/search-form.php'); ?>
 
                     </div>
                 </div>

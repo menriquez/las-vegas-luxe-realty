@@ -542,8 +542,8 @@ class retsController
                 $this->detail_listing_page_title = $this->model->getStreetAddress() . " | " .$this->model->getCityStZip() . " | MLS ID $_GET[mls] | Matrix ID $matrix_id | Sahar Saljougui Top Las Vegas MLS Realtor";
 
                 $this->detail_listing_page_desc = $this->model->getStreetAddress() . " | " .$this->model->getCityStZip() . " is a " . $this->model->getBeds() . " bedroom, " . $this->model->getFullBaths(). " full baths, " .
-                    $this->model->get34Baths() . " 3/4 bath, and " . $this->model->getHalfBaths() . " half bath " . strtolower( $this->model->getPropertyType() ) . " " . strtolower( $this->model->getPropertyTypeTag() ). " .    
-                     The listed price is " . $this->model->getPrice() . "$is_reduced.  The property currently has " . $this->model->getPhotoCount() . " pictures, which are " .
+                    $this->model->get34Baths() . " 3/4 bath, and " . $this->model->getHalfBaths() . " half bath " . strtolower( $this->model->getPropertyType() ) . " " . strtolower( $this->model->getPropertyTypeTag() ).
+                    " The listed price is " . $this->model->getPrice() . "$is_reduced.  The property currently has " . $this->model->getPhotoCount() . " pictures, which are " .
                     "available for viewing on LasVegasLuxeRealty.com , is constructed of ". $this->model->getConstruction() . " and is " . $this->model->getBuildingDesc() . "  talland exterior include " . $this->model->getExtFeats() . ". The " .
                     strtolower( $this->model->getPropertyTypeTag() ) . " faces " . $this->model->getFaces() . " and has " .$this->model->getFaces() . ". The landscape features " . trim($this->model->getLandscape() )  . ". View more at LasVegasLuxeRealty.com " .
                     "or call Sahar Saljougui, a professional MLS realtor, and allow her to help you find what you are looking for..  MLS# " . $this->model->getMLS() .".";
@@ -551,6 +551,30 @@ class retsController
                 $this->detail_listing_page_keys = $this->model->getStreetAddress() . "," . $this->model->getStreetAddress() . "," . $this->model->getMLS() . $this->model->getConstruction()  .  $this->model->getPrice();
 
 	            break;
+
+            case 'all-search':
+
+                $this->model = new dbRetsModel();
+
+                $_POST['city'] = fixDashes($_POST['city']);
+
+                $this->model->doSearch();
+
+                echo $this->model->pagination->render();
+                echo "<br>";
+
+                if ($this->model->count > 0) {
+                    do {
+                        require('mls/view/city-listing.view.php');
+                    } while ($this->model->next());
+                } else {
+                    require('mls/view/searchNoFound.php');
+                }
+
+                echo $this->model->pagination->render();
+
+                break;
+
 
             default:
                 throw new Exception('Controller ERROR - unknown action type {' . $this->action . '} Please make sure the filename WITHOUT extension matches the switch/case strings in the invoke() method.');

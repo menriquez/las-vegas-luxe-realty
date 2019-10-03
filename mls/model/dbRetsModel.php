@@ -126,7 +126,7 @@ class dbRets extends pdoConfig {
 
 		$add = str_replace(" ","-", $this->getStreetAddress());
 		$city = str_replace(" ","-", $this->getCityStZip(false));
-		$uri = $add . "-" . $city . "/matrix-" . $this->getSysId() . $this->getMLSLink();
+		$uri = "/" . $add . "-" . $city . "/matrix-" . $this->getSysId() . $this->getMLSLink();
 
 		return $uri;
 
@@ -137,6 +137,7 @@ class dbRets extends pdoConfig {
 		$city =  $this->getCityStZip(true);
 		$uri = "Primary image for " . strtolower($this->getPropertyTypeTag()) . " for sale for " . $this->getPrice() . " located at address " . $add . ", " . $city . " | matrix id-" . $this->getSysId() . $this->getMLSLink();
 
+		return $uri;
 	}
 
 	public function getMLS() {     
@@ -282,6 +283,17 @@ class dbRets extends pdoConfig {
 		return $rv;
 	}
 
+	public function getGlobPicFn() {
+
+		$add    = str_replace(" ","-", $this->getStreetAddress());
+		$city   = str_replace(" ","-", $this->getCityStZip(false));
+		$uri    = $add . "-" . $city . "-" . $this->getMLSPhoto();
+
+		$rv = $uri;
+
+		return $rv;
+	}
+
 	public function getMLSPhoto() {
 		return "mls-".$this->row['listing_id'];
 	}
@@ -357,6 +369,7 @@ class dbRets extends pdoConfig {
 		$images = $this->getImageArray();
 
 		$first = true;
+		$cnt=0;
 
 		foreach ($images as $image) {
 
@@ -365,10 +378,12 @@ class dbRets extends pdoConfig {
 			$imageArr = explode("/",$image);
 			$fn = array_pop($imageArr);
 			$img = $BASE_WEB_URL."/rets/photos/".$fn;
-			$thumb = $BASE_WEB_URL."/rets/thumbs96/".$fn;
 
-			echo "<a class='rsImg $stg' data-rsw='540' data-rsh='374' data-rsBigImg='$img' href='$img'><img width='96' height='72' class='rsTmb' src='$img' alt='' /></a>\n\n";
+			$alt = $this->buildAltTag() . " [image $cnt]";
+
+			echo "<a class='rsImg $stg' data-rsw='540' data-rsh='374' data-rsBigImg='$img' href='$img'><img width='96' height='72' class='rsTmb' src='$img' alt='$alt' /></a>\n\n";
 			$first = false;
+			$cnt++;
 
 		}
 
@@ -1279,23 +1294,21 @@ class dbRetsModel extends dbRets {
 	public function buildQuery($countFlag=false) {
 
 		// grab "tag" string for use in titles/seo
-		if (isset($_GET['tag'])) {
+		if (isset($_POST['tag'])) {
 			$this->tag = ucwords(fixDashes($_REQUEST['tag']));
 		}
-
-
+		
 		// jump out of here if an MLS # is discovered /////////////////////////////////////////////////////////////////////////////////////////////////
-		if (!empty($_GET['mlsid'])) {
-			return "SELECT * FROM ".self::MLS_TABLENAME." WHERE listing_id = '$_GET[mlsid]' ";
+		if (!empty($_POST['mlsid'])) {
+			return "SELECT * FROM ".self::MLS_TABLENAME." WHERE listing_id = '$_POST[mlsid]' ";
 		}
 
-		if (!empty($_GET['id'])) {
-			return "SELECT * FROM ".self::MLS_TABLENAME." WHERE listing_id = '$_GET[id]' ";
+		if (!empty($_POST['id'])) {
+			return "SELECT * FROM ".self::MLS_TABLENAME." WHERE listing_id = '$_POST[id]' ";
 		}   
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-		$area = strtolower($_GET['area']);
+		
+		$area = strtolower($_POST['area']);
 
 		if ($this->isCity($area)) {
 			$city = $this->cityname = ucwords($area);  
@@ -1306,8 +1319,8 @@ class dbRetsModel extends dbRets {
 			$sql_or[] = "subdivision REGEXP '$this->subdiv'";
 
 		// throw city into the search becuz sometimes the data has a blank listing_area....sigh - marke
-		if (!empty($_GET['city']))
-			$sql_or[] = "city = '$city'";
+		if (!empty($_POST['city']))
+			$sql_or[] = "city = " . $this->fix_dashes($_POST['city']);
 
 
 		// create multi-city OR sql statement...implode() magic - marke
@@ -1325,17 +1338,18 @@ class dbRetsModel extends dbRets {
 		}
 		else {
 			$sql_addition[] = " property_type='residential' ";
-			if (isset($_GET['pricerange']) && !isset($_GET['url'])) $mult=1000; else $mult=1;      
+			if (isset($_POST['pricerange']) && !isset($_POST['url'])) $mult=1000; else $mult=1;      
 		}
 
-		$this->setPropertyType($_GET['proptype']);
+		$this->setPropertyType($_POST['proptype']);
 
-		switch (strtolower($_GET['proptype'])) {
+		switch (strtolower($_POST['proptype'])) {
 
 			// kludge-y way to deal with property_type search - ugh sorry
 			case "homes":
+			case "home":
 			case "house":
-				$type = " property_sub_type = 'Single Family Detach' ";
+				$type = " property_sub_type = 'Single Family Residential' ";
 				$isComm = false;
 				break;
 
@@ -1343,12 +1357,12 @@ class dbRetsModel extends dbRets {
 			case "townhome":
 			case "townhomes":
 			case "townhouse":
-				$type = " ( property_sub_type='town house' OR property_sub_type = '' ) ";
+				$type = "  property_sub_type='Townhouse' ";
 				break;
 
 			case "condo":
 			case "condos":
-				$type = " property_sub_type='Condo' ";
+				$type = " property_sub_type='Condominium' ";
 				break;
 
 			case "new":
@@ -1382,97 +1396,26 @@ class dbRetsModel extends dbRets {
 		//  end process top level type data ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		//
 
-
-		// quickie hack to filter commercial prop searches by sale or lease
-		if (!empty($_GET['srch'])) {
-			$sql_addition[] = " sale_lease = '$srch' ";
-		}
-
-		// quickie hack to filter commercial prop searches by sale or lease
-
-		if (!empty($_GET['subdiv'])) {
-			$_GET['subdiv']=fixDashes($_GET['subdiv']);
-			$sql_addition[] = " subdivision REGEXP '$_GET[subdiv]'";
+		if (!empty($_POST['subdiv'])) {
+			$_POST['subdiv']=fixDashes($_POST['subdiv']);
+			$sql_addition[] = " subdivision REGEXP '$_POST[subdiv]'";
 		}
 
 		if (isset($_REQUEST['bedrange']) && !empty($_REQUEST['bedrange'])) {
-			list($_GET['bedrooms_from'],$_GET['bedrooms_to']) = explode("-",$_REQUEST['bedrange']);
+			list($_POST['bedrooms_from'],$_POST['bedrooms_to']) = explode("-",$_REQUEST['bedrange']);
 		}
 
 		if (isset($_REQUEST['pricerange']) && !empty($_REQUEST['pricerange'])) {
-			list($_GET['minprice'],$_GET['maxprice']) = explode("-",$_REQUEST['pricerange']);
+			list($_POST['minprice'],$_POST['maxprice']) = explode("-",$_REQUEST['pricerange']);
 		}
 
-		//
-		//  processing search prices based on subsearch and chekcbox info /////////////////////////////////////////////////////////////////////////////////////////////////////////
-		//
-
-		if(empty($_GET['searchsubtype'])) {
-
-			if(!empty($_GET['seasonal'])) {
-
-				if(!empty($_GET['minprice'])) {
-					$price_from = $_GET['minprice']*$mult;
-					$sql_addition[] = " furn_ann_rent >= $price_from ";
-				}
-
-				if(!empty($_GET['maxprice'])) {
-					$price_to = $_GET['maxprice']*$mult;
-					$sql_addition[] = " furn_ann_rent <= $price_to ";
-				}
-			}
-			else {
-
-				if(!empty($_GET['minprice'])) {
-					$price_from = $_GET['minprice']*$mult;
-					$sql_addition[] = " listing_price >= $price_from ";
-				}
-
-				if(!empty($_GET['maxprice'])) {
-					$price_to = $_GET['maxprice']*$mult;
-					$sql_addition[] = " listing_price <= $price_to ";
-				}
-			}
-		}
-
-		else {
-
-			if ($_GET['searchsubtype']=="petfurn") {
-
-				if(!empty($_GET['minprice'])) {
-					$price_from = $_GET['minprice'];
-					$sql_addition[] = " furn_ann_rent >= $price_from ";
-				}
-
-				if(!empty($_GET['maxprice'])) {
-					$price_to = $_GET['maxprice'];
-					$sql_addition[] = " furn_ann_rent <= $price_to ";
-				}
-			}        
-
-			if ($_GET['searchsubtype']=="petunfurn") {
-
-				if(!empty($_GET['minprice'])) {
-					$price_from = $_GET['minprice'];
-					$sql_addition[] = " listing_price >= $price_from ";
-				}
-
-				if(!empty($_GET['maxprice'])) {
-					$price_to = $_GET['maxprice'];
-					$sql_addition[] = " listing_price <= $price_to ";
-				}
-			}        
-
-		}
-
-		if(!empty($_GET['price_from'])) {
-			$price_from = $_GET['price_from']*$mult;
+		if(!empty($_POST['price_from'])) {
+			$price_from = $_POST['price_from']*$mult;
 			$sql_addition[] = " listing_price >= $price_from ";
 		}
 
-
-		if(!empty($_GET['price_to'])) {
-			$price_to = $_GET['price_to']*$mult;
+		if(!empty($_POST['price_to'])) {
+			$price_to = $_POST['price_to']*$mult;
 			$sql_addition[] = " listing_price <= $price_to ";
 		}
 
@@ -1480,75 +1423,73 @@ class dbRetsModel extends dbRets {
 		//  end process price search  ///////////////////////////////////////////////////////////////////////////
 		//
 
-		if(!empty($_GET['beds']) && ($_GET['beds']=="4+")){
-			$_GET['bedrooms_from']=4;
-			$_GET['bedrooms_to']=20;
-			unset($_GET['beds']);
-		}
-		if(!empty($_GET['beds'])) {
-			$bedrooms = $_GET['beds'];
-			$sql_addition[] = " bedrooms =$bedrooms ";
+		if(!empty($_POST['beds_from']) && ($_POST['beds_from']=="any")){
+			$_POST['beds_from']=1;
+			$_POST['beds_to']=20;
+			unset($_POST['beds_from']);
+			unset($_POST['beds_to']);
 		}
 
-		if(!empty($_GET['bedrooms_from'])) {
-			$bedrooms_from = $_GET['bedrooms_from'];
-			$sql_addition[] = " bedrooms >=$bedrooms_from ";
+
+		if(!empty($_POST['beds_from'])) {
+			$bedrooms_from = $_POST['beds_from'];
+			$sql_addition[] = " bedrooms >= $bedrooms_from ";
 		}
 
-		if(!empty($_GET['bedrooms_to'])) {
-			$bedrooms_to= $_GET['bedrooms_to'];
-			$sql_addition[] = " bedrooms <=$bedrooms_to ";
+		if(!empty($_POST['beds_to'])) {
+			$bedrooms_to= $_POST['beds_to'];
+			$sql_addition[] = " bedrooms <= $bedrooms_to ";
 		}
 
-		if(!empty($_GET['baths']) && ($_GET['baths']=="4+")){
-			$_GET['bathrooms_from']=4;
-			$_GET['bathrooms_to']=20;
-			unset($_GET['baths']);
+		if(!empty($_POST['baths']) && ($_POST['baths']=="4+")){
+			$_POST['bathrooms_from']=4;
+			$_POST['bathrooms_to']=20;
+			unset($_POST['baths']);
 		}
-		if(!empty($_GET['baths'])) {
-			$baths = $_GET['baths'];
+		if(!empty($_POST['baths'])) {
+			$baths = $_POST['baths'];
 			$sql_addition[] = " bathrooms = $baths ";
 		}
 
-		if(!empty($_GET['bathrooms_from'])) {
-			$bathrooms_from = $_GET['bathrooms_from'];
+		if(!empty($_POST['bathrooms_from'])) {
+			$bathrooms_from = $_POST['bathrooms_from'];
 			$sql_addition[] = " bathrooms >=$bathrooms_from ";
 		}
 
-		if(!empty($_GET['bathrooms_to'])) {
-			$bathrooms_to = $_GET['bathrooms_to'];
+		if(!empty($_POST['bathrooms_to'])) {
+			$bathrooms_to = $_POST['bathrooms_to'];
 			$sql_addition[] = " bathrooms <=$bathrooms_to ";
 		}
 
 		/* FOOTAGE */
-		if(!empty($_GET['sqft_from'])) {
-			$footage_from = $_GET['sqft_from'];
+		if(!empty($_POST['sqft_from'])) {
+			$footage_from = $_POST['sqft_from'];
 			$sql_addition[] = " sqft_living >=$footage_from ";
 		}
 
-		if(!empty($_GET['sqft_to'])) {
-			$footage_to  = $_GET['sqft_to'];
+		if(!empty($_POST['sqft_to'])) {
+			$footage_to  = $_POST['sqft_to'];
 			$sql_addition[] = " sqft_living <=$footage_to ";
 		}
 
-		if(!empty($_GET['dwelling'])) {
-			$dwelling = $_GET['dwelling'];
+		if(!empty($_POST['dwelling'])) {
+			$dwelling = $_POST['dwelling'];
 			$sql_addition[] = " dwelling_view LIKE '%$dwelling%' ";
 		}
 
-		if(!empty($_GET['year_from'])) {
-			$year_from = $_GET['year_from'];
+		if(!empty($_POST['year_from'])) {
+			$year_from = $_POST['year_from'];
 			$sql_addition[] = "year_built >= $year_from";
 		}
 
-		if(!empty($_GET['year_to'])) {
-			$year_to = $_GET['year_to'];
+		if(!empty($_POST['year_to'])) {
+			$year_to = $_POST['year_to'];
 			$sql_addition[] = "year_built <=$year_to";
 		}
 
-		if(!empty($_GET['pool'])) {
+		if(!empty($_POST['pool'])) {
 
-			$pool = $_GET['pool'];
+			$pool = $_POST['pool'];
 			if ($pool=="on") {
 				$sql_addition[] = " private_pool = 'Yes' ";
 			} else {
@@ -1556,31 +1497,31 @@ class dbRetsModel extends dbRets {
 			}
 		}
 
-		if(!empty($_GET['over55'])) {
+		if(!empty($_POST['over55'])) {
 
 			$sql_addition[] = " ( remarks REGEXP 'adult' OR remarks REGEXP '55' ) ";
 		}
 
-		if(!empty($_GET['reo'])) {
+		if(!empty($_POST['reo'])) {
 
 			$sql_addition[] = " ( reo = 'Yes' ) ";
 		}
 
-		if(!empty($_GET['pets'])) {
+		if(!empty($_POST['pets'])) {
 
 			$sql_addition[] = " ( pets = 'Yes' OR pets = 'Restricted' ) ";
 		}   
 
-		if(!empty($_GET['gated'])) {  
+		if(!empty($_POST['gated'])) {  
 			$sql_addition[] = " security REGEXP 'gate' ";
 		}
 
 		/* FORECLOSURE */
-		if(!empty($_GET['shortsale'])) {
+		if(!empty($_POST['shortsale'])) {
 			$sql_addition[] = " short_sale = 'Yes' ";
 		}
 
-		if(!empty($_GET['waterfront'])) {
+		if(!empty($_POST['waterfront'])) {
 			$sql_addition[] = " waterfront <> 'None' ";
 		}
 
@@ -1618,26 +1559,28 @@ class dbRetsModel extends dbRets {
 		include_once('includes/globals.php');
 		global $base_image_dir;
 
-		$listing_fname = $this->buildURI();
+		$listing_fname = $this->getGlobPicFn();
 
-		$fnArray1 = glob($base_image_dir.$listing_fname."-?.webp");
+		$search_fname = $base_image_dir."/".$listing_fname."-?.webp";
+
+		$fnArray1 = glob($search_fname);
 		if ($fnArray1==false) {
 			$fnArray1 = array();
 		}
 
 		// fix the fact the glob sometimes doens't return an array type...
-		$fnArray2 = glob($base_image_dir.$listing_fname."-??.webp");
+		$fnArray2 = glob($base_image_dir."/".$listing_fname."-??.webp");
 		if ($fnArray2==false) {
 			$fnArray2 = array();
 		}
 
 		// added for props with over 100 images...sigh..agents need to chill with that shit - marke
-		$fnArray3 = glob($base_image_dir.$listing_fname."-???.webp");
+		$fnArray3 = glob($base_image_dir."/".$listing_fname."-???.webp");
 		if ($fnArray3==false) {
 			$fnArray3 = array();
 		}
 
-		// merge the arrays and get count
+		// merge the arrays and get coun
 		$images1 = array_merge($fnArray2 , $fnArray3 );
 		$images = array_merge($fnArray1 , $images1 );
 		$image_count = count($images);

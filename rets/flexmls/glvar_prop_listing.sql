@@ -222,6 +222,7 @@ CREATE TABLE `glvar_property_listing` (
   `Num_Acres` decimal(14,2) DEFAULT NULL,
   `Numberof_Furnished_Units` int(11) DEFAULT NULL,
   `Numberof_Pets` int(11) DEFAULT NULL,
+  `Numberof_Pets` int(11) DEFAULT NULL,
   `Num_Bldgs` int(11) DEFAULT NULL,
   `Num_Den_Other` int(11) DEFAULT NULL,
   `Num_Floors` int(11) DEFAULT NULL,

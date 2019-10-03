@@ -17,17 +17,30 @@ $start_time = date('G:ia');
 require('database.php');
 
 $sql = 'DELETE FROM custom_listings;';
-mysql_query($sql) or die(mysql_error() . $sql);    
+mysqli_query($conn,$sql) or die(mysqli_error($conn) . $sql);
 
-$sql = 'INSERT INTO custom_listings (listing_id) 
-        SELECT listing_id from master_rets_table 
+$sql = 'SELECT listing_id from master_rets_table 
               WHERE property_type = "Residential"
                 AND city REGEXP "(las vegas|hende
-                rson)" \
+                rson)" 
                 AND listing_price > 2000000
                 AND listing_price <= 4000000
               ORDER BY rand() DESC
-              LIMIT 5';   
-                    
-mysql_query($sql) or die(mysql_error() . $sql);    
-  
+              LIMIT 5';
+
+$rets_results = mysqli_query($conn, $sql);
+$totRows = mysqli_num_rows($rets_results);
+$curRow = 0;
+
+// get images
+if ($totRows > 0) {
+
+	while ($row=mysqli_fetch_assoc($rets_results)) {
+
+		$listing_id=$row['listing_id'];
+		system("php rets_update_images_mrtu.php $listing_id");
+
+		$update_sql = "INSERT INTO custom_listings SET listing_id = $listing_id";
+	}
+
+}
