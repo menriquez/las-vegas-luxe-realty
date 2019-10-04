@@ -8,7 +8,6 @@ require('mls/controller/retsController.php');
 $controller = new retsController('loadmls');        // register controller with page action and parameter
 $controller->invoke();
 
-
 $page_title = $controller->detail_listing_page_title;
 $page_desc = $controller->detail_listing_page_desc;
 $page_keys = $controller->detail_listing_page_keys;
