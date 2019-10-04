@@ -117,7 +117,7 @@ require "includes/header.php";
                     </div>
 
 	                <?php require 'includes/accordion.php'; ?>
-	                <?php // require 'includes/search-form.php'; ?>
+	                <?php require 'includes/search-form.php'; ?>
 
                     <!-- begin featured listings summary block -->
                     <div id="bargains_marker"></div>

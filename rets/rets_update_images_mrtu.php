@@ -180,9 +180,15 @@ function begin_image_update($rets_object, $rets_name, $rets_config) {
 
         }
 
-	    mysqli_close ( $conn );
+        if (!$conn) {
+  	        require("database.php");
+        }
+        else {
+	        mysqli_close ( $conn );
+	        require("database.php");
 
-        require_once("database.php");
+        }
+
 
         // update timestamp only if we processed some records
         $sql = "UPDATE photo_dl_info 
