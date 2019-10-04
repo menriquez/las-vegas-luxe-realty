@@ -12,7 +12,7 @@
                                         <div class="content-box shadow-back  ease-right-2">
                                             <p class="blue-plate">Las Vegas Real Estate Search - Nevada</p>
                                             <div class="wrap">
-                                                <form id="searchform" class="form-horizontal" name="form" method="post" action="/search_result.php">
+                                                <form id="searchform" class="form-horizontal" name="form" method="post" action="/search-result.php">
                                                     <input type="hidden" value="1" name="dosearch">
                                                     <input type="hidden" value="default" name="searchtype">
 
@@ -20,7 +20,7 @@
                                                         <label class="control-label col-xs-12 col-sm-5 col-md-4">Location <span class="required">(Required)</span>:</label>
                                                         <div class="col-xs-12 col-sm-7 col-md-8">
                                                             <select class="form-control" name="city">
-                                                                <option value="any">Pick a City</option>
+                                                                <option value="any">Any</option>
                                                                 <option value="las-vegas">Las Vegas</option>
                                                                 <option value="north-las-vegas">North Las Vegas</option>
                                                                 <option value="pahrump">Pahrump</option>
@@ -43,7 +43,6 @@
                                                     <div class="form-group">                
                                                         <label class="control-label col-xs-12 col-sm-5 col-md-4">Property Type:</label>
                                                         <div class="col-xs-12 col-sm-7 col-md-8">
-                                                            <select name="type" class="form-control">
                                                                 <select name="property-subtype" class="form-control">
                                                                     <option value="any">Any</option>
                                                                     <option value="home">Home</option>
@@ -51,7 +50,6 @@
                                                                     <option value="condo">Condominium</option>
                                                                     <option value="high-rise">Hi-Rise</option>
                                                                 </select>
-                                                            </select>
                                                         </div>
                                                     </div>
 
@@ -59,7 +57,7 @@
                                                         <label class="control-label col-xs-12 col-sm-5 col-md-4">Price Range:</label>
                                                         <div class="col-xs-12 col-sm-7 col-md-8 from-to">
                                                             <select name="price_from" class="form-control">
-                                                                <option value="">0</option>
+                                                                <option value="any">Any</option>
                                                                 <option value="25000">$25,000</option>
                                                                 <option value="50000">$50,000</option>
                                                                 <option value="100000">$100,000</option>
@@ -79,7 +77,7 @@
                                                                 <option value="800000">$800,000</option>
                                                                 <option value="850000">$850,000</option>
                                                                 <option value="900000">$900,000</option>
-                                                                <option value="950000">$950,000</option>
+                                                                <option value="95000">$950,000</option>
                                                                 <option value="1000000">$1,000,000</option>
                                                                 <option value="1050000">$1,050,000</option>
                                                                 <option value="1100000">$1,100,000</option>
@@ -264,10 +262,6 @@
                                                             </select>           
                                                             <span>to</span>
                                                             <select name="price_to" class="form-control">
-                                                                <option value="">Any</option>
-                                                                <option value="1000">$1,000</option>
-                                                                <option value="2000">$2,000</option>
-                                                                <option value="3000">$3,000</option>
                                                                 <option value="50000">$50,000</option>
                                                                 <option value="100000">$100,000</option>
                                                                 <option value="150000">$150,000</option>
@@ -287,7 +281,7 @@
                                                                 <option value="850000">$850,000</option>
                                                                 <option value="900000">$900,000</option>
                                                                 <option value="950000">$950,000</option>
-                                                                <option value="1000000">$1,000,000</option>
+                                                                <option selected value="1000000">$1,000,000</option>
                                                                 <option value="1050000">$1,050,000</option>
                                                                 <option value="1100000">$1,100,000</option>
                                                                 <option value="1150000">$1,150,000</option>
@@ -467,7 +461,7 @@
                                                                 <option value="9850000">$9,850,000</option>
                                                                 <option value="9900000">$9,900,000</option>
                                                                 <option value="9950000">$9,950,000</option>
-                                                                <option value="10000000">$10,000,000</option>
+                                                                <option value="10000000">$10,000,000+</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -493,12 +487,11 @@
                                                             </select>           
                                                             <span>to</span>
                                                             <select name="footage_to" class="form-control">
-
                                                                 <option value="1000">1,000</option>
                                                                 <option value="1500">1,500</option>
                                                                 <option value="2000">2,000</option>
                                                                 <option value="2000">2,000</option>
-                                                                <option value="3000">3,000</option>
+                                                                <option selected value="3000">3,000</option>
                                                                 <option value="4000">4,000</option>
                                                                 <option value="5000">5,000</option>
                                                                 <option value="6000">6,000</option>
@@ -663,7 +656,7 @@
                                                         <label class="control-label col-xs-12 col-sm-5 col-md-4">55+ Community:</label>
                                                         <div class="col-xs-12 col-sm-7 col-md-8">
                                                             <select name="adult_community" class="form-control">
-                                                                <option value="all">Show All</option>
+                                                                <option value="any">Any</option>
                                                                 <option value="yes">Yes</option>
                                                                 <option value="no">No</option>
                                                             </select>
@@ -674,7 +667,7 @@
                                                         <label class="control-label col-xs-12 col-sm-5 col-md-4">Swimming Pool:</label>
                                                         <div class="col-xs-12 col-sm-7 col-md-8">
                                                             <select name="pool" class="form-control">
-                                                                <option value="">Any</option>
+                                                                <option value="any">Any</option>
                                                                 <option value="None">None</option>
                                                                 <option value="Private">Private</option>
                                                                 <option value="Community">Community</option>
@@ -979,7 +972,7 @@
                                                 <div class="content-box shadow-back equal-1 equal-2 ease-left-2" style="height: auto;">
                                                     <p class="blue-plate">MLS Number</p>
                                                     <div class="wrap">
-                                                        <form action="/search_result.php" class="form-horizontal" method="POST" id="bymlsform">
+                                                        <form action="/search-result.php" class="form-horizontal" method="POST" id="bymlsform">
                                                             <input type="hidden" value="1" name="dosearch">
                                                             <input type="hidden" value="mls" name="searchtype">
                                                             <div class="form-group">
@@ -1004,7 +997,7 @@
                                                 <div class="content-box shadow-back equal-1 ease-left-2" style="height: auto;"> 
                                                     <p class="blue-plate">Search by Street</p>
                                                     <div class="wrap">
-                                                        <form action="/search_result.php" method="POST" class="form-horizontal" id="bymlsform">
+                                                        <form action="/search-result.php" method="POST" class="form-horizontal" id="bymlsform">
                                                             <input type="hidden" value="1" name="dosearch">
                                                             <input type="hidden" value="address" name="searchtype">
 
