@@ -116,8 +116,7 @@ require "includes/header.php";
 
                     </div>
 
-	                <?php require 'includes/accordion.php'; ?>
-	                <?php require 'includes/search-form.php'; ?>
+	                <?php // require 'includes/search-form.php'; ?>
 
                     <!-- begin featured listings summary block -->
                     <div id="bargains_marker"></div>
@@ -137,8 +136,6 @@ require "includes/header.php";
                                 <div class="dropdown">
                                     <p id="title-whatsthis" onClick="toggleShowHide('bargain-hide-text')" class="dropdown-toggle" data-toggle="dropdown"  type="button" tabindex="1">[ What Is This? ] <i class="fa fa-bars fa-1x icon-rotates" ></i></p>
                                 </div>
-
-
                             </div>
                             <br>
                             <br>
@@ -155,9 +152,9 @@ require "includes/header.php";
                             </div>
 
                         </div>
+                    </div>
                         <!-- /end featured listings summary block -->
-
-
+	                <?php require 'includes/accordion.php'; ?>
                         <!-- begin featured listings summary block -->
                     <div id="featured_marker"></div>
                     <div class="wide-block">
