@@ -245,8 +245,6 @@ require "includes/header.php";
                                                  alt="Sahar Saljougui, your real estate pro!"/>
                                         </div>
 
-                                        <div class="block-separator clearfix"></div>
-
                                     </div>
                                 </div>
                             </div>
