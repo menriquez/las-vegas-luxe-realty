@@ -195,19 +195,6 @@ $(window).resize(function () {
 
 $(window).load(function () {
 
-    function testWepP(callback) {
-        var webP = new Image();
-        webP.src = 'data:image/webp;base64,UklGRi4AAABXRUJQVlA4TCEAAAAvAUAAEB8wAiMw' +
-            'AgSSNtse/cXjxyCCmrYNWPwmHRH9jwMA';
-        webP.onload = webP.onerror = function () {
-            callback(webP.height === 2);
-        };
-    };
-
-    testWebP(function(supported) {
-        console.log((supported) ? "webP 0.2.0 supported!" : "webP not supported.");
-    });
-
     let hash = location.hash;
     if (hash) {
         $("#top_menu li a[href='" + hash + "']").click();
