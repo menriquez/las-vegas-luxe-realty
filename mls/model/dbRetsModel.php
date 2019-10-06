@@ -709,70 +709,64 @@ class dbRetsModel extends dbRets {
 		$sql = "(select *
 		from master_rets_table
 		where property_type = 'Residential' and city = 'JUNO BEACH' and listing_price > 500000 and listing_price <= 1500000
-		AND index_photo = 1
+	
 		order by rand()
 		limit 1
 		) union all
 		(select *
 		from master_rets_table
 		where property_type = 'Residential' and city = 'palm beach gardens' and listing_price > 500000 and   listing_price <= 1500000
-		AND index_photo = 1
 		order by rand()
 		limit 1
 		) union all
 		(select *
 		from master_rets_table
 		where property_type = 'Residential' and city = 'North Palm Beach' and listing_price > 500000 and   listing_price <= 1500000
-		AND index_photo = 1
 		order by rand()
 		limit 1
 		) union all             
 		(select *
 		from master_rets_table
 		where property_type = 'Residential' and city = 'Palm Beach' and listing_price > 500000 and   listing_price <= 1500000
-		AND index_photo = 1
 		order by rand()
 		limit 1
 		) union all             
 		(select *
 		from master_rets_table
 		where property_type = 'Residential' and city = 'Boynton Beach' and listing_price > 500000 and   listing_price <= 1500000
-		AND index_photo = 1
 		order by rand()
 		limit 1
 		) union all              
 		(select *
 		from master_rets_table
 		where property_type = 'Residential' and city = 'Delray Beach' and listing_price > 500000 and   listing_price <= 1500000
-		AND index_photo = 1
 		order by rand()
 		limit 1
 		) union all  
 		(select *
 		from master_rets_table
 		where property_type = 'Residential' and city = 'jupiter' and listing_price > 500000 and listing_price <= 1500000
-		AND index_photo = 1
 		order by rand()
 		limit 1
 		) union all
 		(select *
 		from master_rets_table
 		where property_type = 'Residential' and city = 'WEST PALM BEACH' and listing_price > 500000 and  listing_price <= 1500000
-		AND index_photo = 1
+		 
 		order by rand()
 		limit 1
 		) union all
 		(select *
 		from master_rets_table
 		where property_type = 'Residential' and city = 'Boca Raton' and listing_price > 500000 and  listing_price <= 1500000
-		AND index_photo = 1
+		 
 		order by rand()
 		limit 1
 		) union all
 		(select *
 		from master_rets_table
 		where property_type = 'Residential' and city = 'Singer Island' and listing_price > 500000 and  listing_price <= 1500000
-		AND index_photo = 1
+		 
 		order by rand()
 		limit 1
 		)";            
@@ -840,21 +834,22 @@ class dbRetsModel extends dbRets {
 		WHERE listing_price > 600000 AND listing_price < 1300000 
 		AND photo_count > 0 
 		AND property_status IN  ( 'active' )
-		AND property_type IN  ( 'Residential','High Rise' )
+		AND property_type IN  ( 'Residential' )
+	
 		ORDER BY photo_timestamp DESC LIMIT 12";
 
 		$this->initQueryResults($sql);
 
 	}
-	
 
-	public function getFeaturedListingPlants() {
+	public function getHighRiseListingProps() {
 
 		$sql = "SELECT  ".self::CARD_FIEDS." from master_rets_table 
-		WHERE listing_price > 600000 AND listing_price < 1300000 
+		WHERE listing_price > 900000 AND listing_price < 1800000 
 		AND photo_count > 0 
 		AND property_status IN  ( 'active' )
-		AND property_type IN  ( 'Residential','High Rise' )
+		AND property_type IN  ( 'High-Rise )
+		
 		ORDER BY photo_timestamp DESC LIMIT 12";
 
 		$this->initQueryResults($sql);
@@ -920,6 +915,7 @@ class dbRetsModel extends dbRets {
 						(( previous_price - listing_price )/ previous_price ) < 0.51
 						AND
 						active_DOM < $days_to_scan
+					
 					ORDER BY
 						active_DOM ASC ,
 						pct_discount DESC
@@ -935,42 +931,42 @@ class dbRetsModel extends dbRets {
 		$sql = "(select *
 		from master_rets_table
 		where property_type = 'Residential' and city = 'Jupiter' and listing_price > 300000 and listing_price <= 1000000
-		AND index_photo = 1
+		 
 		order by listing_entry_timestamp DESC
 		limit 2
 		) UNION ALL
 		(select *
 		from master_rets_table
 		where property_type = 'Residential' and city = 'palm beach gardens' and listing_price > 500000 and   listing_price <= 1000000
-		AND index_photo = 1
+		 
 		order by listing_entry_timestamp DESC
 		limit 2
 		) UNION ALL
 		(select *
 		from master_rets_table
 		where property_type = 'Residential' and city = 'WEST PALM BEACH' and listing_price > 500000 and listing_price <= 1000000
-		AND index_photo = 1
+		
 		order by listing_entry_timestamp DESC
 		limit 2
 		) UNION ALL
 		(select *
 		from master_rets_table
 		where property_type = 'Residential' and city = 'Boyton Beach' and listing_price > 500000 and  listing_price <= 1000000
-		AND index_photo = 1
+		
 		order by listing_entry_timestamp DESC
 		limit 2
 		) UNION ALL
 		(select *
 		from master_rets_table
 		where property_type = 'Residential' and city = 'Delray Beach' and listing_price > 500000 and  listing_price <= 1000000
-		AND index_photo = 1
+	
 		order by listing_entry_timestamp DESC
 		limit 2
 		) UNION ALL
 		(select *
 		from master_rets_table
 		where property_type = 'Residential' and city = 'Boca Raton' and listing_price > 500000 and  listing_price <= 1000000
-		AND index_photo = 1
+		
 		order by listing_entry_timestamp DESC
 		limit 2
 		)";            
@@ -1010,6 +1006,7 @@ class dbRetsModel extends dbRets {
 		WHERE city = '.$this->city.'
 		AND  property_sub_type = '.$this->property_subtype.'
 		AND listing_price >= '.$this->min_price.' AND listing_price <= '.$this->max_price.'
+		
 		ORDER BY listing_price DESC ';
 
 		$this->stm = $this->prepare($sql);
@@ -1392,12 +1389,11 @@ class dbRetsModel extends dbRets {
 			$sql_addition[] = " sqft_living <=$footage_to ";
 		}
 
-		if(!empty($_POST['dwelling'])) {
-			$dwelling = $_POST['dwelling'];
-			$sql_addition[] = " dwelling_view LIKE '%$dwelling%' ";
-		}
-
 		if(!empty($_POST['year_from'])) {
+			if ($_POST['year_from']=="any") {
+				$year_from = "1000";
+				$_POST['year_to'] = date("Y");
+			}
 			$year_from = $_POST['year_from'];
 			$sql_addition[] = "year_built >= $year_from";
 		}
@@ -1415,6 +1411,11 @@ class dbRetsModel extends dbRets {
 			} else {
 				$sql_addition[] = " private_pool = 'No' OR private_pool = '' ";
 			}
+		}
+
+		if(!empty($_POST['dwelling'])) {
+			$dwelling = $_POST['dwelling'];
+			$sql_addition[] = " dwelling_view LIKE '%$dwelling%' ";
 		}
 
 		if(!empty($_POST['over55'])) {

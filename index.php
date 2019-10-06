@@ -130,7 +130,7 @@ require "includes/header.php";
                                     </h2>
                                     <div class="block-separator clearfix"></div>
                                     <div id="bargain-hide-text" style="display:none" class="col-md-12">
-                                        <h4>[ every day, i hdpickan properties that represent newly listed "bargains"...where the homeowner has recently dropped the asking price at least 4% from the original price!  no where else can you so easily find these timely deals, and I put in a good deal of work into first finding and then posting them for you. I sincerely hope you find your dream home that you are looking for right here, and if you can save thousands of dollars as well...great! don't forget to contact me and ask about any property you see listed here, or just to say "Hi" and to tell my team and I how we could better serve your home buying needs.  thanks! - Sahar ]</h4>
+                                        <h4>[ every day, i handpick properties that represent newly listed "bargains"...where the homeowner has recently dropped the asking price at least 4% from the original price!  no where else can you so easily find these timely deals, and I put in a good deal of work into first finding and then posting them for you. I sincerely hope you find your dream home that you are looking for right here, and if you can save thousands of dollars as well...great! don't forget to contact me and ask about any property you see listed here, or just to say "Hi" and to tell my team and I how we could better serve your home buying needs.  thanks! - Sahar ]</h4>
                                     </div>
                                 </div>
                                 <div class="dropdown">

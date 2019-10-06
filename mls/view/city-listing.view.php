@@ -3,8 +3,8 @@
 																								<!-- featured item  house #1 summary info -->
 																								<div class="featured-item box-seq shadow-back">
 																									<!-- house #1 image -->
-																									<a id="mls-<?= $this->model->row_idx ?>" href="//<?= $BASE_WEB_URL ?>/mlsid/<?= $this->model->getMLS() ?>" class="property-link"> <img class="img-responsive" src="<?= $this->model->getFrontPicFn()?>" alt=""></a>
-																									<!-- house #1 headline -->                        
+                                                                                                    <a id="mls-<?= $this->model->getMLS() ?>" href="<?= $BASE_WEB_URL ?>/property-details<?= $this->model->buildURI() ?>" class="property-link"> <img class="img-responsive" src="<?= $this->model->getFrontPicFn()?>" alt="<?= $this->model->buildAltTag()?>"></a>
+                                                                                                    <!-- house #1 headline -->
 																									<div class="heading styler_bg_color lead"><?= $this->model->getPrice()?></div>
 																									<!-- house #1 summary content -->
 																									<div class="content">
@@ -32,8 +32,8 @@
 																												<div class="col-md-6 col-sm-6">
 																													<!-- link to house #1 featured item detail -->
 																													<div class="more">
-																														<a id="mls-<?= $this->model->getMLS() ?>" href="//<?= $BASE_WEB_URL ?>/mlsid/<?= $this->model->getMLS() ?>" class="styler_color">View Details</a>
-																													</div>
+                                                                                                                        <a id="mls-<?= $this->model->getMLS() ?>" href="<?= $BASE_WEB_URL ?>/property-details<?= $this->model->buildURI() ?>" class="styler_color">View Details</a>
+                                                                                                                    </div>
 																												</div>
 																											</div>                
 																										</div>

@@ -674,7 +674,7 @@
                                                             </select>
                                                         </div>
                                                     </div>
-
+<!--
                                                     <button class="btn btn-gen btn-block collapsed" type="button" data-toggle="collapse" data-target="#collapseSearch" aria-expanded="false" aria-controls="collapseExample">
                                                         More Search Options <i class="fa fa-chevron-down"></i>
                                                     </button>
@@ -964,7 +964,9 @@
                                                 </form>
                                             </div>
                                         </div>
-                                    </div>     
+                                    </div>
+
+                                    -->
 
                                     <div class="col-xs-12 col-md-12 col-lg-4">
                                         <div class="row">
