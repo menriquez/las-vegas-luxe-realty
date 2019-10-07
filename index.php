@@ -14,7 +14,7 @@ $tot = count($city_array);
 
 $city = $city_array[rand(0, $tot)];
 
-$page_title = "Las Vegas Luxe Real Estate - MLS Real Estate in Las Vegas, Nevada MLS Homes, Condos, and Townhomes.";
+$page_title = "MLS Real Estate in Las Vegas and Henderson, Nevada Featuring GLVAR Homes, Condos, and Townhomes For Sale.";
 $page_desc = "Sahar Saljougui, a top MLS Realor, specializing in finding that perfect MLS House, Condo, or Townhome in Las Vegas, Nevada, or to sell your home fast!";
 $page_keys = "las vegas real estate, for sale, for rent, best mls realtor near Las Vegas, top realtor for buying a new home, selling a home, sell home fast, home selling tips, cost of selling your home,
               sell a home fast, fastest way to sell a home in Las Vegas, home selling tips, cost of selling your home, marketing your home, ways to sell your home, house staging tips, how to stage your home,
@@ -116,7 +116,7 @@ require "includes/header.php";
 
                     </div>
 
-	                <?php // require 'includes/search-form.php'; ?>
+	                <?php require 'includes/search-form.php'; ?>
 
                     <!-- begin featured listings summary block -->
                     <div id="bargains_marker"></div>

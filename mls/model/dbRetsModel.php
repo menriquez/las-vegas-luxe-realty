@@ -559,7 +559,7 @@ class dbRetsModel extends dbRets {
 			$searchStg = "Condominium";
 		}     
 		else {
-			$this->property_type=self::quote("High-Rise");
+			$this->property_type=self::quote("High Rise");
 			$searchStg = "";
 		}
 
@@ -848,7 +848,7 @@ class dbRetsModel extends dbRets {
 		WHERE listing_price > 900000 AND listing_price < 1800000 
 		AND photo_count > 0 
 		AND property_status IN  ( 'active' )
-		AND property_type IN  ( 'High-Rise )
+		AND property_type IN  ( 'High Rise )
 		
 		ORDER BY photo_timestamp DESC LIMIT 12";
 
@@ -1216,28 +1216,60 @@ class dbRetsModel extends dbRets {
 		}
 		
 		// jump out of here if an MLS # is discovered /////////////////////////////////////////////////////////////////////////////////////////////////
-		if (!empty($_POST['mlsid'])) {
+		if (!empty($_POST['mlsnumber'])) {
 			return "SELECT * FROM ".self::MLS_TABLENAME." WHERE listing_id = '$_POST[mlsid]' ";
 		}
 
-		if (!empty($_POST['id'])) {
-			return "SELECT * FROM ".self::MLS_TABLENAME." WHERE listing_id = '$_POST[id]' ";
-		}   
-		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		
-		$area = strtolower($_POST['area']);
-
-		if ($this->isCity($area)) {
-			$city = $this->cityname = ucwords($area);  
-			$sql_or[] = "city = '$city'";
+		if (!empty($_POST['streetName'])) {
+			$s = $_POST['streetName'];
+			return "SELECT * FROM ".self::MLS_TABLENAME." WHERE city = " . $this->quote($this->fix_dashes($_POST['city'])) . " AND street_name LIKE '%$s' ";
 		}
+
+		$qs = false;
+		switch ($_REQUEST['type']) {
+
+			case "homes":
+				$type = "  property_type='Residential' ";
+				$subtype = " property_sub_type='Single Family Residential' ";
+				$interval = 2;
+				$qs = true;
+				break;
+			case "condos":
+				$type = "  property_type='Residential' ";
+				$subtype = " property_sub_type='Condominium' ";
+				$interval = 3;
+				$qs = true;
+				break;
+			case "townhouses":
+				$type = "  property_type='Residential' ";
+				$subtype = " property_sub_type='Townhomes' ";
+				$interval = 5;
+				$qs = true;
+			break;
+			case "highrise":
+				$type = "  property_type='High Rise' ";
+				$subtype = " property_sub_type='' ";
+				$interval = 7;
+				$qs = true;
+				break;
+
+
+		}
+
+		if ($qs) {
+			return "SELECT " . self::CARD_FIEDS . " FROM ".self::MLS_TABLENAME." WHERE 
+					(DATE_SUB(CURDATE(),INTERVAL 2 DAY) <= listing_date) AND 
+					$type AND $subtype ORDER BY listing_date DESC ";
+		}
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 		if (!empty($this->subdiv))
 			$sql_or[] = "subdivision REGEXP '$this->subdiv'";
 
 		// throw city into the search becuz sometimes the data has a blank listing_area....sigh - marke
 		if (!empty($_POST['city']))
-			$sql_or[] = "city = " . $this->fix_dashes($_POST['city']);
+			$sql_or[] = "city = " . $this->quote($this->fix_dashes($_POST['city']));
 
 
 		// create multi-city OR sql statement...implode() magic - marke
@@ -1249,37 +1281,35 @@ class dbRetsModel extends dbRets {
 		//
 		//  process the search and property type info ////////////////////////////////////////////  
 		//
-		if (strtolower($_REQUEST['searchtype']) == "rental") {
-			$sql_addition[] = " property_type='rental' ";
-			$mult=1;
-		}
-		else {
-			$sql_addition[] = " property_type='residential' ";
-			if (isset($_POST['pricerange']) && !isset($_POST['url'])) $mult=1000; else $mult=1;      
-		}
 
-		$this->setPropertyType($_POST['proptype']);
+		//$this->setPropertyType($_POST['proptype']);
 
-		switch (strtolower($_POST['proptype'])) {
+		switch (strtolower($_POST['property-subtype'])) {
 
 			// kludge-y way to deal with property_type search - ugh sorry
 			case "homes":
 			case "home":
 			case "house":
-				$type = " property_sub_type = 'Single Family Residential' ";
-				$isComm = false;
+				$type = "  property_type='Residential' ";
+				$subtype = " property_type = 'Single Family Residential' ";
 				break;
 
 			case "villa":
 			case "townhome":
 			case "townhomes":
 			case "townhouse":
-				$type = "  property_sub_type='Townhouse' ";
+				$subtype =  "  property_sub_type='Townhouse' ";
+				$type = "  property_type='Residential' ";
+				break;
+
+			case "high-rise":
+				$type = "  property_type='High Rise' ";
 				break;
 
 			case "condo":
 			case "condos":
-				$type = " property_sub_type='Condominium' ";
+				$type = "  property_type='Residential' ";
+				$subtype = " property_sub_type='Condominium' ";
 				break;
 
 			case "new":
@@ -1318,21 +1348,20 @@ class dbRetsModel extends dbRets {
 			$sql_addition[] = " subdivision REGEXP '$_POST[subdiv]'";
 		}
 
-		if (isset($_REQUEST['bedrange']) && !empty($_REQUEST['bedrange'])) {
-			list($_POST['bedrooms_from'],$_POST['bedrooms_to']) = explode("-",$_REQUEST['bedrange']);
-		}
-
-		if (isset($_REQUEST['pricerange']) && !empty($_REQUEST['pricerange'])) {
-			list($_POST['minprice'],$_POST['maxprice']) = explode("-",$_REQUEST['pricerange']);
-		}
 
 		if(!empty($_POST['price_from'])) {
-			$price_from = $_POST['price_from']*$mult;
+			if($_POST['price_from']=="any") {
+				$price_from=0;
+				$_POST['price_to'] = 100000000;
+			}
+			else {
+				$price_from=$_POST['price_from'];
+			}
 			$sql_addition[] = " listing_price >= $price_from ";
 		}
 
 		if(!empty($_POST['price_to'])) {
-			$price_to = $_POST['price_to']*$mult;
+			$price_to = $_POST['price_to'];
 			$sql_addition[] = " listing_price <= $price_to ";
 		}
 
@@ -1340,42 +1369,38 @@ class dbRetsModel extends dbRets {
 		//  end process price search  ///////////////////////////////////////////////////////////////////////////
 		//
 
-		if(!empty($_POST['beds_from']) && ($_POST['beds_from']=="any")){
-			$_POST['beds_from']=1;
-			$_POST['beds_to']=20;
-			unset($_POST['beds_from']);
-			unset($_POST['beds_to']);
-		}
-
-
 		if(!empty($_POST['beds_from'])) {
-			$bedrooms_from = $_POST['beds_from'];
-			$sql_addition[] = " bedrooms >= $bedrooms_from ";
+			if($_POST['beds_from']=="any") {
+				$beds_from=0;
+				$_POST['beds_to'] = 20;
+			}
+			else {
+				$beds_from = $_POST['beds_from'];
+			}
+			$sql_addition[] = " bedrooms >= $beds_from ";
 		}
 
 		if(!empty($_POST['beds_to'])) {
-			$bedrooms_to= $_POST['beds_to'];
-			$sql_addition[] = " bedrooms <= $bedrooms_to ";
+			$beds_to= $_POST['beds_to'];
+			$sql_addition[] = " bedrooms <= $beds_to ";
 		}
 
-		if(!empty($_POST['baths']) && ($_POST['baths']=="4+")){
-			$_POST['bathrooms_from']=4;
-			$_POST['bathrooms_to']=20;
-			unset($_POST['baths']);
-		}
-		if(!empty($_POST['baths'])) {
-			$baths = $_POST['baths'];
-			$sql_addition[] = " bathrooms = $baths ";
+
+		if(!empty($_POST['baths_from'])) {
+			if($_POST['baths_from']=="any") {
+				$baths_from=0;
+				$_POST['baths_to'] = 20;
+			}
+			else {
+				$baths_from = $_POST['baths_from'];
+			}
+
+			$sql_addition[] = " full_bath >= $baths_from ";
 		}
 
-		if(!empty($_POST['bathrooms_from'])) {
-			$bathrooms_from = $_POST['bathrooms_from'];
-			$sql_addition[] = " bathrooms >=$bathrooms_from ";
-		}
-
-		if(!empty($_POST['bathrooms_to'])) {
-			$bathrooms_to = $_POST['bathrooms_to'];
-			$sql_addition[] = " bathrooms <=$bathrooms_to ";
+		if(!empty($_POST['baths_to'])) {
+			$baths_to = $_POST['baths_to'];
+			$sql_addition[] = " full_bath <= $baths_to ";
 		}
 
 		/* FOOTAGE */
@@ -1394,7 +1419,10 @@ class dbRetsModel extends dbRets {
 				$year_from = "1000";
 				$_POST['year_to'] = date("Y");
 			}
-			$year_from = $_POST['year_from'];
+			else {
+				$year_from = $_POST['year_from'];
+			}
+
 			$sql_addition[] = "year_built >= $year_from";
 		}
 
@@ -1407,9 +1435,9 @@ class dbRetsModel extends dbRets {
 
 			$pool = $_POST['pool'];
 			if ($pool=="on") {
-				$sql_addition[] = " private_pool = 'Yes' ";
+				$sql_addition[] = " pool = 1 ";
 			} else {
-				$sql_addition[] = " private_pool = 'No' OR private_pool = '' ";
+				$sql_addition[] = " pool = 0 ";
 			}
 		}
 

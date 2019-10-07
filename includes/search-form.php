@@ -674,14 +674,14 @@
                                                             </select>
                                                         </div>
                                                     </div>
-<!--
+
                                                     <button class="btn btn-gen btn-block collapsed" type="button" data-toggle="collapse" data-target="#collapseSearch" aria-expanded="false" aria-controls="collapseExample">
                                                         More Search Options <i class="fa fa-chevron-down"></i>
                                                     </button>
 
                                                     <div class="clear"></div>
 
-                                                    <div class="collapse" id="collapseSearch">
+                                             <!--       <div class="collapse" id="collapseSearch">
 
                                                         <br>
 
@@ -947,7 +947,7 @@
                                                             </div>
                                                         </div>
 
-                                                    </div>
+                                                    </div>  -->
 
                                                     <hr class="dotted">
 
@@ -1053,19 +1053,25 @@
                                                     <p class="blue-plate">Quick Search</p>
 
                                                     <div class="wrap">
-                                                        <form action="/new-homes.php">
+                                                        <form action="/new-homes" method="POST">
+                                                            <input type="hidden" value="homes" name="dosearch">
                                                             <div class="form-group">
                                                                 <button class="btn  btn-gen btn-block" type="submit">New Homes</button>
                                                             </div>
                                                         </form>
-                                                        <form action="/new-condos.php">
+                                                        <form action="/new-condos" method="POST">
                                                             <div class="form-group" style="margin-bottom: 11px;">
                                                                 <button class="btn btn-gen  btn-block" type="submit">New Condos</button>
                                                             </div>
                                                         </form>
-                                                        <form action="/new-hirise.php">
+                                                        <form action="/new-townhomes" method="POST">
                                                             <div class="form-group" style="margin-bottom: 11px;">
-                                                                <button class="btn btn-gen   btn-block" type="submit">New Hi-Rise</button>
+                                                                <button class="btn btn-gen  btn-block" type="submit">New Townhomes</button>
+                                                            </div>
+                                                        </form>
+                                                        <form action="/new-highrise" method="POST">
+                                                            <div class="form-group" style="margin-bottom: 11px;">
+                                                                <button class="btn btn-gen   btn-block" type="submit">New High-Rise</button>
                                                             </div>
                                                         </form>
                                                     </div>

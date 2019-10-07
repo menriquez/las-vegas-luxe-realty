@@ -109,6 +109,10 @@ ExpiresDefault "access 1 week"
 # dynamic links here
 #
 
+RewriteRule ^new-homes                  search-result.php?type=homes
+RewriteRule ^new-condos                  search-result.php?type=condos
+RewriteRule ^new-townhouses                  search-result.php?type=townhouses
+RewriteRule ^new-highrise                  search-result.php?type=highrise
 
 RewriteRule ^mail/contact-landing                  contact-me.php?type=contact
 

@@ -558,7 +558,7 @@ class retsController
 
                 $_POST['city'] = fixDashes($_POST['city']);
 
-                $this->model->doSearch();
+	            $this->model->doSearch();
 
                 echo $this->model->pagination->render();
                 echo "<br>";
