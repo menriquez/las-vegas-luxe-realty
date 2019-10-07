@@ -116,19 +116,18 @@ require "includes/header.php";
 
                     </div>
 
-	                <?php //require 'includes/search-form.php'; ?>
+	                <?php require 'includes/search-form.php'; ?>
 
                     <!-- begin featured listings summary block -->
                     <div id="bargains_marker"></div>
                     <div class="wide-block">
                         <div class="featured-listings">
                             <div class="row">
-                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12"><div class="block-separator clearfix"></div>
                                     <!-- edit featured listings headline here -->
                                     <h2 class="block-title sr-header">
-                                        Sahar's Exclusive GLVAR MLS Hot Picks Of The Week
+                                        Sahar's Exclusive GLVAR MLS "Deals Of The Week"
                                     </h2>
-                                    <div class="block-separator clearfix"></div>
                                     <div id="bargain-hide-text" style="display:none" class="col-md-12">
                                         <h4>[ every day, i handpick properties that represent newly listed "bargains"...where the homeowner has recently dropped the asking price at least 4% from the original price!  no where else can you so easily find these timely deals, and I put in a good deal of work into first finding and then posting them for you. I sincerely hope you find your dream home that you are looking for right here, and if you can save thousands of dollars as well...great! don't forget to contact me and ask about any property you see listed here, or just to say "Hi" and to tell my team and I how we could better serve your home buying needs.  thanks! - Sahar ]</h4>
                                     </div>

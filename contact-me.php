@@ -1,7 +1,24 @@
 <?php
 
 if ($_REQUEST['frompage'] == "landing" ||
-	$_REQUEST['frompage'] == "detail") {
+	$_REQUEST['frompage'] == "detail"  ||
+	$_REQUEST['frompage'] == "newsletter" ) {
+
+	if ($_REQUEST['frompage'] == "newsletter") {
+
+		$email = $_REQUEST['femail'];
+		$to='SaharSaljougui@gmail.com'; // Add your email address inbetween the '' replacing yourname@yourdomain.com - This is where the form will send a message to.
+
+		$email_body="You have received a new message from your website contact form.\n\nContact name:$fname\nContact email:$femail\nmessage:\n$fmsg";
+		$headers="From: noreply@lasvegasluxerealty.com\n"; // This is the email address the generated message will be from. We recommend using something like noreply@yourdomain.com.
+		$headers.="Reply-To: $femail";
+		mail($to, $email_subject, $email_body, $headers);
+
+		$reply['data']=true;
+		$reply['status']="ok";
+		$json_reply=json_encode($reply);
+		header('Content-type: application/json');
+	}
 
 	$reply=[];
 

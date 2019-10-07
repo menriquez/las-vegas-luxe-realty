@@ -23,8 +23,8 @@
                             <p>Enter your e-mail and subscribe to our newsletter.</p>
                         </div>
                         <div class="subscribe center-block">
-                            <form action="/" method="post">
-                                <input type="text" placeholder="Email Address" />
+                            <form action="/contact-me.php?type=newsletter" method="post">
+                                <input type="text" name="femail" id="femail" placeholder="Email Address" />
                                 <input type="submit" value="GO" class="styler_bg_color" />
                             </form>
                         </div>
@@ -36,7 +36,7 @@
                         <div class="text">
                             <div class="header">DISCLAIMER</div>
                             <!-- edit your disclaimer text here -->
-                            <p>Information is from the multiple listing service and neither suggests nor infers that the Melanie Saljougui or Key Realty participated as either the listing or cooperating agent or broker in the sale or purchase of the properties depicted.</p>
+                            <p>Information is from the multiple listing service and neither suggests nor infers that the Sahar Saljougui or Key Realty participated as either the listing or cooperating agent or broker in the sale or purchase of the properties depicted.</p>
                             <p >All properties listed in this web site are available on an equal opportunity basis.</p>
                         </div>
                         <!-- /end disclaimer -->
@@ -48,7 +48,7 @@
             <div class="container">
                 <div class="row text-center">
                     <!-- edit copyright notice here -->
-                    <div class="copyrights">Design / RETS by <a href="https://webwarephpdevelopment.com">Webware PHP Development</a> &copy2016 - <?= date('Y') ?></div>
+                    <div class="copyrights">Design / RETS by <a href="https://webware.site">Webware PHP Development</a> &copy2016 - <?= date('Y') ?></div>
                 </div>
             </div>
         </div>

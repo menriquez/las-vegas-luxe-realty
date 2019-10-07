@@ -1,20 +1,32 @@
 <?php
 //session_start();
-error_reporting(E_ALL);
-
+error_reporting(E_ERROR & E_WARNING);
 
 require "env.php";
 require "includes/globals.php";
 include('mls/controller/retsController.php');
 include('mls/controller/seoController.php');
 
-$city = ucwords(fixDashes($_GET['city']));
-$proptype = ucwords(fixDashes($_GET['proptype']));
+if (empty($_REQUEST['filter']) && empty($_REQUEST['streetName'])) {
+	$city = ucwords(fixDashes($_REQUEST['city']));
+	$proptype = ucwords(fixDashes($_REQUEST['proptype']));
+
+}
+else if ($_REQUEST['filter']==1) {
+    $city = "GLVAR";
+	$proptype = "New ". ucwords($_REQUEST['type']);
+}
+else {
+   $city = ucwords(fixDashes($_REQUEST['city']));
+   $sn = ucwords($_REQUEST['streetName']);
+   $proptype = " GLVAR Properties on $sn Road ";
+}
 
 $action = basename(__FILE__, '.php');               // load action from filename for consistancy (index for this case)
 //$controller = new retsController($action);            // register controller with page action and parameter
 //$controller->invoke();                            // invokde controller to get view
 
+$stg="";
 if (isset($_GET['price_from'])) $stg = "Between $$_GET[price_from] And $$_GET[price_to]";
 
 $page_title = "$city NV $proptype For Sale $stg";

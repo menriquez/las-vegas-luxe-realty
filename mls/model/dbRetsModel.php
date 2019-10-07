@@ -1163,7 +1163,7 @@ class dbRetsModel extends dbRets {
 	}
 	/******************************************************************************************************************/
 	// end search methods
-	/******************************************************************************************************************/
+	/****************************************\\\\\\\\\\\\\\\\\\\\\\\\\\\**************************************************************************/
 
 	public function next() {
 
@@ -1242,7 +1242,7 @@ class dbRetsModel extends dbRets {
 				break;
 			case "townhouses":
 				$type = "  property_type='Residential' ";
-				$subtype = " property_sub_type='Townhomes' ";
+				$subtype = " property_sub_type='Townhouse' ";
 				$interval = 5;
 				$qs = true;
 			break;
@@ -1258,7 +1258,7 @@ class dbRetsModel extends dbRets {
 
 		if ($qs) {
 			return "SELECT " . self::CARD_FIEDS . " FROM ".self::MLS_TABLENAME." WHERE 
-					(DATE_SUB(CURDATE(),INTERVAL 2 DAY) <= listing_date) AND 
+					(DATE_SUB(CURDATE(),INTERVAL $interval DAY) <= listing_date) AND 
 					$type AND $subtype ORDER BY listing_date DESC ";
 		}
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

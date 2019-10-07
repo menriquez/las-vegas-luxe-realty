@@ -1064,7 +1064,7 @@
                                                                 <button class="btn btn-gen  btn-block" type="submit">New Condos</button>
                                                             </div>
                                                         </form>
-                                                        <form action="/new-townhomes" method="POST">
+                                                        <form action="/new-townhouses" method="POST">
                                                             <div class="form-group" style="margin-bottom: 11px;">
                                                                 <button class="btn btn-gen  btn-block" type="submit">New Townhomes</button>
                                                             </div>
