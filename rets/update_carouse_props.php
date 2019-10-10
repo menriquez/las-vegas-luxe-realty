@@ -41,7 +41,7 @@ if ($totRows > 0) {
 		system("php rets_update_images_mrtu.php $listing_id");
 
 		$update_sql = "INSERT INTO custom_listings SET listing_id = $listing_id";
-		mysqli_query($conn, $sql) or die(mysqli_error($conn));
+		mysqli_query($conn, $update_sql) or die(mysqli_error($conn));
 	}
 
 }
