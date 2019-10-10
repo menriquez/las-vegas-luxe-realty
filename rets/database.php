@@ -9,7 +9,7 @@ if (constant("DEV_NAME") != "prod")  {
       'DB_HOST' => 'lasvegasluxerealty.com',
       'DB_NAME' => 'admin_lvlr',
       'DB_USER' => 'admin_admin_lvlr',
-      'DB_PASS' => 'JTgOaOVZrd',
+      'DB_PASS' => '2w0KPRUl9m',
       'DB_DRIVER' => 'mysql'
     );
 
@@ -19,7 +19,7 @@ else {
       'DB_HOST' => 'localhost',
       'DB_NAME' => 'admin_lvlr',
       'DB_USER' => 'admin_admin_lvlr',
-      'DB_PASS' => 'JTgOaOVZrd',
+      'DB_PASS' => '2w0KPRUl9m',
       'DB_DRIVER' => 'mysql'
     );
 }

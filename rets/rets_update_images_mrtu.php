@@ -497,7 +497,7 @@ function makeTable()
     // if sucessful init table with one "old" record
     $rowCnt = mysqli_query($conn, "select * from photo_dl_info");
     if (mysqli_num_rows($rowCnt) == 0) {
-        $initTbl = mysqli_query($conn, "INSERT INTO photo_dl_info set start_time = '1970-01-01', end_time_db_ts = '1970-01-01';");
+        $initTbl = mysqli_query($conn, "INSERT INTO photo_dl_info set start_time = '1970-01-01', end_time_db_ts = '1974-01-01';");
     }
 
 }

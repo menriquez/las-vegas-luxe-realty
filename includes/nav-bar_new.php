@@ -13,7 +13,7 @@
                                   </div>
                                   <div class="collapse navbar-collapse">
                                     <ul class="nav navbar-nav ">
-                                        <li ><a id="bargains" href="#bargains_marker">Reduced</a></li>
+                                        <li ><a id="bargains" href="<?= "//$_SERVER[HTTP_HOST]" ?>#bargains_marker">Reduced</a></li>
                                       <li ><a id="featured" href="#featured_marker">Featured</a></li>
                                       <li ><a id="search" href="#search_marker">Search</a></li>
                                       <!--      <li ><a id="about" href="#about_marker">About</a></li> -->

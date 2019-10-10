@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" serverName="centos7" stopOnFirstError="true" uploadOnCheckin="a611a8cc-068f-4a5c-8515-e2fe68340ca2" autoUploadExternalChanges="true">
+  <component name="PublishConfigData" serverName="centos7" stopOnFirstError="true" uploadOnCheckin="a611a8cc-068f-4a5c-8515-e2fe68340ca2" showDialogOnRemoteDnD="false">
     <serverData>
       <paths name="Copy of project-level server 'centos7'">
         <serverdata>
@@ -30,7 +30,7 @@
           </mappings>
         </serverdata>
       </paths>
-      <paths name="ww_vpscheap">
+      <paths name="webware.site">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />

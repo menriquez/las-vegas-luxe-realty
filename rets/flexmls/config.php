@@ -370,6 +370,7 @@ function flexmls_updateResidential()
 
             // Run Query
             $results = mysqli_query($conn, $sql) or die(mysqli_error() . $sql);
+
             $cntRow++;
 
             if (($cntRow % 50) == 0) {

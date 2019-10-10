@@ -6,7 +6,7 @@
         <fileTransfer port="0" mountedRoot="C:\xampp72\htdocs\lvlr" accessType="MOUNT" />
       </webServer>
       <webServer id="a611a8cc-068f-4a5c-8515-e2fe68340ca2" name="centos7" url="http://lasvegasluxerealty.com">
-        <fileTransfer host="192.243.101.140" port="22" rootFolder="/home/admin/web/lasvegasluxerealty.com/public_html" accessType="SFTP">
+        <fileTransfer host="192.243.101.140" port="22" privateKey="C:\Users\owner\Documents\rsa_pri.ppk" rootFolder="/home/admin/web/lasvegasluxerealty.com/public_html" accessType="SFTP" keyPair="true">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>

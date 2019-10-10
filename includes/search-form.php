@@ -664,7 +664,7 @@
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <label class="control-label col-xs-12 col-sm-5 col-md-4">Swimming Pool:</label>
+                                                        <label class="control-label col-xs-12 col-sm-5 col-md-4">Swimming Pool </label>
                                                         <div class="col-xs-12 col-sm-7 col-md-8">
                                                             <select name="pool" class="form-control">
                                                                 <option value="any">Any</option>
@@ -675,9 +675,10 @@
                                                         </div>
                                                     </div>
 
-                                                    <button class="btn btn-gen btn-block collapsed" type="button" data-toggle="collapse" data-target="#collapseSearch" aria-expanded="false" aria-controls="collapseExample">
+                                              <!--      <button class="btn btn-gen btn-block collapsed" type="button" data-toggle="collapse" data-target="#collapseSearch" aria-expanded="false" aria-controls="collapseExample">
                                                         More Search Options <i class="fa fa-chevron-down"></i>
                                                     </button>
+                                                -->
 
                                                     <div class="clear"></div>
 
