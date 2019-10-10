@@ -131,7 +131,7 @@ function begin_image_update($rets_object, $rets_name, $rets_config) {
     $sql = "SELECT photo_count,sysid,listing_id,photo_timestamp,sysid, listing_id,listing_price, listing_date, street_name,street_dir,street_number, 
 	street_suffix, city, state_province, postal_code, 3_4_bath ,
 	sqft_living, sqft_tot, halfbaths, full_bath , bedrooms , year_built , active_DOM FROM master_rets_table_update 
-                WHERE photo_timestamp > (select end_time_db_ts from photo_dl_info where end_time_db_ts <> '0000-00-00 00:00:00' order by id DESC limit 1) 
+                WHERE photo_timestamp < (select end_time_db_ts from photo_dl_info where end_time_db_ts <> '0000-00-00 00:00:00' order by id DESC limit 1) 
                 AND photo_count > 0
                 AND property_type IN ( 'Residential','High Rise' )
                   ORDER BY photo_timestamp DESC ";
