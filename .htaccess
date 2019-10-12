@@ -7,6 +7,9 @@ RewriteBase /
 RewriteCond %{SERVER_PORT} 80
 RewriteRule ^(.*)$ https://www.lasvegasluxerealty.com/$1 [R,L]
 
+# get the heart racing a bit for those script kiddies...
+Redirect 301 /wp-config.php http://www.fbi.gov/
+
 # Enable GZIP
 <ifmodule mod_deflate.c>
 AddOutputFilterByType DEFLATE text/text text/html text/plain text/xml text/css application/x-javascript application/javascript
