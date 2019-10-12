@@ -181,7 +181,7 @@ foreach ($rets_config as $key => $config) {
                 $curRow++;
                 $perDone = number_format($curRow / $totRows * 100, 1, '.', '');
 
-                if ($curRow % 200 == 0)
+                if ($curRow % 30 == 0)
                     echo "[$perDone% Done]" . PHP_EOL;
 
                 // keep updating the "first" vars bcuz at the end it will represent the newest one

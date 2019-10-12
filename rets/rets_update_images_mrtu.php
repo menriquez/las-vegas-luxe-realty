@@ -185,6 +185,8 @@ function begin_image_update($rets_object, $rets_name, $rets_config) {
 	        require("database.php");
         }
 
+	    echo "Updating photo_dl_info table with MLS$ $end_mlsid [$end_sysid] with db time of $end_db_ts...." . PHP_EOL;
+
         // update timestamp only if we processed some records
         $sql = "UPDATE photo_dl_info 
                     SET end_time = NOW(),
@@ -198,14 +200,16 @@ function begin_image_update($rets_object, $rets_name, $rets_config) {
 
         $endUpdate = mysqli_query($conn, $sql);
         if (!$endUpdate) {
-            throw new Exception("RETS_UPDATE_IMAGES.PHP - unable to update end time record...SQL = $sql ");
+	        echo "ERROR!\n\n\n";
+            throw new Exception("rets_update_images_mrtu.php - unable to update end time record...SQL = $sql ");
         } else {
+        	echo "OK!\n\n\n";
             $endTime = date("Y-m-d H:i:s");
             echo "PHOTO DOWNLOADER SUCCESSFUL END at $endTime" . PHP_EOL;
         }
     }
 
-    echo "Ending master_rets_table_update for $rets_name image download [$totRows DLed]...ok" . PHP_EOL;
+    echo "Ending master_rets_table_update for $rets_name image download [$totRows DLed]" . PHP_EOL;
 } //end begin_rets()
 
 
