@@ -48,7 +48,7 @@
             <div class="container">
                 <div class="row text-center">
                     <!-- edit copyright notice here -->
-                    <div class="copyrights">Design / RETS by <a href="https://webware.site">Webware PHP Development</a> &copy2016 - <?= date('Y') ?></div>
+                    <div class="copyrights">Design / RETS by <a href="https://webware.site">Webware PHP Development :: Mark Enriquez</a> &copy2016 - <?= date('Y') ?></div>
                 </div>
             </div>
         </div>
