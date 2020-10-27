@@ -16,8 +16,9 @@ WebPConvert::convert($source, $destination, $options);
 
 error_reporting(E_ERROR + E_WARNING);
 date_default_timezone_set("America/New_York");
-//set_time_limit(0);
+set_time_limit(0);
 $send_notification_email = true;
+require_once("PHRETS/vendor/autoload.php");
 //require('config_imageDL.php') ;
 
 $base_root_dir = dirname(__DIR__);
@@ -27,7 +28,7 @@ require __DIR__ . '/flexmls/config.php';
 require __DIR__ . '/database.php';
 require __DIR__ . '/basic_image.php';
 
-$webp_compress = 55;
+$jpeg_compress = 55;
 
 global $conn;
 
@@ -60,28 +61,22 @@ $hiResForceDl = false;
 // counter to let us know how much overall our compression is working
 $diskspace_saved=0;
 
-// PHPRETS
-require __DIR__ . '/phrets2.php';
-$rets = new phRETS();
+$config_phrets = new \PHRETS\Configuration;
 
-// set initial parameters
-$rets->SetParam('disable_follow_location', true);
-if (!fopen($cookie_fullpathandname, "wa")) {
-    throw new Exception("RETS_UPDATE_IMAGES_MRTU.PHP - can't open all important cookie file [ $cookie_fullpathandname ] PLEASE INVESTIGATE! \n\n");
-    exit(-1);
-}
-$rets->SetParam('cookie_file', $cookie_fullpathandname);
-@exec("chmod 777 $cookie_fullpathandname");
+global $rets_config;
+
+$config_phrets->setLoginUrl($rets_config['FLEXMLS']['login_url'])
+    ->setUsername($rets_config['FLEXMLS']['username'])
+    ->setPassword($rets_config['FLEXMLS']['password'])
+    ->setRetsVersion('1.7.2');
+
+$rets = new \PHRETS\Session($config_phrets);
 
 // Connect to RETS
 echo "Connecting to RETS Server..." . "\n";
-global $rets_config;
-if (!$rets->Connect($rets_config['FLEXMLS']['login_url'], $rets_config['FLEXMLS']['username'], $rets_config['FLEXMLS']['password'])) {
-    throw new Exception("RETS_UPDATE.PHP - Unable to log in...probably can't write to cookie.txt\n\n");
-
+if (!$rets->Login()) {
+    throw new Exception("RETS_UPDATE.PHP - Unable to log in...probably can't write to cookie.txt");
 }
-
-$serverInfo = $rets->GetServerInformation();
 
 // if someone passed an id in, just get that set
 if (isset($listing_id) && $listing_id) {
@@ -128,17 +123,21 @@ function begin_image_update($rets_object, $rets_name, $rets_config) {
     // pull listing_ids for all properties without update fl`ag being set...
     //$rets_results = mysql_query("SELECT * from `master_rets_table` WHERE `rets_system` = '$rets_name' AND `photo_update` = 0 and photo_count > 0 order by listing_id ASC") or die(mysql_error());
 
-    $sql = "SELECT photo_count,sysid,listing_id,photo_timestamp,sysid, listing_id,listing_price, listing_date, street_name,street_dir,street_number, 
+	$sql_sub_before = " <= (select photo_timestamp from master_rets_table_update where listing_id = (select start_time_mlsid from photo_dl_info order by id DESC limit 1))";
+	$sql_sub_after = " > (select photo_timestamp from master_rets_table_update where listing_id =  (select end_time_mlsid from photo_dl_info where end_time_mlsid <> '' order by id DESC limit 1) )";
+
+	$sql = "SELECT photo_count,sysid,listing_id,photo_timestamp,sysid, listing_id,listing_price, listing_date, street_name,street_dir,street_number, 
 	street_suffix, city, state_province, postal_code, 3_4_bath ,
-	sqft_living, sqft_tot, halfbaths, full_bath , bedrooms , year_built , active_DOM FROM master_rets_table_update 
-                WHERE photo_timestamp > (select end_time_db_ts from photo_dl_info where end_time_db_ts <> '0000-00-00 00:00:00' order by id DESC limit 1) 
-                AND photo_count > 0
+	sqft_living, sqft_tot, halfbaths, full_bath , bedrooms , year_built , active_DOM FROM master_rets_table_update
+                WHERE photo_timestamp  > (select end_time_db_ts from photo_dl_info where end_time_mlsid <> '' order by id DESC limit 1) 
                 AND property_type IN ( 'Residential','High Rise' )
                   ORDER BY photo_timestamp DESC ";
 
     $rets_results = mysqli_query($conn, $sql);
     $totRows = mysqli_num_rows($rets_results);
+    echo "TOTAL PROPS TO GET IMAGES: $totRows\n";
     $curRow = 0;
+
 
     // get images
     if ($totRows > 0) {
@@ -153,8 +152,10 @@ function begin_image_update($rets_object, $rets_name, $rets_config) {
             $timeRecId = mysqli_insert_id($conn);
         }
 
-        $first = 1;
+	    $first = true;
+	    $start_seconds = time();
 
+	    //  MAIN IMAGE IMPORT LOOP STARTS HERE -------------------------------------------------------------------------------------------
         while ($row = mysqli_fetch_assoc($rets_results)) {
 
             if ($first) {
@@ -163,7 +164,7 @@ function begin_image_update($rets_object, $rets_name, $rets_config) {
                 $end_mlsid = $row['listing_id'];
                 $end_sysid = $row['sysid'];
 
-                $first = 0;
+                $first = false;
             }
 
             get_images($row['sysid'], $row['photo_count'], $row['sysid'], $rets_object, $row, $rets_config);
@@ -173,12 +174,24 @@ function begin_image_update($rets_object, $rets_name, $rets_config) {
             $perDone = number_format($curRow / $totRows * 100, 1, '.', '');
             echo "[$perDone% Done]" . PHP_EOL;
 
+	        $sec_elapsed =  time() - $start_seconds;
+
+	        // wait 10 seconds to start estimating
+	        if ($sec_elapsed > 10) {
+		        $estimate_seconds = intval($sec_elapsed * ($totRows/$curRow));
+		        $end_time = ($start_seconds + $estimate_seconds) - time();
+		        $time_estimate = gmdate("H:i:s", $end_time);
+		        echo "est. photo import time remaining: $time_estimate\n";
+
+	        }
+
             // keep updating the "last" vars bcuz at the end it will represent the newest one
             $last_is_first_import_ts = $row['photo_timestamp'];
             $start_mlsid = $row['listing_id'];
             $start_sysid = $row['sysid'];
 
         }
+        //  END IMAGE IMPORT LOOP --------------------------------------------------------------------------------
 
         if ($conn->errno <> 0) {
 	        mysqli_close ( $conn );
@@ -226,9 +239,9 @@ function begin_image_update($rets_object, $rets_name, $rets_config) {
 function get_images($listing_id, $photo_count, $rets_key, $rets_object, $r, $rets_config): bool
 {
 
-    global $base_photo_image_dir, $base_hires_image_dir, $hiRes;
+    global $base_photo_image_dir, $base_hires_image_dir, $base_photo_jpeg_dir, $hiRes;
     global $diskspace_saved;
-    global $webp_compress;
+    global $jpeg_compress;
 
     // Image Directory
     /* $dir = $base_image.$rets_config['image_directory'].$listing_id.'/'; */
@@ -252,11 +265,6 @@ function get_images($listing_id, $photo_count, $rets_key, $rets_object, $r, $ret
 
     // debug stuff...
     echo "Getting Photo Objects for Listing ID $listing_id " . PHP_EOL;
-    $object_types = $rets_object->GetMetadataObjects("Property");
-    foreach ($object_types as $type) {
-        //    echo "+ Object {$type['ObjectType']} described as " . $type['Description'] . "\n";
-    }
-    // end debug stuff
 
 
     if (!$hiRes) {
@@ -299,9 +307,9 @@ function get_images($listing_id, $photo_count, $rets_key, $rets_object, $r, $ret
                  $raw_fn = build_seo_filenames($r,$photoLink['Object-ID']);
                  $pic_fn = $base_photo_image_dir . $raw_fn;
 
-	             if (imagewebp($image_res,$pic_fn,$webp_compress)==false) {
+	             if (imagejpeg($image_res,$pic_fn,$jpeg_compress)==false) {
                     // barf...
-                    echo "Could not write the file " . $picFname . "<br>" . PHP_EOL;
+                    echo "Could not write the file " . $pic_fn . "<br>" . PHP_EOL;
                     $write_error = true;
                     break;
                 } else {
@@ -329,6 +337,7 @@ function get_images($listing_id, $photo_count, $rets_key, $rets_object, $r, $ret
             } else {
                 echo "FORCED LINK image DL count FAIL for listing_id $listing_id [$image_count] not equal [$totPhotos]" . PHP_EOL;
             }
+
         } else {
 
             // we got the photos in the array..w00t
@@ -341,7 +350,7 @@ function get_images($listing_id, $photo_count, $rets_key, $rets_object, $r, $ret
                 $width = imagesx($image_res);
                 $height = imagesy($image_res);
 
-				if (imagewebp($image_res,$pic_fn,$webp_compress)==false) {
+				if (imagejpeg($image_res,$pic_fn,$jpeg_compress)==false) {
 
                 // if (file_put_contents($picFname, $photo['Data']) == false) {
 
@@ -374,14 +383,15 @@ function get_images($listing_id, $photo_count, $rets_key, $rets_object, $r, $ret
 
         foreach ($photos as $photo) {
 
-	        $jpeg_res=imagecreatefromstring($photo['Data']);
+	        $jpeg_res=imagecreatefromstring($photo->getContent());
 
             $image_count++;
-	        $raw_fn = build_seo_filenames($r,$photo['Object-ID']);
+
+	        $raw_fn = build_seo_filenames($r,$photo->getObjectId());
 	        $pic_fn = $base_photo_image_dir . $raw_fn;
 
 	        // webp it here
-	        if (imagewebp($jpeg_res,$pic_fn,$webp_compress)==false) {
+	        if (imagejpeg($jpeg_res,$pic_fn,$jpeg_compress)==false) {
 		        echo "Could not write the file [ " . $raw_fn . " ] Skipping...".PHP_EOL;
 	        } else {
 		        echo "Writing BASE image [ " . $raw_fn . " ] Ok" . PHP_EOL;
@@ -501,7 +511,7 @@ function makeTable()
     // if sucessful init table with one "old" record
     $rowCnt = mysqli_query($conn, "select * from photo_dl_info");
     if (mysqli_num_rows($rowCnt) == 0) {
-        $initTbl = mysqli_query($conn, "INSERT INTO photo_dl_info set start_time = '1970-01-01', end_time_db_ts = '1974-01-01';");
+        $initTbl = mysqli_query($conn, "INSERT INTO photo_dl_info set end_time_mlsid = '9999999', end_time_db_ts = '1974-01-01';");
     }
 
 }
@@ -538,13 +548,15 @@ function get_single_image_set($listing_id, $rets_object)
 {
 
     global $conn;
-    global $webp_compress;
+    global $jpeg_compress;
 
-    $webp_compress=100;
+    $jpeg_compress=65;
 
     $rets_results = mysqli_query($conn, "select * from `master_rets_table` WHERE  listing_id = '$listing_id';");
     $totRows = mysqli_num_rows($rets_results);
     $curRow = 0;
+
+    $is_first = true;
 
     // get images
     if ($totRows > 0) {
@@ -625,13 +637,24 @@ function updateMasterRets($listing_id)
 
 }
 
+
+
+function build_seo_filenames_jpeg($r,$i_set_id) {
+
+	$add = str_replace(" ","-", getStreetAddress($r));
+	$city = str_replace(" ","-", getCityStZip($r));
+	$uri = $add . "-" . $city . "-" . getMLSPhoto($r);
+
+	$rv = $uri . "-$i_set_id.jpg";
+	return $rv;
+}
 function build_seo_filenames($r,$i_set_id) {
 
 	$add = str_replace(" ","-", getStreetAddress($r));
 	$city = str_replace(" ","-", getCityStZip($r));
 	$uri = $add . "-" . $city . "-" . getMLSPhoto($r);
 
-	$rv = $uri . "-$i_set_id.webp";
+	$rv = $uri . "-$i_set_id.jpg";
 	return $rv;
 }
 

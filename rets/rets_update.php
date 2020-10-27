@@ -1,19 +1,18 @@
 <?php
 //SET TIME LIMIT
 @set_time_limit(0);
-date_default_timezone_set("America/New_York");
-error_reporting(E_ERROR);
+date_default_timezone_set("America/Los_Angeles");
+error_reporting(E_ERROR | E_WARNING);
 
-include_once "../env.php";
+include_once "env.php";
+require_once("PHRETS/vendor/autoload.php");
+
 $ACTIVE_DOMAIN="lasvegasluxerealty.com";
 
 /** Data Config **/
 require __DIR__ . '/database.php';
 require __DIR__ . '/flexmls/config.php';
 include __DIR__ . '/simpleImage.php';
-
-/** PHPRETS **/
-require __DIR__ . '/phrets2.php';
 
 /** START TIME */
 $db_map = [];
@@ -33,79 +32,41 @@ foreach ($rets_config as $key => $config) {
     foreach ($config['data'] as $data => $setting) {
 
         // flexmls_master_update("multifamily");
-        //  flexmls_master_update("residential");
         //flexmls_master_update("hirise");
         //  flexmls_master_update("rental");
 
         //exit();
 
-        //goto debug_config;
-
         echo "Starting RETS download for {$config['name']} Data: {$data} into database $configDB[DB_NAME]..." . "\n";
 
         /** Initialize PHRETS **/
-        $rets = new phRETS();
+        $config_phrets = new \PHRETS\Configuration;
 
-        // Setup Basic Param.
-        $rets->SetParam('disable_follow_location', true);
+        $config_phrets->setLoginUrl($config['login_url'])
+            ->setUsername($config['username'])
+            ->setPassword($config['password'])
+            ->setRetsVersion('1.7.2');
 
-        $cookie_fn = "/home/admin/web/$ACTIVE_DOMAIN/public_html/rets/cookie.txt";
-        if (!fopen($cookie_fn, "wa+")) {
-            echo("FATAL ERROR:  cannot open cookie file [ $cookie_fn ] for writing...check system for errors...\n\n");
-            exit(-1);
-        }
-
-        $rets->SetParam('cookie_file', $cookie_fn);
-        exec("chmod 777 $cookie_fn");
-        //$rets->AddHeader("User-Agent", $config['user_agent']);
+        $rets = new \PHRETS\Session($config_phrets);
 
         // Connect to RETS
         echo "Connecting to RETS Server..." . "\n";
-        if (!$rets->Connect($config['login_url'], $config['username'], $config['password'])) {
+        if (!$rets->Login()) {
             throw new Exception("RETS_UPDATE.PHP - Unable to log in...probably can't write to cookie.txt");
         }
-
-        $server_info = $rets->GetServerInformation();
-
-        /** Class and Property Config **/
-        $class = $setting['class'];
-        $resource = $setting['resource'];
-        $keyfield = $setting['keyfield'];
-
-        /** Offset Check **/
-        echo "Offset Check..." . "\n";
-        $offset = offset_check($rets, $resource, $class, $setting['query'], $keyfield);
-
-        if ($offset) {
-            echo "Offset Supported! " . "\n";
-            $rets->SetParam("offset_support", true);    // not really...
-        } else {
-            echo "Offset NOT Support. " . "\n";
-            $rets->SetParam("offset_support", false);
-        }
-
-        /** Build MYSQL Table **/
 
         // only create tables if required...
         if ($setting['create_table']) {
 
             // Get Fields
-            $fields = $rets->GetMetadataTable($resource, $class);
+
+            $fields = $rets->GetTableMetadata($setting['resource'], $setting['class']);
 
             // Create Table
-            $table_name = str_replace(' ', '_', $config['table_prefix'] . '_' . strtolower($resource) . '_' . strtolower($class));
-            create_table($table_name, $fields, $config);
+            $table_name = str_replace(' ', '_', $config['table_prefix'] . '_' . strtolower($setting['resource']) . '_' . strtolower($setting['class']));
+            create_table($table_name, $fields->all(), $config);
 
         }
-
-        /** Get RETS Data **/
-        $limit = $config['query_limit'];
-
-        // Build Query Options
-        $query_options = [
-            'Limit' => $limit,
-            'Count' => 1
-        ];
 
         // Query RETS Server
         // this loop controls the number of months to import
@@ -117,23 +78,24 @@ foreach ($rets_config as $key => $config) {
 
             $query = "(ListingContractDate=" . $start_date . "T00:00:00-),(ListingContractDate=" . $end_date . "T00:00:00+),$setting[query]";
 
-            echo "Running Query: $query on Resource: {$resource} and Class: {$class} with a Limit: {$limit}" . "\n";
+            echo "Running Query: $query on Resource: {$setting['resource']} and Class: {$setting['class']}" . "\n";
 
-            $search_query = $rets->SearchQuery($resource, $class, $query, $query_options);
-            $tot_recs = $rets->TotalRecordsFound();
+            $search_query = $rets->Search($setting['resource'], $setting['class'], $query);
+            $tot_recs = $search_query->count();
 
             // Check for Rows
-            if ($rets->TotalRecordsFound() < $config['server_query_limit']) {
+            if ($tot_recs < 10000) {
 
                 echo "Total records found: $tot_recs " . "\n";
 
                 // Check Server Query Limit
-                if ($rets->NumRows() <= 0) {
+                if ($tot_recs <= 0) {
                     echo "No Rows Found..." . "\n";
 
                 } else { //  main transpose loop starts here ------------------------------------------------------------------>>>
 
-                    while ($listing = $rets->FetchRow($search_query)) {
+                    $results = $search_query->toArray();
+                    foreach ( $results as $listing ) {
 
                         // Build Query
                         $query = 'INSERT INTO ' . $table_name . ' SET';
@@ -153,6 +115,9 @@ foreach ($rets_config as $key => $config) {
                         $query = rtrim($query, ',');
                         $query .= ';';
 
+                        // DEBUG
+                      //  echo $query;
+
                         // Run Query
                         mysqli_query($conn, $query) or die(mysqli_error($conn) . $query);
 
@@ -167,7 +132,7 @@ foreach ($rets_config as $key => $config) {
             } // End Total Row Check
 
             /** Free SearchQuery Object. Should also free up resources **/
-            $rets->FreeResult($search_query);
+            //$rets->FreeResult($search_query);
 
         }
 
@@ -270,7 +235,7 @@ function create_table($table_name, $fields, $rets_config)
     }
     $query = rtrim($query, ',');
     $query .= ') ENGINE = MyISAM;';
-    mysqli_query($conn, "DROP TABLE $table_name;") or die(mysqli_error($conn) . $query);
+    mysqli_query($conn, "DROP TABLE IF EXISTS $table_name;") or die(mysqli_error($conn) . $query);
     mysqli_query($conn, $query) or die(mysqli_error($conn) . $query);
 }
 

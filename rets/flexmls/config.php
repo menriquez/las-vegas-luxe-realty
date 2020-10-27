@@ -51,7 +51,7 @@ $rets_config['FLEXMLS']['data']['residential'] = array(
     "class" => "Listing",
     "keyfield" => "matrix_unique_id ",
     // "query" => "(1=|RES),(242=|ER,EA,AU,C)"
-    "query" => "(Status=|EA,A)"
+    "query" => "(Status=|A)"
 );
 
 /*
@@ -168,7 +168,7 @@ function flexmls_updateResidential()
             if ($master_check <= 0) {
 
                 /** Insert new record into master table */
-                $sql = "INSERT INTO `master_rets_table_update` SET       
+                $sql = " INSERT INTO `master_rets_table_update` SET       
                     rets_system = 'GLVAR',
                     property_type= '" . mysqli_real_escape_string($conn, $row['Property_Type']) . "',
                     listing_id = '" . mysqli_real_escape_string($conn, $row['MLS_Number']) . "',
@@ -356,8 +356,7 @@ function flexmls_updateResidential()
                     solar_desc = '" . mysqli_real_escape_string($conn, $row['Solar_Electric']) . "',
                     pet_fee = '" . mysqli_real_escape_string($conn, $row['Pet_Deposit']) . "',
                     in_foreclose = '" . mysqli_real_escape_string($conn, $row['Foreclosure_Commenced_YN']) . "',
-                    active_DOM = '" . mysqli_real_escape_string($conn, $row['DOM']) . "'
-                ";
+                    active_DOM = '" . mysqli_real_escape_string($conn, $row['DOM']) . " ' ";
                 //if hoa dues + hoa dues term is wrong, fix.
 
             }

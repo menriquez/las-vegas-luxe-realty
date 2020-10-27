@@ -1,14 +1,15 @@
-
 Options +FollowSymLinks
 RewriteEngine on
 RewriteBase /
 
 # force HTTPS
-RewriteCond %{SERVER_PORT} 80
-RewriteRule ^(.*)$ https://www.lasvegasluxerealty.com/$1 [R,L]
+#RewriteCond %{HTTPS} !=on
+#RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301,NE]
 
 # get the heart racing a bit for those script kiddies...
 Redirect 301 /wp-config.php http://www.fbi.gov/
+Redirect 301 /wp-admin.php http://www.fbi.gov/
+Redirect 301 /admin http://www.fbi.gov/
 
 # Enable GZIP
 <ifmodule mod_deflate.c>
@@ -41,8 +42,6 @@ ExpiresDefault "access 1 week"
 #
 
 <IfModule mod_rewrite.c>
-  RewriteEngine On
-  RewriteBase /
   RewriteCond %{QUERY_STRING} (\"|%22).*(<|>|%3) [NC,OR]
   RewriteCond %{QUERY_STRING} (javascript:).*(\;) [NC,OR]
   RewriteCond %{QUERY_STRING} (<|%3C).*script.*(>|%3) [NC,OR]
@@ -111,10 +110,10 @@ ExpiresDefault "access 1 week"
 # dynamic links here
 #
 
-RewriteRule ^new-homes                  search-result.php?type=homes&filter=1
-RewriteRule ^new-condos                  search-result.php?type=condos&filter=1
-RewriteRule ^new-townhouses                  search-result.php?type=townhouses&filter=1
-RewriteRule ^new-highrise                  search-result.php?type=highrise&filter=1
+RewriteRule ^new-homes                  search-result.php?dosearch=homes&qs=1
+RewriteRule ^new-condos                  search-result.php?dosearch=condos&qs=1
+RewriteRule ^new-townhouses                  search-result.php?dosearch=townhouses&qs=1
+RewriteRule ^new-highrise                  search-result.php?dosearch=highrise&qs=1
 
 RewriteRule ^mail/contact-landing                  contact-me.php?type=contact
 

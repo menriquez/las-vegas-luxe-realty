@@ -1,13 +1,8 @@
 <?php
 
-include_once 'pdoConfig.php';
-include_once 'dbRetsRoomModel.php';
-
-include_once $_SERVER['DOCUMENT_ROOT'].'/includes/utils.php';
-include_once $_SERVER['DOCUMENT_ROOT'].'/includes/pagination.php';
-
-//include_once('mls/model/areazone.php');
-
+require_once 'pdoConfig.php';
+require_once 'dbRetsRoomModel.php';
+require_once 'includes/utils.php';
 
 // hold the data in this class
 class dbRets extends pdoConfig {
@@ -19,6 +14,7 @@ class dbRets extends pdoConfig {
 	public  $row_idx;
 	protected $stm;
 
+    protected $pagination_page_num;
 
 	const MLS_TABLENAME = 'master_rets_table';
 
@@ -52,13 +48,30 @@ class dbRets extends pdoConfig {
 
 	}
 
+    public function getGlobalLastUpdateDateTime() {
+	    $sql = "select end_time_db_ts from photo_dl_info order by end_time_db_ts DESC limit 1";
+        $stm = $this->prepare($sql);
+
+        $stm->execute();
+        $row= $stm->fetch();
+
+        // set row to first
+        return($row['end_time_db_ts']);
+
+
+    }
+
+    public function getLastUpdateDateTime() {
+        return $this->row['Photo'];
+
+    }
+
 	public function getAgentId () {
 		return $this->row['agent_id'];
 	}
 
 	public function getStreetAddress() {
 
-        $sfx="";
 		switch ($this->row['street_suffix']) {
 			case "Avenue":
 				$sfx = "Ave";
@@ -107,10 +120,12 @@ class dbRets extends pdoConfig {
 				break;
 			case "Valley":
 				$sfx = "Vly";
+                break;
 			default:
 				$sfx=$this->row['street_suffix'];
 
 		}
+
 
 		$str = $this->row['street_number']." ".($this->row['street_dir']<>""?$this->row['street_dir']." ":"").ucwords(strtolower($this->row['street_name']))." ".$sfx;
 
@@ -140,7 +155,7 @@ class dbRets extends pdoConfig {
 	public function buildAltTag() {
 		$add =  $this->getStreetAddress();
 		$city =  $this->getCityStZip(true);
-		$uri = "Primary image for " . strtolower($this->getPropertyTypeTag()) . " for sale for " . $this->getPrice() . " located at address " . $add . ", " . $city . " | matrix id-" . $this->getSysId() . $this->getMLSLink();
+		$uri = "Primary image for " . strtolower($this->getPropertyTypeTag()) . " for sale for " . $this->getPrice() . " located at address $add, $city | matrix id-" . $this->getSysId() . $this->getMLSLink();
 
 		return $uri;
 	}
@@ -254,12 +269,14 @@ class dbRets extends pdoConfig {
 
 	public function getThumbSmallFn() {
 	    global $BASE_WEB_URL_IMAGES;
+
+
 		return $BASE_WEB_URL_IMAGES."/rets/thumbs200/".$this->row['sysid']."-1.jpg";
 	}
 
 	public function getThumbFn() {
-        global $BASE_WEB_URL_IMAGES;
-		return  $BASE_WEB_URL_IMAGES. "/rets/thumbs/".$this->row['sysid']."-1.jpg";
+        global $BASE_WEB_THUMBS_URL;
+		return  $BASE_WEB_THUMBS_URL. "/rets/thumbs/".$this->row['sysid']."-1.jpg";
 	}
 
 /*	public function getFrontPicFn() {
@@ -279,13 +296,24 @@ class dbRets extends pdoConfig {
 
 	public function getFrontPicFn() {
 
+		global $BASE_WEB_PHOTOS_URL;
+
 		$add    = str_replace(" ","-", $this->getStreetAddress());
 		$city   = str_replace(" ","-", $this->getCityStZip(false));
 		$uri    = $add . "-" . $city . "-" . $this->getMLSPhoto();
 
-		$rv = "//lasvegasluxerealty.com/rets/photos/". $uri . "-0.webp";
+		$rv = $uri . "-0.jpg";
 
-		return $rv;
+	/*	if ($global_browser_id == 1) {
+			if (!file_exists("rets/photos/jpeg/". $uri . "-0.jpg")) {
+				$img = imagecreatefromwebp("rets/photos/" . $uri . "-0.webp");
+				imagejpeg($img, "rets/photos/jpeg/" . $uri . "-0.jpg", 60);
+			}
+
+			$rv = "jpeg/". $uri . "-0.jpg";
+		}
+   */
+		return $BASE_WEB_PHOTOS_URL.$rv;
 	}
 
 	public function getGlobPicFn() {
@@ -384,6 +412,7 @@ class dbRets extends pdoConfig {
 
 			$imageArr = explode("/",$image);
 			$fn = array_pop($imageArr);
+
 			$img = $BASE_WEB_URL."/rets/photos/".$fn;
 
 			$alt = $this->buildAltTag() . " [image $cnt]";
@@ -470,7 +499,7 @@ class dbRetsModel extends dbRets {
 
 	// vars to handle internal row management
 
-	private $vars;
+
 	private $paging;
 
 	// search fields
@@ -484,16 +513,16 @@ class dbRetsModel extends dbRets {
 
 	private $min_price;
 	private $max_price;
-	private $min_bath;
-	private $max_bath;
 
 	private $date_from;
 	private $tag;
 
 	public $pagination;
-	private $recs_per_page=40;   
+	private $recs_per_page=42;
 
 	public $rooms;
+
+	public $is_pagination;
 
 	public function __construct(){
 		parent::__construct( );
@@ -1130,22 +1159,40 @@ class dbRetsModel extends dbRets {
 
 	public function doSearch () {
 
-		// check class data
-		$sql = $this->buildQuery();
+        $this->pagination = new zPagination();
+
+	    // first we need to check for pagination condition...
+        $matches=null;
+        $this->is_pagination=false;
+        if (preg_match('/page([0-9]+)/',$_SERVER['PATH_INFO'] , $matches, PREG_OFFSET_CAPTURE)) {
+
+            $this->is_pagination = true;
+
+            $page = (int) filter_var($matches[0][0], FILTER_SANITIZE_NUMBER_INT);
+            $this->pagination->set_page($page);
+            $sql = $_SESSION['pagination_sql'];
+
+        }
+
+        else {
+            $sql = $this->buildQuery();
+        }
 
 		$this->stm = $this->prepare($sql);
+
+		// save this sql in case we trigger paginatiton...
+		$_SESSION['pagination_sql']=$sql;
+        $_SESSION['request_obj'] =  serialize($_REQUEST);
 
 		$this->stm->execute();
 		$this->rows= $this->stm->fetchAll(self::FETCH_ASSOC);
 		$this->count = $this->stm->rowCount();
 
 		// adding pagination
-
-		$this->pagination = new zPagination();
 		$this->pagination->records($this->count);
 		$this->pagination->records_per_page($this->recs_per_page);
 		$this->pagination->method('url');
-		$this->pagination->base_url("",false);
+		$this->pagination->base_url("",true);
 
 		$this->rows = array_slice(
 			$this->rows,
@@ -1217,7 +1264,7 @@ class dbRetsModel extends dbRets {
 		
 		// jump out of here if an MLS # is discovered /////////////////////////////////////////////////////////////////////////////////////////////////
 		if (!empty($_POST['mlsnumber'])) {
-			return "SELECT * FROM ".self::MLS_TABLENAME." WHERE listing_id = '$_POST[mlsid]' ";
+			return "SELECT * FROM ".self::MLS_TABLENAME." WHERE listing_id = '$_REQUEST[mlsnumber]' ";
 		}
 
 		if (!empty($_POST['streetName'])) {
@@ -1226,30 +1273,37 @@ class dbRetsModel extends dbRets {
 		}
 
 		$qs = false;
-		switch ($_REQUEST['type']) {
+		if (isset($_REQUEST['qs']) AND ($_REQUEST['qs']==1)) {
+			$qs = true;
+			$_REQUEST['property'] = $_REQUEST['dosearch'];
+		}
+		switch ($_REQUEST['property']) {
 
 			case "homes":
+			case "home":
 				$type = "  property_type='Residential' ";
 				$subtype = " property_sub_type='Single Family Residential' ";
-				$interval = 2;
+				$interval = 1;
 				$qs = true;
 				break;
 			case "condos":
+			case "condo":
 				$type = "  property_type='Residential' ";
 				$subtype = " property_sub_type='Condominium' ";
 				$interval = 3;
 				$qs = true;
 				break;
 			case "townhouses":
+			case "townhome":
 				$type = "  property_type='Residential' ";
 				$subtype = " property_sub_type='Townhouse' ";
-				$interval = 5;
+				$interval = 3;
 				$qs = true;
 			break;
 			case "highrise":
 				$type = "  property_type='High Rise' ";
 				$subtype = " property_sub_type='' ";
-				$interval = 7;
+				$interval = 5;
 				$qs = true;
 				break;
 
@@ -1353,6 +1407,7 @@ class dbRetsModel extends dbRets {
 			if($_POST['price_from']=="any") {
 				$price_from=0;
 				$_POST['price_to'] = 100000000;
+
 			}
 			else {
 				$price_from=$_POST['price_from'];
@@ -1431,10 +1486,10 @@ class dbRetsModel extends dbRets {
 			$sql_addition[] = "year_built <=$year_to";
 		}
 
-		if(!empty($_POST['pool'])) {
+		if($_POST['pool']!='Any') {
 
 			$pool = $_POST['pool'];
-			if ($pool=="on") {
+			if ($pool=="Private") {
 				$sql_addition[] = " pool = 1 ";
 			} else {
 				$sql_addition[] = " pool = 0 ";
@@ -1466,8 +1521,9 @@ class dbRetsModel extends dbRets {
 		}
 
 		/* FORECLOSURE */
-		if(!empty($_POST['shortsale'])) {
-			$sql_addition[] = " short_sale = 'Yes' ";
+		if($_POST['foreclosure'] != "any") {
+			$flg = $_POST['foreclosure'] == 'yes'?'1':'0';
+			$sql_addition[] = " in_foreclose = $flg ";
 		}
 
 		if(!empty($_POST['waterfront'])) {
@@ -1507,24 +1563,37 @@ class dbRetsModel extends dbRets {
 
 		include_once('includes/globals.php');
 		global $base_image_dir;
+		global $base_image_jpeg_dir;
+		global $global_browser_id;
+
+	// 	$global_browser_id = 1;
 
 		$listing_fname = $this->getGlobPicFn();
 
-		$search_fname = $base_image_dir."/".$listing_fname."-?.webp";
+		$search_fname = $base_image_dir."/".$listing_fname."-?.jpg";
+		$jpg_count = -1;
+
+		if ($global_browser_id == 1) {
+			$search_jpg_name = "rets/photos/".$listing_fname."-?.jpg";
+			$fn_jpg_Array1 = glob($search_jpg_name);
+			$jpg_count = count($fn_jpg_Array1);
+		}
 
 		$fnArray1 = glob($search_fname);
 		if ($fnArray1==false) {
 			$fnArray1 = array();
 		}
+		$fn_count = count($fnArray1);
+
 
 		// fix the fact the glob sometimes doens't return an array type...
-		$fnArray2 = glob($base_image_dir."/".$listing_fname."-??.webp");
+		$fnArray2 = glob($base_image_dir."/".$listing_fname."-??.jpg");
 		if ($fnArray2==false) {
 			$fnArray2 = array();
 		}
 
 		// added for props with over 100 images...sigh..agents need to chill with that shit - marke
-		$fnArray3 = glob($base_image_dir."/".$listing_fname."-???.webp");
+		$fnArray3 = glob($base_image_dir."/".$listing_fname."-???.jpg");
 		if ($fnArray3==false) {
 			$fnArray3 = array();
 		}
@@ -1534,9 +1603,42 @@ class dbRetsModel extends dbRets {
 		$images = array_merge($fnArray1 , $images1 );
 		$image_count = count($images);
 
+		if ($global_browser_id == 1 && $fn_count <> $jpg_count) {
+			$images = $this->convert_to_jpeg($images);
+		}
+
+		if ($global_browser_id ==1)
+			$images=$this->convert_to_jpeg_filenames($images);
+
 		return $images;
 
 	}
+
+	public function convert_to_jpeg($img) {
+
+		global $base_image_jpeg_dir;
+
+		$img_names = [];
+		foreach ($img as $i) {
+			$jpg_image = imagecreatefromwebp($i);
+			$img_name_part = pathinfo($i);
+			imagejpeg($jpg_image, "rets/photos/" . $img_name_part['filename'] . ".jpg", 60);
+			$img_names[] = "rets/photos/" . $img_name_part['filename'] . ".jpg";
+		}
+
+		return $img_names;
+	}
+
+	public function convert_to_jpeg_filenames($img) {
+		$img_names = [];
+		foreach ($img as $i) {
+			$img_name_part = pathinfo($i);
+			$img_names[] = "rets/photos/jpeg/" . $img_name_part['filename'] . ".jpg";
+		}
+		return $img_names;
+	}
+
+
 
 }
 

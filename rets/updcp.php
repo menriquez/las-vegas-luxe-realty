@@ -23,8 +23,8 @@ $sql = 'SELECT listing_id from master_rets_table
               WHERE property_type = "Residential"
                 AND city REGEXP "(las vegas|hende
                 rson)" 
-                AND listing_price > 2000000
-                AND listing_price <= 4000000
+                AND listing_price > 1800000
+                AND listing_price <= 4500000
               ORDER BY rand() DESC
               LIMIT 5';
 

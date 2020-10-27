@@ -6,7 +6,6 @@ error_reporting(E_ALL);
 require "env.php";
 require "includes/globals.php";
 include('mls/controller/retsController.php');
-include('mls/controller/seoController.php');
 
 $city = ucwords(fixDashes($_GET['city']));
 $proptype = ucwords(fixDashes($_GET['proptype']));

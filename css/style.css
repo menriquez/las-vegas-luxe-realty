@@ -2104,7 +2104,7 @@ form {
 
 .wide-block {
     margin: 0 -1000px 0;
-    padding: 90px 1004px 90px;
+    padding: 90px 1004px 30px;
     background: #f0f0f0;
 }
 
@@ -3035,6 +3035,14 @@ form {
 #title-whatsthis {
     text-align: center;
     font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #6CBECC;
+}
+
+#title-lastupdate {
+    text-align: center;
+    font-size: 10px;
     font-weight: bold;
     text-transform: uppercase;
     color: #6CBECC;

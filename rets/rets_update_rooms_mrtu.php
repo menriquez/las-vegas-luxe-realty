@@ -12,6 +12,7 @@ $mtime = $mtime[1] + $mtime[0];
 $starttime = $mtime;
 $start_time = date('G:ia');
 
+require_once("PHRETS/vendor/autoload.php");
 
 /** Data Config **/
 require_once('database.php');
@@ -55,48 +56,37 @@ foreach ($rets_config as $key => $config) {
         echo "Starting RETS download for {$config['name']} Data: {$data} into database $configDB[DB_NAME]..."."\n";
 
         /** Initialize PHRETS **/
-        $rets = new phRETS();
+        $config_phrets = new \PHRETS\Configuration;
 
-        // Setup Basic Param.
-        $rets->SetParam('disable_follow_location', true);
-        $rets->SetParam('cookie_file',"/home/admin/web/lasvegasluxerealty.com/public_html/rets/cookie.txt");
-        exec("chmod 777 /home/admin/web/lasvegasluxerealty.com/public_html/rets/cookie.txt");
-        //$rets->AddHeader("User-Agent", $config['user_agent']);
+        $config_phrets->setLoginUrl($config['login_url'])
+            ->setUsername($config['username'])
+            ->setPassword($config['password'])
+            ->setRetsVersion('1.7.2');
+
+        $rets = new \PHRETS\Session($config_phrets);
 
         // Connect to RETS
-        echo "Connecting to RETS Server..."."\n";
-        if (!$rets->Connect($config['login_url'], $config['username'], $config['password'])) {
-            throw new Exception("RETS_UPDATE_ROOMS_MRTU.PHP - Unable to log in...probably can't write cookie.txt");
+        echo "Connecting to RETS Server..." . "\n";
+        if (!$rets->Login()) {
+            throw new Exception("RETS_UPDATE.PHP - Unable to log in...probably can't write to cookie.txt");
         }
-
-        $serverInfo=$rets->GetServerInformation();
 
         /** Class and Property Config **/
         $class = $setting['class'];
         $resource = $setting['resource'];
         $keyfield = $setting['keyfield'];
 
-        /** Offset Check **/
-        echo "Offset Check..."."\n";
-        $offset = offsetCheck($rets,$resource,$class,$setting['query'],$keyfield);
-
-        if($offset)
-        {
-            echo "Offset Supported! "."\n";
-            $rets->SetParam("offset_support", true);    // not really...
-        }
-        else {
-            echo "Offset NOT Support. "."\n";
-            $rets->SetParam("offset_support", false);
-        }
-
-        /** Build MYSQL Table **/   
 
         // only create tables if required...
         if ($setting['create_table']) {
 
             // Get Fields
-            $fields = $rets->GetMetadataTable($resource, $class);
+            try {
+                $fields = $rets->GetTableMetadata($resource, $class);
+            } catch (\PHRETS\Exceptions\CapabilityUnavailable $e) {
+                echo "ERROR - unable to get table fields";
+                exit;
+            }
 
             // Create Table
             $table_name = str_replace(' ', '_', $config['table_prefix'] . '_' . strtolower($resource) . '_' . strtolower($class));
@@ -113,10 +103,10 @@ foreach ($rets_config as $key => $config) {
         // ok.. create update time table if needed
         make_rooms_dl_table();
 
-        $sql = "SELECT sysid,last_change_date FROM master_rets_table_update 
-                WHERE last_change_date > (select end_time_db_ts from room_dl_info order by id DESC limit 1) 
+        $sql = "SELECT sysid,last_change_date FROM master_rets_table_update
+                WHERE last_change_date >= (select end_time_db_ts from room_dl_info order by id DESC limit 1)
                 AND property_type IN ( 'Residential','High Rise' )
-                  ORDER BY last_change_date DESC ";
+                  ORDER BY last_change_date DESC  ";
 
         $rets_results = mysqli_query($conn, $sql);
         $totRows = mysqli_num_rows($rets_results);
@@ -153,16 +143,22 @@ foreach ($rets_config as $key => $config) {
 
                 echo "Pulling room info from remote RETS system...";
 
-                $search_query = $rets->SearchQuery( $resource,  $class,  $query, $query_options );
-                $totRecs=$rets->TotalRecordsFound();
+                try {
+                    $search_query = $rets->Search($resource, $class, $query);
+                } catch (\PHRETS\Exceptions\CapabilityUnavailable $e) {
+                    echo "ERROR - Unable to search RETS database\n";
+                    exit;
+                }
+                $totRecs=$search_query->count();
 
 
                 if ($totRecs > 0) {
 
                     echo "FOUND! {$totRecs} rooms for property id: {$muid}"."\n";
 
+                    $all_rooms = $search_query->toArray();
                     // Fetch Rows
-                    while ($listing = $rets->FetchRow($search_query)) {
+                    foreach ($all_rooms as $listing) {
 
                         $db_ok = write_room_record($table_name, $listing, $conn, $db_map);
 
@@ -174,9 +170,6 @@ foreach ($rets_config as $key => $config) {
                     echo "NOPE! for property id: {$muid} "."\n";
 
                 } // End Total Row Check
-
-                /** Free SearchQuery Object. Should also free up resources **/
-                $rets->FreeResult($search_query);
 
                 $curRow++;
                 $perDone = number_format($curRow / $totRows * 100, 1, '.', '');
@@ -209,8 +202,12 @@ foreach ($rets_config as $key => $config) {
             }
 
             /** Disconnect from RETS server. Should free up resources **/
-            $rets->Disconnect();
-            echo "Disconnecting from RETS server..."."\n";
+            try {
+                $rets->Disconnect();
+            } catch (\PHRETS\Exceptions\CapabilityUnavailable $e) {
+                exit;
+            }
+            echo "Disconnected from RETS server..."."\n";
 
         }
     }
@@ -359,12 +356,12 @@ function make_rooms_dl_table() {
 
     $sql = "cREATE TABLE IF NOT EXISTS `room_dl_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `start_time` timestamp NULL DEFAULT NULL,
-  `start_time_db_ts` timestamp NULL DEFAULT NULL,
+  `start_time` datetime NULL DEFAULT NULL,
+  `start_time_db_ts` datetime NULL DEFAULT NULL,
   `start_time_sysid` int(11) DEFAULT NULL,
-  `end_time_db_ts` timestamp NULL DEFAULT NULL,
+  `end_time_db_ts` datetime NULL DEFAULT NULL,
  `end_time_sysid` int(11) DEFAULT NULL,
-  `end_time` timestamp NULL DEFAULT NULL,
+  `end_time` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8";
 

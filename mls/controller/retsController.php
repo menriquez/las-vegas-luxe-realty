@@ -1,7 +1,7 @@
 <?php
 
-define("DS", "/", true);
-define('BASE_PATH', $_SERVER['DOCUMENT_ROOT'] . DS, true);
+//define("DS", "/", true);
+//define('BASE_PATH', $_SERVER['DOCUMENT_ROOT'] . DS, true);
 
 // eliminates the need for all those messy include files
 // IMPORTANT! MUST NAME THE CLASS THE SAME AS THE FILENAME!
@@ -16,7 +16,10 @@ spl_autoload_register(function ($class) {
     include 'mls/model/' . $class . '.php';
 });
 
-include_once('includes/utils.php');
+$base_file_path = getcwd();
+
+include_once 'includes/utils.php';
+include_once 'includes/pagination.php';
 
 class retsController
 {
@@ -30,6 +33,8 @@ class retsController
     public $detail_listing_page_title;
     public $detail_listing_page_desc;
     public $detail_listing_page_keys;
+
+    public $last_update_datetime;
 
     private $pct_bargain;
     private $days_for_bargain;
@@ -87,6 +92,8 @@ class retsController
 
                 //  get data...
                 $this->model->getCarouselProps();
+
+                $this->last_update_datetime = $this->model->getGlobalLastUpdateDateTime();
 
                 // process view
                 do {
@@ -156,19 +163,6 @@ class retsController
 
                 //break;
 
-                // Dynamic Contact Modal for details tablet
-            case 'contact-modal':
-
-                $this->model = new dbRetsModel();
-
-                //$this->model->getFeaturedListingProps();
-
-                // process view
-
-                do {
-                } while ($this->model->next());
-
-                break;
 
             case 'index-random':
 
@@ -449,7 +443,6 @@ class retsController
 
                 // set params for search and get data
                 $this->page->setPageName($this->pagename);
-                $this->page->getPage();
                 $_SESSION['page'] = $this->page->row;        // store for later use in search
 
                 // process view

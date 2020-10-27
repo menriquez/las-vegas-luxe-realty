@@ -13,7 +13,6 @@ include('database.php');
 //
 //  CONFIG OPTIONS
 //
-$rets_name="palmbeach1.com";
 $rets_from="retsupdater@palmbeach1.com";
 $mls_photo_dir = '../mls/photos/';
 $mls_thumb_dir = 'thumb/';
@@ -26,7 +25,6 @@ $hiRes=true;
 // $site_root_dir = '/var/www/vhosts/brevardauctions.com/httpdocs/';  - not doing it this way on this system - marke
 $site_root_dir = dirname(__FILE__);
 $base_image_dir = $site_root_dir .DIRECTORY_SEPARATOR.$mls_photo_dir;
-$base_image_dir = $site_root_dir .D;
 
 
 fixDBPhotoRecs();

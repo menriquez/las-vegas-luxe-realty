@@ -1,0 +1,9 @@
+#!/bin/bash
+
+php /home/admin/web/lasvegasluxerealty.com/public_html/rets/rets_update.php
+
+php /home/admin/web/lasvegasluxerealty.com/public_html/rets/rets_update_images_mrtu.php
+
+php /home/admin/web/lasvegasluxerealty.com/public_html/rets/rets_update_rooms_mrtu.php
+
+php /home/admin/web/lasvegasluxerealty.com/public_html/rets/update_mrt.php

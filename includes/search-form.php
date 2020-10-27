@@ -20,8 +20,7 @@
                                                         <label class="control-label col-xs-12 col-sm-5 col-md-4">Location <span class="required">(Required)</span>:</label>
                                                         <div class="col-xs-12 col-sm-7 col-md-8">
                                                             <select class="form-control" name="city">
-                                                                <option value="any">Any</option>
-                                                                <option value="las-vegas">Las Vegas</option>
+                                                                <option value="las-vegas" selected>Las Vegas</option>
                                                                 <option value="north-las-vegas">North Las Vegas</option>
                                                                 <option value="pahrump">Pahrump</option>
                                                                 <option value="boulder-city">Boulder City</option>
@@ -44,9 +43,9 @@
                                                         <label class="control-label col-xs-12 col-sm-5 col-md-4">Property Type:</label>
                                                         <div class="col-xs-12 col-sm-7 col-md-8">
                                                                 <select name="property-subtype" class="form-control">
-                                                                    <option value="any">Any</option>
+                                                                    <option value="all property type">Any</option>
                                                                     <option value="home">Home</option>
-                                                                    <option value="townhomes">Townhouse</option>
+                                                                    <option value="townhome">Townhouse</option>
                                                                     <option value="condo">Condominium</option>
                                                                     <option value="high-rise">Hi-Rise</option>
                                                                 </select>
@@ -470,7 +469,7 @@
                                                         <label class="control-label col-xs-12 col-sm-5 col-md-4">Footage:</label>
                                                         <div class="col-xs-12 col-sm-7 col-md-8 from-to">
                                                             <select name="footage_from" class="form-control">
-                                                                <option value="any">Any</option>
+                                                                <option selected value="any">Any</option>
                                                                 <option value="500">500</option>
                                                                 <option value="1000">1,000</option>
                                                                 <option value="1500">1,500</option>
@@ -573,6 +572,7 @@
                                                                 <option value="2017">2017</option>
                                                                 <option value="2018">2018</option>
                                                                 <option value="2019">2019</option>
+                                                                <option value="2019">2020</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -581,7 +581,7 @@
                                                         <label class="control-label col-xs-12 col-sm-5 col-md-4">Bedrooms:</label>
                                                         <div class="col-xs-12 col-sm-7 col-md-8 from-to">
                                                             <select name="beds_from" class="form-control">
-                                                                <option value="">Any</option>
+                                                                <option value="any">Any</option>
                                                                 <option value="1">1</option>
                                                                 <option value="2">2</option>
                                                                 <option value="3">3</option>
@@ -613,7 +613,7 @@
                                                         <label class="control-label col-xs-12 col-sm-5 col-md-4">Bathrooms:</label>
                                                         <div class="col-xs-12 col-sm-7 col-md-8 from-to">
                                                             <select name="baths_from" class="form-control">
-                                                                <option value="">Any</option>
+                                                                <option value="any">Any</option>
                                                                 <option value="1">1</option>
                                                                 <option value="2">2</option>
                                                                 <option value="3">3</option>
@@ -645,7 +645,7 @@
                                                         <label class="control-label col-xs-12 col-sm-5 col-md-4">Foreclosure/Short Sale:</label>
                                                         <div class="col-xs-12 col-sm-7 col-md-8">
                                                             <select name="foreclosure" class="form-control">
-                                                                <option value="all">Show All</option>
+                                                                <option value="any">Show All</option>
                                                                 <option value="yes">Yes</option>
                                                                 <option value="no">No</option>
                                                             </select>
@@ -667,7 +667,7 @@
                                                         <label class="control-label col-xs-12 col-sm-5 col-md-4">Swimming Pool </label>
                                                         <div class="col-xs-12 col-sm-7 col-md-8">
                                                             <select name="pool" class="form-control">
-                                                                <option value="any">Any</option>
+                                                                <option value="Any">Any</option>
                                                                 <option value="None">None</option>
                                                                 <option value="Private">Private</option>
                                                                 <option value="Community">Community</option>
@@ -675,280 +675,7 @@
                                                         </div>
                                                     </div>
 
-                                              <!--      <button class="btn btn-gen btn-block collapsed" type="button" data-toggle="collapse" data-target="#collapseSearch" aria-expanded="false" aria-controls="collapseExample">
-                                                        More Search Options <i class="fa fa-chevron-down"></i>
-                                                    </button>
-                                                -->
-
                                                     <div class="clear"></div>
-
-                                             <!--       <div class="collapse" id="collapseSearch">
-
-                                                        <br>
-
-                                                        <label>Interior Features:</label>
-                                                        <div class="form-group">
-                                                            <div class="col-xs-12 col-sm-6 col-md-4">
-                                                                <div class="checkbox-inline">  
-                                                                    <span class="check-btn">
-                                                                        <input name="interior_features[]" type="checkbox" value="Bar">
-                                                                    </span>
-                                                                    Bar                                 </div>
-                                                            </div>
-                                                            <div class="col-xs-12 col-sm-6 col-md-4">
-                                                                <div class="checkbox-inline">
-                                                                    <span class="check-btn">
-                                                                        <input name="interior_features[]" type="checkbox" value="Breakfast Nook">
-                                                                    </span>
-                                                                    Breakfast Nook                                  </div>
-                                                            </div>
-                                                            <div class="col-xs-12 col-sm-6 col-md-4">
-                                                                <div class="checkbox-inline">
-                                                                    <span class="check-btn">
-                                                                        <input name="interior_features[]" type="checkbox" value="Closet - Walk-Ins">
-                                                                    </span>
-                                                                    Closet - Walk-Ins                                   </div>
-                                                            </div>
-                                                            <div class="col-xs-12 col-sm-6 col-md-4">
-                                                                <div class="checkbox-inline">
-                                                                    <span class="check-btn">
-                                                                        <input name="interior_features[]" type="checkbox" value="Computer Wired">
-                                                                    </span>
-                                                                    Computer Wired                                  </div>
-                                                            </div>
-                                                            <div class="col-xs-12 col-sm-6 col-md-4">
-                                                                <div class="checkbox-inline">
-                                                                    <span class="check-btn">
-                                                                        <input name="interior_features[]" type="checkbox" value="Cook Island">
-                                                                    </span>
-                                                                    Cook Island                                 </div>
-                                                            </div>
-                                                            <div class="col-xs-12 col-sm-6 col-md-4">
-                                                                <div class="checkbox-inline">
-                                                                    <span class="check-btn">
-                                                                        <input name="interior_features[]" type="checkbox" value="Handicap Features">
-                                                                    </span>
-                                                                    Handicap Features                                   </div>
-                                                            </div>
-                                                            <div class="col-xs-12 col-sm-6 col-md-4">
-                                                                <div class="checkbox-inline">
-                                                                    <span class="check-btn">
-                                                                        <input name="interior_features[]" type="checkbox" value="Kitchen - Eat In">
-                                                                    </span>
-                                                                    Kitchen - Eat In                                    </div>
-                                                            </div>
-                                                            <div class="col-xs-12 col-sm-6 col-md-4">
-                                                                <div class="checkbox-inline">
-                                                                    <span class="check-btn">
-                                                                        <input name="interior_features[]" type="checkbox" value="Kitchen - Island">
-                                                                    </span>
-                                                                    Kitchen - Island                                    </div>
-                                                            </div>
-                                                            <div class="col-xs-12 col-sm-6 col-md-4">
-                                                                <div class="checkbox-inline">
-                                                                    <span class="check-btn">
-                                                                        <input name="interior_features[]" type="checkbox" value="Laundry in Garage">
-                                                                    </span>
-                                                                    Laundry in Garage                                   </div>
-                                                            </div>
-                                                            <div class="col-xs-12 col-sm-6 col-md-4">
-                                                                <div class="checkbox-inline">
-                                                                    <span class="check-btn">
-                                                                        <input name="interior_features[]" type="checkbox" value="Living/Dining Combo">
-                                                                    </span>
-                                                                    Living/Dining Combo                                 </div>
-                                                            </div>
-                                                            <div class="col-xs-12 col-sm-6 col-md-4">
-                                                                <div class="checkbox-inline">
-                                                                    <span class="check-btn">
-                                                                        <input name="interior_features[]" type="checkbox" value="Office">
-                                                                    </span>
-                                                                    Office                                  </div>
-                                                            </div>
-                                                            <div class="col-xs-12 col-sm-6 col-md-4">
-                                                                <div class="checkbox-inline">
-                                                                    <span class="check-btn">
-                                                                        <input name="interior_features[]" type="checkbox" value="Outside Storage">
-                                                                    </span>
-                                                                    Outside Storage                                 </div>
-                                                            </div>
-                                                            <div class="col-xs-12 col-sm-6 col-md-4">
-                                                                <div class="checkbox-inline">
-                                                                    <span class="check-btn">
-                                                                        <input name="interior_features[]" type="checkbox" value="Pantry">
-                                                                    </span>
-                                                                    Pantry                                  </div>
-                                                            </div>
-                                                            <div class="col-xs-12 col-sm-6 col-md-4">
-                                                                <div class="checkbox-inline">
-                                                                    <span class="check-btn">
-                                                                        <input name="interior_features[]" type="checkbox" value="Pantry - Butler">
-                                                                    </span>
-                                                                    Pantry - Butler                                 </div>
-                                                            </div>
-                                                            <div class="col-xs-12 col-sm-6 col-md-4">
-                                                                <div class="checkbox-inline">
-                                                                    <span class="check-btn">
-                                                                        <input name="interior_features[]" type="checkbox" value="Pantry - Walk-in">
-                                                                    </span>
-                                                                    Pantry - Walk-in                                    </div>
-                                                            </div>
-                                                            <div class="col-xs-12 col-sm-6 col-md-4">
-                                                                <div class="checkbox-inline">
-                                                                    <span class="check-btn">
-                                                                        <input name="interior_features[]" type="checkbox" value="Pull Down Stairs">
-                                                                    </span>
-                                                                    Pull Down Stairs                                    </div>
-                                                            </div>
-                                                            <div class="col-xs-12 col-sm-6 col-md-4">
-                                                                <div class="checkbox-inline">
-                                                                    <span class="check-btn">
-                                                                        <input name="interior_features[]" type="checkbox" value="Sky Light(s)">
-                                                                    </span>
-                                                                    Sky Light(s)                                    </div>
-                                                            </div>
-                                                            <div class="col-xs-12 col-sm-6 col-md-4">
-                                                                <div class="checkbox-inline">
-                                                                    <span class="check-btn">
-                                                                        <input name="interior_features[]" type="checkbox" value="Solar Tubes">
-                                                                    </span>
-                                                                    Solar Tubes                                 </div>
-                                                            </div>
-                                                            <div class="col-xs-12 col-sm-6 col-md-4">
-                                                                <div class="checkbox-inline">
-                                                                    <span class="check-btn">
-                                                                        <input name="interior_features[]" type="checkbox" value="Storage">
-                                                                    </span>
-                                                                    Storage                                 </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <hr class="dotted">
-
-                                                        <label>Exterior Features:</label>
-                                                        <div class="form-group">
-                                                            <div class="col-xs-12 col-sm-6 col-md-4">
-                                                                <div class="checkbox-inline">
-                                                                    <span class="check-btn">
-                                                                        <input name="exterior_features[]" type="checkbox" value="Balcony">
-                                                                    </span>
-                                                                    Balcony                                 </div>
-                                                            </div>
-                                                            <div class="col-xs-12 col-sm-6 col-md-4">
-                                                                <div class="checkbox-inline">
-                                                                    <span class="check-btn">
-                                                                        <input name="exterior_features[]" type="checkbox" value="Barbeque">
-                                                                    </span>
-                                                                    Barbeque                                    </div>
-                                                            </div>
-                                                            <div class="col-xs-12 col-sm-6 col-md-4">
-                                                                <div class="checkbox-inline">
-                                                                    <span class="check-btn">
-                                                                        <input name="exterior_features[]" type="checkbox" value="Breezeway">
-                                                                    </span>
-                                                                    Breezeway                                   </div>
-                                                            </div>
-                                                            <div class="col-xs-12 col-sm-6 col-md-4">
-                                                                <div class="checkbox-inline">
-                                                                    <span class="check-btn">
-                                                                        <input name="exterior_features[]" type="checkbox" value="Courtyard">
-                                                                    </span>
-                                                                    Courtyard                                   </div>
-                                                            </div>
-                                                            <div class="col-xs-12 col-sm-6 col-md-4">
-                                                                <div class="checkbox-inline">
-                                                                    <span class="check-btn">
-                                                                        <input name="exterior_features[]" type="checkbox" value="Deck">
-                                                                    </span>
-                                                                    Deck                                    </div>
-                                                            </div>
-                                                            <div class="col-xs-12 col-sm-6 col-md-4">
-                                                                <div class="checkbox-inline">
-                                                                    <span class="check-btn">
-                                                                        <input name="exterior_features[]" type="checkbox" value="Fence">
-                                                                    </span>
-                                                                    Fence                                   </div>
-                                                            </div>
-                                                            <div class="col-xs-12 col-sm-6 col-md-4">
-                                                                <div class="checkbox-inline">
-                                                                    <span class="check-btn">
-                                                                        <input name="exterior_features[]" type="checkbox" value="Fire Pit">
-                                                                    </span>
-                                                                    Fire Pit                                    </div>
-                                                            </div>
-                                                            <div class="col-xs-12 col-sm-6 col-md-4">
-                                                                <div class="checkbox-inline">
-                                                                    <span class="check-btn">
-                                                                        <input name="exterior_features[]" type="checkbox" value="Gazebo">
-                                                                    </span>
-                                                                    Gazebo                                  </div>
-                                                            </div>
-                                                            <div class="col-xs-12 col-sm-6 col-md-4">
-                                                                <div class="checkbox-inline">
-                                                                    <span class="check-btn">
-                                                                        <input name="exterior_features[]" type="checkbox" value="Outdoor Shower">
-                                                                    </span>
-                                                                    Outdoor Shower                                  </div>
-                                                            </div>
-                                                            <div class="col-xs-12 col-sm-6 col-md-4">
-                                                                <div class="checkbox-inline">
-                                                                    <span class="check-btn">
-                                                                        <input name="exterior_features[]" type="checkbox" value="Patio">
-                                                                    </span>
-                                                                    Patio                                   </div>
-                                                            </div>
-                                                            <div class="col-xs-12 col-sm-6 col-md-4">
-                                                                <div class="checkbox-inline">
-                                                                    <span class="check-btn">
-                                                                        <input name="exterior_features[]" type="checkbox" value="Porch">
-                                                                    </span>
-                                                                    Porch                                   </div>
-                                                            </div>
-                                                            <div class="col-xs-12 col-sm-6 col-md-4">
-                                                                <div class="checkbox-inline">
-                                                                    <span class="check-btn">
-                                                                        <input name="exterior_features[]" type="checkbox" value="Sprinkler">
-                                                                    </span>
-                                                                    Sprinkler                                   </div>
-                                                            </div>
-                                                            <div class="col-xs-12 col-sm-6 col-md-4">
-                                                                <div class="checkbox-inline">
-                                                                    <span class="check-btn">
-                                                                        <input name="exterior_features[]" type="checkbox" value="Storage/Shed">
-                                                                    </span>
-                                                                    Storage/Shed                                    </div>
-                                                            </div>
-                                                            <div class="col-xs-12 col-sm-6 col-md-4">
-                                                                <div class="checkbox-inline">
-                                                                    <span class="check-btn">
-                                                                        <input name="exterior_features[]" type="checkbox" value="Storm Shutters">
-                                                                    </span>
-                                                                    Storm Shutters                                  </div>
-                                                            </div>
-                                                            <div class="col-xs-12 col-sm-6 col-md-4">
-                                                                <div class="checkbox-inline">
-                                                                    <span class="check-btn">
-                                                                        <input name="exterior_features[]" type="checkbox" value="Tennis Court">
-                                                                    </span>
-                                                                    Tennis Court                                    </div>
-                                                            </div>
-                                                            <div class="col-xs-12 col-sm-6 col-md-4">
-                                                                <div class="checkbox-inline">
-                                                                    <span class="check-btn">
-                                                                        <input name="exterior_features[]" type="checkbox" value="Well">
-                                                                    </span>
-                                                                    Well                                    </div>
-                                                            </div>
-                                                            <div class="col-xs-12 col-sm-6 col-md-4">
-                                                                <div class="checkbox-inline">
-                                                                    <span class="check-btn">
-                                                                        <input name="exterior_features[]" type="checkbox" value="Workshop">
-                                                                    </span>
-                                                                    Workshop                                    </div>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>  -->
 
                                                     <hr class="dotted">
 
@@ -967,8 +694,6 @@
                                         </div>
                                     </div>
 
-                                    -->
-
                                     <div class="col-xs-12 col-md-12 col-lg-4">
                                         <div class="row">
                                             <div class="col-xs-12 col-sm-6 col-md-4 col-lg-12">
@@ -981,7 +706,7 @@
                                                             <div class="form-group">
                                                                 <label class="col-xs-12" style="text-align: left;">MLS Number:</label>
                                                                 <div class="col-xs-12">
-                                                                    <input class="form-control" name="mlsnumber" size="6" maxlength="6">
+                                                                    <input class="form-control" name="mlsnumber" size="7" maxlength="7">
                                                                 </div>
                                                             </div>
 
@@ -1047,20 +772,19 @@
                                                 </div>
                                             </div>
 
-
-
                                             <div class="col-xs-12 col-sm-6 col-md-4 col-lg-12">
                                                 <div class="content-box shadow-back equal-1 equal-2 ease-left-2" style="height: auto;">
                                                     <p class="blue-plate">Quick Search</p>
 
                                                     <div class="wrap">
                                                         <form action="/new-homes" method="POST">
-                                                            <input type="hidden" value="homes" name="dosearch">
+
                                                             <div class="form-group">
                                                                 <button class="btn  btn-gen btn-block" type="submit">New Homes</button>
                                                             </div>
                                                         </form>
                                                         <form action="/new-condos" method="POST">
+
                                                             <div class="form-group" style="margin-bottom: 11px;">
                                                                 <button class="btn btn-gen  btn-block" type="submit">New Condos</button>
                                                             </div>

@@ -653,10 +653,6 @@ CREATE TABLE `master_rets_table` (
   FULLTEXT KEY `property_sub_type` (`property_sub_type`)
 ) ENGINE=MyISAM AUTO_INCREMENT=10315 DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Table structure for `master_rets_table_update`
--- ----------------------------
-DROP TABLE IF EXISTS `master_rets_table_update`;
 CREATE TABLE `master_rets_table_update` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `sysid` varchar(20) NOT NULL,
@@ -908,6 +904,11 @@ CREATE TABLE `master_rets_table_update` (
   `last_change_date` date DEFAULT NULL,
   `lot_acres` float DEFAULT NULL,
   `last_status` varchar(25) DEFAULT NULL,
+  `sqft_lot` int(255) DEFAULT NULL,
+  `builder` varchar(100) DEFAULT NULL,
+  `earnest_deposit` int(255) DEFAULT NULL,
+  `solar_desc` varchar(100) DEFAULT NULL,
+  `in_foreclose` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`,`sysid`,`listing_entry_timestamp`,`postal_code`),
   KEY `listing_id` (`listing_id`) USING BTREE,
   KEY `city` (`city`),
@@ -915,9 +916,8 @@ CREATE TABLE `master_rets_table_update` (
   FULLTEXT KEY `subdivision` (`subdivision`),
   FULLTEXT KEY `listing_area` (`listing_area`),
   FULLTEXT KEY `property_sub_type` (`property_sub_type`)
-) ENGINE=MyISAM AUTO_INCREMENT=20712 DEFAULT CHARSET=utf8;
-
--- ----------------------------
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+------------------
 -- Table structure for `mrt_bu`
 -- ----------------------------
 DROP TABLE IF EXISTS `mrt_bu`;

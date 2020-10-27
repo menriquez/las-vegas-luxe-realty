@@ -6,20 +6,20 @@ require_once  $base_root_dir . '/env.php';
 if (constant("DEV_NAME") != "prod")  {
     //$ACTIVE_DOMAIN=$_SERVER['HTTP_HOST'];
     $configDB = array(
-      'DB_HOST' => 'lasvegasluxerealty.com',
+      'DB_HOST' => '173.82.119.134',
       'DB_NAME' => 'admin_lvlr',
-      'DB_USER' => 'admin_admin_lvlr',
-      'DB_PASS' => '2w0KPRUl9m',
+      'DB_USER' => 'admin_lvlr',
+      'DB_PASS' => 'oFkOwIwEUp',
       'DB_DRIVER' => 'mysql'
     );
 
 }
 else {
     $configDB = array(
-      'DB_HOST' => 'localhost',
+      'Dbreak;B_HOST' => '173.82.119.134',
       'DB_NAME' => 'admin_lvlr',
-      'DB_USER' => 'admin_admin_lvlr',
-      'DB_PASS' => '2w0KPRUl9m',
+      'DB_USER' => 'admin_lvlr',
+      'DB_PASS' => 'oFkOwIwEUp',
       'DB_DRIVER' => 'mysql'
     );
 }

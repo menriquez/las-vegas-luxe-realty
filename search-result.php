@@ -4,17 +4,23 @@ error_reporting(E_ERROR & E_WARNING);
 
 require "env.php";
 require "includes/globals.php";
-include('mls/controller/retsController.php');
-include('mls/controller/seoController.php');
+require "includes/utils.php";
+require "mls/controller/retsController.php";
 
-if (empty($_REQUEST['filter']) && empty($_REQUEST['streetName'])) {
-	$city = ucwords(fixDashes($_REQUEST['city']));
-	$proptype = ucwords(fixDashes($_REQUEST['proptype']));
+$matches=null;
+if (preg_match('/page([0-9]+)/',$_SERVER['PATH_INFO'] , $matches, PREG_OFFSET_CAPTURE)) {
+    // we are using pagination
+    $_REQUEST = unserialize($_SESSION['request_obj']);
+}
+
+if (empty($_REQUEST['qs']) && empty($_REQUEST['streetName'])) {
+	$city = ucwords(str_replace("-"," ",$_REQUEST['city']));
+	$proptype = ucwords(fixDashes($_REQUEST['property-subtype']))."s";
 
 }
-else if ($_REQUEST['filter']==1) {
+else if ($_REQUEST['qs']==1) {
     $city = "GLVAR";
-	$proptype = "New ". ucwords($_REQUEST['type']);
+	$proptype = "New ". ucwords($_REQUEST['dosearch']);
 }
 else {
    $city = ucwords(fixDashes($_REQUEST['city']));
@@ -27,10 +33,13 @@ $action = basename(__FILE__, '.php');               // load action from filename
 //$controller->invoke();                            // invokde controller to get view
 
 $stg="";
-if (isset($_GET['price_from'])) $stg = "Between $$_GET[price_from] And $$_GET[price_to]";
+setlocale(LC_MONETARY, 'en_US');
+$p1 = "$".number_format($_REQUEST['price_from']);
+$p2 = "$".number_format($_REQUEST['price_to']);
+if (isset($_REQUEST['price_from'])) $stg = "Between $p1 And $p2";
 
 $page_title = "$city NV $proptype For Sale $stg";
-$page_desc = "Luxury custom $proptype for sale in $city $stg";
+$page_desc = "Luxury Custom $proptype For Sale in $city $stg";
 $page_keys = "$city, $proptype, real estate, for sale, $stg";
 
 $homepage = false;

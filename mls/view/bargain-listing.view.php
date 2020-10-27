@@ -4,7 +4,7 @@
                             <!-- featured item  house #1 summary info -->
                             <div class="featured-item box-seq shadow-back">
                                 <!-- house #1 image -->
-                                <a id="mls-<?= $this->model->getMLS() ?>" style="display: block; position: relative;" href="<?= $BASE_WEB_URL ?>/property-details<?= $this->model->buildURI() ?>" class="property-link"> <img class="img-responsive" style=" " src="<?= $this->model->getFrontPicFn()?>" alt="<?= $this->model->buildAltTag()?>"></a>
+                                <a id="mls-<?= $this->model->getMLS() ?>" style="display: block; position: relative;" href="<?= $BASE_WEB_URL ?>/property-details<?= $this->model->buildURI() ?>" class="property-link"> <img class="img-responsive" src="<?= $this->model->getFrontPicFn()?>" alt="<?= $this->model->buildAltTag() ?>"></a>
                                 <!-- house #1 headline -->
                                 <div class="heading lead"><strike id="prev-price-strike"><?= $this->model->getPrevPrice()?></strike> <?= $this->model->getPrice()?></div>
                                 <!-- house #1 summary content -->

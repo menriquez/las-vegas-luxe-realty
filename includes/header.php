@@ -21,9 +21,11 @@
 
     <!-- styles -->
     <!-- <link type="text/css" rel="stylesheet" href="/css/bootstrap.css" />  -->
-    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
     <link type="text/css" rel="stylesheet"
-          href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+          href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+
     <!-- <link type="text/css" rel="stylesheet" href="js/rs-plugin/css/settings.css" />  -->
 
     <link href='//fonts.googleapis.com/css?family=Coustard' rel='stylesheet' type='text/css'>

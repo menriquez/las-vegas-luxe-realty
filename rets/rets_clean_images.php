@@ -2,88 +2,85 @@
 set_time_limit(0);
 $send_notification_email = true;
 date_default_timezone_set("America/New_York");
-error_reporting(E_ERROR);
+error_reporting(E_ERROR | E_WARNING);
 
 include('database.php');
 include('preg_find.php');
-include('../includes/globals.php');
+include('globals.php');
 
-//require('config_imageDL.php') ;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//
-//  CONFIG OPTIONS 
-//  
-$rets_name = "lasvegasluxerealty.com";
-$rets_from = "mark@webwarephpdevelopment.com";
-
-// set this to true to force image download from links instead of using photo array - FLEXMLS advises this is best way
-$forceDl = true;
-// set this to true to pull HiRes images from server
-$hiRes = true;
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// $site_root_dir = '/var/www/vhosts/brevardauctions.com/httpdocs/';  - not doing it this way on this system - marke
-
-set_time_limit(0);
+global $conn;
 
 $delCnt = $keepCnt = 0;
 
-foreach (glob($base_image_dir . "*-1.jpg") as $file) {
 
-    $str = strrchr($file, "/");
+foreach (glob("photos/*-0.jpg") as $file) {
 
-    $from = "/";
-    $to = "-";
 
-    $sub = substr($str, strpos($str, $from) + strlen($from), strlen($str));
-    $mls = substr($sub, 0, strpos($sub, $to));
+    $fn_parts = explode("-",$file);
+	$mls_id = $fn_parts[count($fn_parts)-2];
 
-    $sql = "select * from master_rets_table where sysid = '$mls'";
-    $mls_r = mysql_query($sql);
-    if (mysql_num_rows($mls_r) == 0) {
+
+    $sql = "select * from master_rets_table where listing_id = '$mls_id' ORDER BY listing_id DESC";
+    $mls_r = mysqli_query($conn,$sql);
+    if ($mls_r != false AND mysqli_num_rows($mls_r) == 0) {
         // ok...no record exists for the image, so we can safely delete the image set..
-        delete_images($mls);
-        echo "delete image set for MLS Id# $mls...\r\n";
+	    echo "delete image set [ $mls_id ]...\r\n";
+	    delete_webp_images($mls_id);
         $delCnt++;
 
     } else {
 
         $keepCnt++;
-        // echo "Keeping image set for MLS Id# $mls...\r\n";
+        echo "Keeping image set [ $mls_id ]...\r\n";
     }
 
 
 }
 
-echo "DELCNT = $delCnt\r\nKeepCNT = $keepCnt\r\n";
+echo "JPG :: DELCNT = $delCnt\r\nKeepCNT = $keepCnt\r\n";
+
 exit(0);
 
-function delete_images($listing_id)
-{
+function delete_webp_images($listing_id) {
 
-    GLOBAL $base_image_dir;
-    GLOBAL $rets_config;
+	// Base Images Directory
+	// $init_image = $base_image.$listing_id.".jpg";
+	$image_count=0;
+	$images=[];
 
-    // Base Images Directory
-    // $init_image = $base_image.$listing_id.".jpg";
-    $image_count = 0;
-    $images = [];
-    $dir = $base_image_dir;
 
-    // fix the fact the glob sometimes doens't return an array type...sigh
-    $fnArray1 = glob($dir . "/" . $listing_id . "-??.jpg");
-    if (!$fnArray1) $fnArray1 = array();
-    $fnArray2 = glob($dir . "/" . $listing_id . "-?.jpg");
-    if (!$fnArray2) $fnArray2 = array();
+	// fix the fact the glob sometimes doens't return an array type...sigh
+	$fnArray1=glob("photos/*" . $listing_id . "-??.jpg");
+	if (!$fnArray1) $fnArray1=array();
+	$fnArray2=glob("photos/*" . $listing_id . "-?.jpg");
+	if (!$fnArray2) $fnArray2=array();
 
-    // create one array from the two...
-    $images = array_merge($fnArray1, $fnArray2);
+	// create one array from the two...
+	$images=array_merge($fnArray1, $fnArray2);
 
-    // handy way to delete all files in an array...
-    echo "Deleting old image set for MLS Id# $listing_id...";
-    array_map("unlink", $images);
-    echo "...ok" . "\n";
+	// handy way to delete all files in an array...
+	echo "Deleting old JPEG image set for MLS Id# $listing_id...";
+	array_map("unlink", $images);
+	$tot_webp=count($images);
+}
+
+
+function delete_jpeg_images($listing_id) {
+
+	// fix the fact the glob sometimes doens't return an array type...sigh
+	$jpgArray1 = glob( "photos/jpeg/*" . $listing_id . "-??.jpg");
+	if (!$jpgArray1) $jpgArray1 = array();
+	$jpgArray2 = glob("photos/jpeg/*" . $listing_id . "-?.jpg");
+	if (!$jpgArray2) $jpgArray2 = array();
+
+	// create one array from the two...
+	$images = array_merge($jpgArray1, $jpgArray2);
+
+	// handy way to delete all files in an array...
+	echo "Deleting old JPEG image set for MLS Id# $listing_id...";
+	array_map("unlink", $images);
+	$tot_jpeg = count($images);
+	echo "...ok [ $tot_jpeg ] JPEG images deleted!" . "\n";
 
 }
 

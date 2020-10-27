@@ -20,7 +20,7 @@ class dbRetsRoom extends PDOConfig {
 		parent::__construct( );
 	}
     
-    // generic data function to grab fields directly
+    // generic data function to grabjfields directly
     public function getData($inFld) {
         return str_replace(",",", ",$this->row[$inFld]);
     }       

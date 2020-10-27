@@ -19,7 +19,7 @@
 	                  <div class="property-container">
 	                    <div class="property-image">
 	                      <a href="/fl/<?= $this->model->getCityDashes() ?>" >
-	                        <img src="<?php $stg=$this->model->getFrontPicFn();echo $stg ?>" alt="">
+	                        <img loading="lazy" src="<?php $stg=$this->model->getFrontPicFn();echo $stg ?>" alt="">
 	                      </a>
 	                      <div class="property-price">
 	                        <h4><?php $stg=$this->model->getPropertyType(); echo $stg ?></h4>

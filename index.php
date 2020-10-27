@@ -1,24 +1,25 @@
 <?php
 
 //session_start();
-error_reporting(E_ERROR + E_WARNING);
+error_reporting(E_ALL);
 $base_file_path = getcwd();
 $base_image_path = getcwd() . "/rets/";
 
 require "env.php";
 require "includes/globals.php";
+require "includes/utils.php";
 require "mls/controller/retsController.php";
 
 $city_array = array("Henderson", "North Las Vegas", "Pahrump", "Boulder City", "Overton", "Ely", "Logandale", "Laughlin");
 $tot = count($city_array);
 
-$city = $city_array[rand(0, $tot)];
+$city = $city_array[rand(0, $tot-1)];
 
 $page_title = "MLS Real Estate in Las Vegas and Henderson, Nevada Featuring GLVAR Homes, Condos, and Townhomes For Sale.";
-$page_desc = "Sahar Saljougui, a top MLS Realor, specializing in finding that perfect MLS House, Condo, or Townhome in Las Vegas, Nevada, or to sell your home fast!";
+$page_desc = "Sahar Saljougui, a top MLS Realtor, in $city specializing in finding that perfect MLS House, Condo, or Townhome in Las Vegas, Nevada, or to sell your home fast!";
 $page_keys = "las vegas real estate, for sale, for rent, best mls realtor near Las Vegas, top realtor for buying a new home, selling a home, sell home fast, home selling tips, cost of selling your home,
               sell a home fast, fastest way to sell a home in Las Vegas, home selling tips, cost of selling your home, marketing your home, ways to sell your home, house staging tips, how to stage your home,
-              foreclosure in Las Vegas, foreclosures in Las Vegas, short sales, short selling, short sale process, foreclosure, cons of a short sale, short selling your home, for sale by owner, why to use a Realtor,
+              foreclosure in $city, foreclosures in Las Vegas, short sales, short selling, short sale process, foreclosure, cons of a short sale, short selling your home, for sale by owner, why to use a Realtor,
               property for sale by owner,  for sale by owner listings, listing property for sale by owner, selling your home by owner, tips for selling your home, top tips to get the best offer, mls listings,
               real estate listing mls, mls real estate listings, multiple listing services, first time home buyer guide, best homes for first time home buyer, first time home buyer programs, first time home buyer help
               list of real estate agents, reviews of Realtor, best schools near Las Veges, relocation Realtor in Las Vegas";
@@ -69,6 +70,8 @@ require "includes/header.php";
                 <div class="col-sm-12 col-ms-12">
 
                     <div class="row">
+
+                        <p id="title-lastupdate" >last updated: <?= $controller->last_update_datetime ?> <i class="fa fa-wifi fa-1x fa-spin" ></i></p>
 
                         <div class="col-sm-12 col-ms-12">
 
@@ -183,7 +186,7 @@ require "includes/header.php";
                         <!-- ==========================MLS Search form starts here=======================================-->
                         <!-- Disabled php, remove the "//" before include to activate -->
 
-                        <?php //include('includes/search-form.php'); ?>
+                        <?php include('includes/search-form.php'); ?>
 
                     </div>
 
@@ -229,6 +232,7 @@ require "includes/header.php";
                                             <?php
                                              require('mls/view/contact_modal_landing.view.php');
                                             ?>
+
                                         </div>
                                         <!-- realtor about image area starts here -->
                                         <div class="col-sm-4 col-ms-4">
@@ -236,11 +240,26 @@ require "includes/header.php";
                                             <img class="img-responsive vcenter img-circle center-block ease-left-2"
                                                  src="//lasvegasluxerealty.com/img/Melanie.png"
                                                  alt="Sahar Saljougui, your real estate pro!"/>
+
                                             <img class="img-responsive vcenter scale-img  center-block ease-left-2"
-                                                 src="//lasvegasluxerealty.com/img/mel_dog.png"
+                                                 src="img/mel_dog1.png"
                                                  alt="Sahar Saljougui, your real estate pro!"/>
                                         </div>
+                                        
+                                            <div class="col-ms-4 col-sm-4">
 
+                                                <img class="img-responsive vcenter scale-img  ease-right-2" src="img/mel_dog.png"  alt="Sahar Saljougui, your real estate pro!"/>
+
+                                            </div>
+                                            <div class="col-md-4 col-sm-4 col-xs-12">
+
+                                                <img class="img-responsive vcenter scale-img  ease-up-2"  src="img/mel_dogs.png" alt="Sahar Saljougui, your real estate pro!"/>
+
+                                            </div>
+                                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                                <img class="img-responsive vcenter scale-img  ease-left-2"  src="img/mel_dog3.png" alt="Sahar Saljougui, your real estate pro!"/>
+                                            </div>
+                                        <!-- row -->
                                     </div>
                                 </div>
                             </div>
