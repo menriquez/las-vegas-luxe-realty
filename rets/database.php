@@ -8,8 +8,8 @@ if (constant("DEV_NAME") != "prod")  {
     $configDB = array(
       'DB_HOST' => '173.82.119.134',
       'DB_NAME' => 'admin_lvlr',
-      'DB_USER' => 'admin_lvlr',
-      'DB_PASS' => 'oFkOwIwEUp',
+      'DB_USER' => '',
+      'DB_PASS' => '',
       'DB_DRIVER' => 'mysql'
     );
 
@@ -18,8 +18,8 @@ else {
     $configDB = array(
       'Dbreak;B_HOST' => '173.82.119.134',
       'DB_NAME' => 'admin_lvlr',
-      'DB_USER' => 'admin_lvlr',
-      'DB_PASS' => 'oFkOwIwEUp',
+      'DB_USER' => '',
+      'DB_PASS' => '',
       'DB_DRIVER' => 'mysql'
     );
 }
