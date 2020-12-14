@@ -18,13 +18,13 @@ class pdoConfig extends PDO {
 		// DB CONFIG
 		if (constant("DEV_NAME") != "prod" ) {
 			$dbhost = 'lasvegasluxerealty.com';
-			$dbuser = 'admin_lvlr';
-			$dbpass = 'oFkOwIwEUp';
+			$dbuser = '';
+			$dbpass = '';
 			$dbname = 'admin_lvlr';
 		} else {
 			$dbhost = 'lasvegasluxerealty.com';
-			$dbuser = 'admin_lvlr';
-			$dbpass = 'oFkOwIwEUp';
+			$dbuser = '';
+			$dbpass = '';
 			$dbname = 'admin_lvlr';
 		}
 
